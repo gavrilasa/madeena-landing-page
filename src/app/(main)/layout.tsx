@@ -1,3 +1,4 @@
+import Navbar from "~/components/Navbar";
 import "~/styles/globals.css";
 
 import { type Metadata } from "next";
@@ -21,7 +22,10 @@ export default function RootLayout({
       <head>
         <meta name="apple-mobile-web-app-title" content="Al Madeena" />
       </head>
-      <body>{children}</body>
+      <body>
+        <Navbar />
+        {children}
+      </body>
     </html>
   );
 }

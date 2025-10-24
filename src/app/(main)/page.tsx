@@ -5,11 +5,11 @@ import Motto from "~/components/Motto";
 
 export default function HomePage() {
   return (
-    <div>
+    <main>
     <Hero />
     <Quote />
     <Academic />
     <Motto />
-    </div>
+    </main>
   );
 }
