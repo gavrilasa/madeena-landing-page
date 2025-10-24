@@ -4,7 +4,19 @@
  */
 import "./src/env.js";
 
-/** @type {import("next").NextConfig} */
-const config = {};
-
-export default config;
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+    images: {
+      remotePatterns: [
+        {
+          protocol: "https",
+          hostname: "res.cloudinary.com",
+          port: "",
+          pathname: "/**",
+        },
+      ],
+    },
+  };
+  
+  export default nextConfig;
+  
