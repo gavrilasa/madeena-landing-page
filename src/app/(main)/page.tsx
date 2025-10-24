@@ -6,10 +6,10 @@ import Motto from "~/components/Motto";
 export default function HomePage() {
   return (
     <main>
-    <Hero />
-    <Quote />
-    <Academic />
-    <Motto />
+      <Hero />
+      <Quote />
+      <Academic />
+      <Motto />
     </main>
   );
 }

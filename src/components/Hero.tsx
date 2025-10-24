@@ -5,43 +5,35 @@ import Image from "next/image";
 export default function Hero() {
   return (
     <section className="relative flex h-screen w-screen items-end justify-start overflow-hidden md:items-center">
-      {/* Background Image */}
       <div className="absolute inset-0">
         <Image
-          src="https://res.cloudinary.com/reswara/image/upload/v1761321313/DSCF7772_rvrqoh.jpg"
+          src="https://res.cloudinary.com/dah2v3xbg/image/upload/w_3824,q_auto:good,f_auto/v1761338343/DSCF7772_1_nwjcdw.webp"
           alt="Al Madeena Students"
           fill
           priority
-          className="object-cover transition-transform duration-500 transform scale-[1.7] sm:scale-[1.6] md:scale-[1.4] lg:scale-[1.3] xl:scale-[1.25]"
-          style={{
-            objectPosition: "55% 50%",
-          }}
+          fetchPriority="high"
+          sizes="(max-width: 768px) 200vw, (max-width: 1200px) 100vw, 100vw"
+          quality={85}
+          className="-translate-y-24 scale-125 object-cover object-[55%_50%] md:translate-y-0 md:object-[55%_50%] lg:scale-100"
         />
 
-        {/* Gradient overlay hanya untuk mobile */}
-        <div className="absolute bottom-0 w-full h-1/3 bg-linear-to-t from-[#07204C]/90 to-[#22355D]/0 md:hidden" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_30%,rgba(0,0,0,0.55)_100%)]" />
+
+        <div className="absolute bottom-0 h-1/3 w-full bg-linear-to-t from-[#07204C]/70 to-[#22355D]/0 md:hidden" />
       </div>
 
-      {/* Hero Text Content */}
-      <div className="relative z-10 text-left text-white px-5 sm:px-10 md:px-20 lg:px-28 xl:px-32 pb-10 md:pb-0 max-w-sm sm:max-w-md md:max-w-2xl lg:max-w-3xl">
-        {/* Subheading */}
-        <p className="uppercase tracking-wider mb-2 text-[9px] sm:text-xs md:text-sm lg:text-base xl:text-lg opacity-90">
+      <div className="relative z-10 max-w-sm px-5 pb-10 text-left text-white sm:max-w-md sm:px-10 md:max-w-2xl md:px-20 md:pb-0 lg:max-w-3xl lg:px-28 xl:px-32">
+        <p className="mb-2 text-[9px] tracking-wider uppercase opacity-90 sm:text-xs md:text-sm lg:text-base xl:text-lg">
           AL MADEENA ISLAMIC BILINGUAL SCHOOL
         </p>
-
-        {/* Main Heading */}
-        <h1 className="font-semibold leading-tight md:leading-[1.1] mb-4 text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl drop-shadow-[0_4px_6px_rgba(0,0,0,0.3)]">
+        <h1 className="mb-4 text-3xl leading-tight font-semibold drop-shadow-[0_4px_6px_rgba(0,0,0,0.3)] sm:text-3xl md:text-4xl md:leading-[1.1] lg:text-5xl">
           Growing Golden Generation with Islamic Character.
         </h1>
-
-        {/* Description */}
-        <p className="text-gray-100/90 leading-relaxed md:leading-snug mb-6 text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl max-w-xs sm:max-w-md md:max-w-xl lg:max-w-2xl">
+        <p className="mb-6 max-w-xs text-lg leading-relaxed text-gray-100/90 sm:max-w-md sm:text-sm md:max-w-xl md:text-base md:leading-snug lg:max-w-2xl lg:text-lg xl:text-xl">
           Di Al Madeena, kami menuntun mereka menjadi generasi yang cerdas,
           berakhlak, dan siap menghadapi masa depan.
         </p>
-
-        {/* Button */}
-        <button className="rounded-md bg-white hover:bg-[#f7f7f7] text-black font-semibold py-2 px-6 text-xs sm:text-sm md:text-base transition">
+        <button className="rounded-md bg-white px-6 py-2 text-xs font-semibold text-black transition hover:bg-[#f7f7f7] sm:text-sm md:text-base">
           Register
         </button>
       </div>

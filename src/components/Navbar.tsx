@@ -21,7 +21,7 @@ export default function Navbar() {
       <div className="container mx-auto flex h-16 items-center justify-between gap-4">
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-6">
-            <Image src={"/logo.svg"} alt="Logo" width={64} height={64} />
+            <Image src={"/icon0.svg"} alt="Logo" width={64} height={64} />
           </div>
         </div>
         <div className="flex items-center gap-2">
