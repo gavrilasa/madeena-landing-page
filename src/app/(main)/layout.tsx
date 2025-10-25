@@ -18,11 +18,11 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${inter.className}`}>
+    <html lang="en" className={`${inter.className}`} suppressHydrationWarning>
       <head>
         <meta name="apple-mobile-web-app-title" content="Al Madeena" />
       </head>
-      <body>
+      <body suppressHydrationWarning>
         <Navbar />
         {children}
       </body>

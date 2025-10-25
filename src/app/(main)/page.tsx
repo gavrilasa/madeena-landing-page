@@ -2,6 +2,7 @@ import Hero from "~/components/Hero";
 import Quote from "~/components/Quote";
 import Academic from "~/components/Academic";
 import Motto from "~/components/Motto";
+import Programs from "~/components/Programs";
 
 export default function HomePage() {
   return (
@@ -10,6 +11,7 @@ export default function HomePage() {
       <Quote />
       <Academic />
       <Motto />
+      <Programs />
     </main>
   );
 }
