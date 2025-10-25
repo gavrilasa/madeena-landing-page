@@ -3,9 +3,10 @@
 import React from "react";
 import { Carousel, Card } from "~/components/ui/apple-cards-carousel";
 import { useState } from "react";
+import { program } from "~/data/Program";
 
 export default function Programs() {
-  const cards = data.map((card, index) => (
+  const cards = program.map((card, index) => (
     <Card key={card.src} card={card} index={index} layout={false} />
   ));
 
@@ -20,24 +21,21 @@ export default function Programs() {
         </h1>
 
         {/* Tabs */}
-        <div className="flex gap-6 md:gap-8 border-b border-blue-200">
-          {tabs.map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`pb-3 text-base md:text-lg font-semibold transition-colors relative ${
-                activeTab === tab
-                  ? "text-[#0094D9]"
-                  : "text-gray-400 hover:text-[#0094D9]"
-              }`}
-            >
-              {tab}
-              {activeTab === tab && (
-                <div className="absolute bottom-0 left-0 right-0 h-1 bg-[#0094D9]"></div>
-              )}
-            </button>
-          ))}
-        </div>
+        <div className="mb-10 flex gap-8 border-b border-blue-200">
+        {tabs.map((tab) => (
+          <button
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            className={`pb-3 text-base font-medium transition-all duration-300 ${
+              activeTab === tab
+                ? "border-b-2 border-[#0193DC] text-[#0193DC]"
+                : "text-gray-400 hover:text-[#0193DC]"
+            }`}
+          >
+            {tab}
+          </button>
+        ))}
+      </div>
       </div>
 
       <div className="pl-6 md:pl-12 lg:pl-16">
@@ -69,30 +67,3 @@ const DummyContent = () => {
     </>
   );
 };
-
-const data = [
-  {
-    category: "Curriculum",
-    title: "National Plus Curriculum",
-    src: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?q=80&w=3556&auto=format&fit=crop",
-    content: <DummyContent />,
-  },
-  {
-    category: "Curriculum",
-    title: "Islamic Studies Curriculum",
-    src: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=3387&auto=format&fit=crop",
-    content: <DummyContent />,
-  },
-  {
-    category: "Assessment",
-    title: "Cambridge Assessment",
-    src: "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?q=80&w=2333&auto=format&fit=crop",
-    content: <DummyContent />,
-  },
-  {
-    category: "Education",
-    title: "Bilingual Education",
-    src: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?q=80&w=2515&auto=format&fit=crop",
-    content: <DummyContent />,
-  },
-];

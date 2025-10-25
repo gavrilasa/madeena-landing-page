@@ -210,7 +210,7 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
                 <path
                   d="M15 18L9 12L15 6"
                   stroke="#0094D9"
-                  strokeWidth={activeArrow === 'left' ? "2.5" : "2"}
+                  strokeWidth={activeArrow === 'left' ? "5" : "3"}
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
@@ -219,7 +219,7 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
             <button
               className={cn(
                 "w-12 h-12 border-2 border-[#0094D9] flex items-center justify-center transform rotate-45 transition-colors",
-                activeArrow === 'right' ? "bg-[#0094D9]/20 scale-95" : "hover:bg-[#0094D9]/10",
+                activeArrow === 'right' ? "bg-[#0094D9]/20 scale-95" : "hover:bg-[#0094D9]/50",
                 !canScrollRight && "opacity-30"
               )}
               onClick={handleScrollRight}
@@ -235,7 +235,7 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
                 <path
                   d="M9 6L15 12L9 18"
                   stroke="#0094D9"
-                  strokeWidth={activeArrow === 'right' ? "2.5" : "2"}
+                  strokeWidth={activeArrow === 'right' ? "5" : "3"}
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
@@ -309,7 +309,7 @@ export const BlurImage = ({
     <img
       className={cn(
         "h-full w-full transition duration-300",
-        isLoading ? "blur-sm" : "blur-0",
+        isLoading ? "blur-0" : "blur-0",
         className,
       )}
       onLoad={() => setLoading(false)}
