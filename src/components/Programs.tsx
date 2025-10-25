@@ -20,7 +20,7 @@ export default function Programs() {
         </h1>
 
         {/* Tabs */}
-        <div className="flex gap-6 md:gap-8 border-b border-gray-300">
+        <div className="flex gap-6 md:gap-8 border-b border-blue-200">
           {tabs.map((tab) => (
             <button
               key={tab}
