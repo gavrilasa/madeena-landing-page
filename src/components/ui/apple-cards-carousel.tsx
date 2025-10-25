@@ -280,7 +280,7 @@ export const Card = ({
         />
       </div>
       {index === 0 && (
-        <div className="relative bottom-12 md:bottom-20 left-0 w-20 md:w-36 h-20 md:h-30 bg-[#FFD200]"></div>
+        <div className="relative bottom-12 md:bottom-20 left-0 w-50 md:w-87 h-20 md:h-30 bg-[#FFD200]"></div>
       )}
     </div>
   );
