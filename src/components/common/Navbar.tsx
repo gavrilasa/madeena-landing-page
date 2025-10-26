@@ -13,7 +13,7 @@ import {
 } from "~/components/ui/navigation-menu";
 import { cn } from "~/lib/utils";
 import { MobileNav } from "./MobileNav";
-import { navigationLinks } from "~/data/Navigation";
+import { navigationLinks } from "~/data/navigationLinks";
 
 export default function Navbar() {
   return (
@@ -21,7 +21,14 @@ export default function Navbar() {
       <div className="container mx-auto flex h-16 items-center justify-between gap-4">
         <div className="flex items-center gap-2">
           <div className="flex items-center gap-6">
-            <Image src={"https://res.cloudinary.com/reswara/image/upload/v1761336815/Frame_9_1_yyke1c.svg"} alt="Logo" width={64} height={64} />
+            <Image
+              src={
+                "https://res.cloudinary.com/reswara/image/upload/v1761336815/Frame_9_1_yyke1c.svg"
+              }
+              alt="Logo"
+              width={64}
+              height={64}
+            />
           </div>
         </div>
         <div className="flex items-center gap-2">

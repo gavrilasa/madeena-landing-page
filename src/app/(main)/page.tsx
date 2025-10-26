@@ -1,14 +1,13 @@
-import Hero from "~/components/Hero";
-import Quote from "~/components/Quote";
-import Academic from "~/components/Academic";
-import Motto from "~/components/Motto";
-import Programs from "~/components/Programs";
-import Carousel from "~/components/Carousel";
-import Testimonials from "~/components/Testimonial";
-import Partners from "~/components/Partners";
-import News from "~/components/News";
-import Footer from "~/components/Footer";
-
+import Hero from "~/components/home/Hero";
+import Quote from "~/components/home/Quote";
+import Academic from "~/components/home/Academic";
+import Motto from "~/components/home/Motto";
+import Programs from "~/components/home/Programs";
+import Carousel from "~/components/home/Carousel";
+import Testimonials from "~/components/home/Testimonial";
+import Partners from "~/components/home/Partners";
+import News from "~/components/home/News";
+import Footer from "~/components/common/Footer";
 
 export default function HomePage() {
   return (
