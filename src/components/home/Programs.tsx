@@ -3,7 +3,7 @@
 import React from "react";
 import { Carousel, Card } from "~/components/ui/apple-cards-carousel";
 import { useState } from "react";
-import { programData } from "~/data/programData";
+import { programData } from "~/data/home/programData";
 
 export default function Programs() {
   const cards = programData.map((card, index) => (

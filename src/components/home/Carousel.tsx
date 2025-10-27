@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { cn } from "~/lib/utils";
-import { carouselData } from "~/data/carouselData";
+import { carouselData } from "~/data/home/carouselData";
 
 export default function CarouselSection() {
   const [activeIndex, setActiveIndex] = useState(1);

@@ -1,4 +1,4 @@
-import StaffProfile from "./StaffProfile";
+import StaffProfile from "~/components/about/StaffProfile";
 
 export default function AboutPage() {
   return (
