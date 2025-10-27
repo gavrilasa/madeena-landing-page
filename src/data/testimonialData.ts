@@ -1,4 +1,4 @@
-export const testimonialData = [
+export  const testimonialData = [
   {
     id: 1,
     type: "Student",

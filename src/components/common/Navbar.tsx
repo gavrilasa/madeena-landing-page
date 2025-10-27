@@ -19,18 +19,17 @@ export default function Navbar() {
   return (
     <header className="absolute top-2 right-0 left-0 z-50 bg-transparent px-4 py-2 text-white md:px-6">
       <div className="container mx-auto flex h-16 items-center justify-between gap-4">
-        <div className="flex items-center gap-2">
-          <div className="flex items-center gap-6">
-            <Image
-              src={
-                "https://res.cloudinary.com/reswara/image/upload/v1761336815/Frame_9_1_yyke1c.svg"
-              }
-              alt="Logo"
-              width={64}
-              height={64}
-            />
-          </div>
+        {/* Logo */}
+        <div className="flex items-center gap-6">
+          <Image
+            src="https://res.cloudinary.com/reswara/image/upload/v1761336815/Frame_9_1_yyke1c.svg"
+            alt="Logo"
+            width={64}
+            height={64}
+          />
         </div>
+
+        {/* Desktop Navigation */}
         <div className="flex items-center gap-2">
           <NavigationMenu viewport={false} className="h-full max-md:hidden">
             <NavigationMenuList className="h-full gap-1">
@@ -38,38 +37,39 @@ export default function Navbar() {
                 <NavigationMenuItem key={index} className="h-full">
                   {link.submenu && link.items ? (
                     <>
+                      {/* Tombol utama dropdown */}
                       <NavigationMenuTrigger
                         className={cn(
                           navigationMenuTriggerStyle(),
-                          "group h-full rounded-none border-transparent bg-transparent px-3 py-1.5 pb-3 font-medium text-white/80 hover:border-b-white hover:bg-transparent hover:text-white focus:bg-transparent focus:text-white data-active:bg-transparent data-[state=open]:bg-transparent data-[state=open]:text-white", // Custom overrides
+                          "group h-full rounded-t-lg rounded-b-none border-transparent bg-transparent px-3 py-1.5 pb-3 font-medium text-white transition-all",
+                          // Hover & active tetap transparan
+                          "hover:bg-transparent hover:text-white",
+                          "focus:bg-transparent focus:text-white",
+                          "data-[state=open]:bg-transparent data-[state=open]:text-white"
                         )}
                       >
                         {link.label}
                       </NavigationMenuTrigger>
+
+                      {/* Dropdown */}
                       <NavigationMenuContent>
                         <ul
                           className={cn(
-                            "rounded-xl p-2 md:min-w-60",
-                            "group-data-[viewport=true]/navigation-menu:bg-transparent",
-                            "group-data-[viewport=true]/navigation-menu:backdrop-blur-0",
-                            "group-data-[viewport=true]/navigation-menu:border-0",
-                            "group-data-[viewport=true]/navigation-menu:ring-0",
-                            "group-data-[viewport=true]/navigation-menu:shadow-none",
+                            "rounded-b-lg p-2 md:min-w-60 bg-white text-gray-800 shadow-none border-0 mt-0",
+                            "data-[state=open]:rounded-t-none"
                           )}
                         >
                           {link.items.map((item, itemIndex) => (
                             <li key={itemIndex}>
                               <NavigationMenuLink
                                 href={item.href}
-                                className="block rounded p-2 text-sm transition-colors hover:bg-white/10 focus:bg-white/10 focus:outline-none"
+                                className="block rounded-md p-2 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:outline-none transition-colors"
                               >
                                 <div className="flex items-center gap-2">
                                   {link.type === "description" ? (
                                     <div className="flex-1 space-y-1">
-                                      <div className="font-medium">
-                                        {item.label}
-                                      </div>
-                                      <p className="line-clamp-2 text-xs text-white/70">
+                                      <div className="font-medium">{item.label}</div>
+                                      <p className="line-clamp-2 text-xs font-light text-gray-500">
                                         {item.description}
                                       </p>
                                     </div>
@@ -84,11 +84,13 @@ export default function Navbar() {
                       </NavigationMenuContent>
                     </>
                   ) : (
+                    // Navlink biasa
                     <NavigationMenuLink
                       href={link.href ?? "#"}
                       className={cn(
-                        "group relative flex h-full items-center justify-center rounded-none border-transparent bg-transparent px-3 py-1.5 pb-3 font-medium text-white/80 transition-colors hover:text-white focus:bg-transparent focus:text-white focus:outline-none",
-                        link.active && "font-semibold text-white",
+                        "group relative flex h-full items-center justify-center rounded-none border-transparent bg-transparent px-3 py-1.5 pb-3 font-medium text-white/80 transition-colors",
+                        "hover:text-white hover:bg-transparent focus:bg-transparent focus:text-white",
+                        link.active && "font-semibold text-white"
                       )}
                       active={link.active}
                     >
@@ -101,6 +103,7 @@ export default function Navbar() {
             </NavigationMenuList>
           </NavigationMenu>
 
+          {/* Mobile Navigation */}
           <div className="md:hidden">
             <MobileNav links={navigationLinks} />
           </div>
