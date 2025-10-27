@@ -11,7 +11,7 @@ import Footer from "~/components/common/Footer";
 
 export default function HomePage() {
   return (
-    <main>
+    <main className="space-y-8 bg-[#f4f8fc]">
       <Hero />
       <Quote />
       <Academic />

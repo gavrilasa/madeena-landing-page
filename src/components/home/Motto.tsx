@@ -1,35 +1,91 @@
+"use client";
+
+import { motion } from "framer-motion";
+
 export default function Motto() {
   return (
-    <section className="relative w-full overflow-x-hidden bg-[#f4f8fc] px-6 py-24 md:px-20">
-      <div className="mx-auto flex max-w-6xl flex-col gap-20 p-4 md:gap-24 md:px-8">
-        <div className="items-left flex flex-col text-left md:items-start md:text-left">
-          <h2 className="mb-6 text-4xl font-bold text-[#1E88E5] md:text-5xl">
+    <section className="container mx-auto px-4 py-12 md:px-8">
+      <div className="mx-auto flex flex-col space-y-8 p-4 md:gap-12 md:px-8">
+        <motion.div
+          initial={{ opacity: 0, x: -50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+          className="items-left flex flex-col gap-4 text-left"
+        >
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+            className="text-4xl font-bold text-[#0193DC]"
+          >
             Vision
-          </h2>
-          <p className="text-md max-w-3xl leading-relaxed text-gray-800 md:text-xl">
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6, delay: 0.4, ease: "easeOut" }}
+            className="text-md max-w-3xl leading-relaxed font-medium text-gray-700 md:text-xl"
+          >
             To nurture a golden generation who learns with faith, character, and{" "}
             <br />
             excellence — becoming future leaders grounded in Islamic values.
-          </p>
-        </div>
+          </motion.p>
+        </motion.div>
 
-        {/* Mission */}
-        <div className="items-left flex flex-col text-left md:ml-80 md:items-start md:text-left">
-          <h2 className="mb-6 text-4xl font-bold text-[#1E88E5] md:text-5xl">
+        <motion.div
+          initial={{ opacity: 0, x: 50 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+          className="items-left flex flex-col gap-4 md:ml-auto"
+        >
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+            className="text-4xl font-bold text-[#0193DC]"
+          >
             Mission
-          </h2>
-          <ol className="text-md max-w-3xl list-inside list-decimal space-y-2 text-gray-800 md:text-xl">
-            <li>
-              Integrate faith and knowledge to build balanced intellectual and
+          </motion.h2>
+          <motion.ol
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, amount: 0.3 }}
+            transition={{ duration: 0.5, delay: 0.3 }}
+            className="text-md max-w-3xl list-inside list-decimal space-y-3 text-justify leading-relaxed font-medium text-gray-700 md:text-xl"
+          >
+            <motion.li
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.5, delay: 0.5, ease: "easeOut" }}
+            >
+              Integrate faith and knowledge to build balanced intelectual and
               spiritual growth.
-            </li>
-            <li>
+            </motion.li>
+            <motion.li
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.5, delay: 0.6, ease: "easeOut" }}
+            >
               Cultivate Islamic character through daily practice and positive
               culture.
-            </li>
-            <li>Encourage creativity, confidence, and lifelong learning.</li>
-          </ol>
-        </div>
+            </motion.li>
+            <motion.li
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, amount: 0.3 }}
+              transition={{ duration: 0.5, delay: 0.7, ease: "easeOut" }}
+            >
+              Encourage creativity, confidence, and lifelong learning.
+            </motion.li>
+          </motion.ol>
+        </motion.div>
       </div>
     </section>
   );

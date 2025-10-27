@@ -7,7 +7,7 @@ import { cn } from "~/lib/utils";
 
 const NewsCard = ({ item }: { item: NewsItem }) => {
   return (
-    <div className="flex flex-col overflow-hidden bg-[#f4f8fc] shadow-md transition-shadow duration-300 hover:shadow-lg">
+    <div className="flex flex-col overflow-hidden shadow-md transition-shadow duration-300 hover:shadow-lg">
       {/* Image Container */}
       <div className="relative aspect-4/3 w-full">
         <Image
@@ -30,7 +30,7 @@ const NewsCard = ({ item }: { item: NewsItem }) => {
         <Link
           href={item.linkUrl}
           className={cn(
-            "mt-auto self-start rounded bg-[#FFD500] px-4 py-2 text-sm font-semibold text-gray-900 transition-colors duration-200 hover:bg-yellow-400 focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-[#0094D9] focus:outline-none",
+            "mt-auto self-start rounded bg-[#FFD500] px-4 py-2 text-sm font-semibold text-gray-700 transition-colors duration-200 hover:bg-yellow-400 focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-[#0094D9] focus:outline-none",
           )}
         >
           Selengkapnya
@@ -46,7 +46,7 @@ export default function NewsSection() {
   const displayedNews = newsItemsData.slice(0, 3);
 
   return (
-    <section className="bg-[#f4f8fc] py-16 sm:py-20 lg:py-24">
+    <section className="py-16 sm:py-20 lg:py-24">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Title */}
         <h2 className="mb-10 text-left text-3xl leading-tight font-bold tracking-tight text-[#0094D9] sm:text-4xl lg:mb-12">

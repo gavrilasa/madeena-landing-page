@@ -1,25 +1,30 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import Image from "next/image";
 import { testimonialData } from "~/data/home/testimonialData";
 import { cn } from "~/lib/utils";
 
 export default function Testimonials() {
   const [hoveredId, setHoveredId] = useState<number | null>(null);
   const [selectedVideo, setSelectedVideo] = useState<number | null>(null);
-  const videoRefs = useRef<{ [key: number]: HTMLVideoElement | null }>({});
+  const videoRefs = useRef<Record<number, HTMLVideoElement | null>>({});
   const modalVideoRef = useRef<HTMLVideoElement | null>(null);
-  const playTimeoutRef = useRef<{ [key: number]: NodeJS.Timeout | null }>({});
+  const playTimeoutRef = useRef<Record<number, NodeJS.Timeout | null>>({});
 
   const handleMouseEnter = (id: number) => {
     setHoveredId(id);
-    if (playTimeoutRef.current[id]) {
-      clearTimeout(playTimeoutRef.current[id]!);
+    const existingTimeout = playTimeoutRef.current[id]; // Store in variable
+    if (existingTimeout) {
+      clearTimeout(existingTimeout); // Clear using the variable
     }
+    // Assign directly, setTimeout returns NodeJS.Timeout or number
     playTimeoutRef.current[id] = setTimeout(() => {
       const video = videoRefs.current[id];
       if (video) {
-        video.play().catch((error) => {
+        // Add type annotation for error in catch block
+        video.play().catch((error: Error) => {
+          // Access .name safely now
           if (error.name !== "AbortError") {
             console.error("Gagal memulai video:", error);
           }
@@ -29,8 +34,9 @@ export default function Testimonials() {
   };
 
   const handleMouseLeave = (id: number) => {
-    if (playTimeoutRef.current[id]) {
-      clearTimeout(playTimeoutRef.current[id]!);
+    const existingTimeout = playTimeoutRef.current[id]; // Store in variable
+    if (existingTimeout) {
+      clearTimeout(existingTimeout); // Clear using the variable
       playTimeoutRef.current[id] = null;
     }
     setHoveredId(null);
@@ -44,8 +50,9 @@ export default function Testimonials() {
   };
 
   const handleVideoClick = (id: number) => {
-    if (playTimeoutRef.current[id]) {
-      clearTimeout(playTimeoutRef.current[id]!);
+    const existingTimeout = playTimeoutRef.current[id];
+    if (existingTimeout) {
+      clearTimeout(existingTimeout);
       playTimeoutRef.current[id] = null;
     }
     setSelectedVideo(id);
@@ -68,7 +75,7 @@ export default function Testimonials() {
 
   useEffect(() => {
     if (selectedVideo && modalVideoRef.current) {
-      modalVideoRef.current.play().catch((error) => {
+      modalVideoRef.current.play().catch((error: Error) => {
         console.error("Gagal memutar video modal:", error);
       });
     }
@@ -87,7 +94,7 @@ export default function Testimonials() {
 
         <div className="relative mx-auto max-w-6xl">
           {/* Squares */}
-          <div className="absolute top-2 -right-4 z-0 h-14 w-14 bg-[#0094D9] md:h-24 md:w-24"></div>
+          <div className="absolute -top-4 -right-4 z-0 h-14 w-14 bg-[#0094D9] md:h-24 md:w-24"></div>
           <div className="absolute -bottom-12 -left-12 z-0 h-28 w-28 bg-[#FFD200] md:h-36 md:w-36"></div>
           <div className="absolute -right-12 -bottom-12 z-0 h-16 w-16 bg-[#FF6B35] md:h-24 md:w-24"></div>
 
@@ -101,11 +108,12 @@ export default function Testimonials() {
                 onMouseLeave={() => handleMouseLeave(item.id)}
                 onClick={() => handleVideoClick(item.id)}
               >
-                <div className="relative h-[350px] cursor-pointer overflow-hidden bg-black md:h-[500px]">
-                  {/* Image (Poster) */}
-                  <img
+                <div className="relative h-[350px] cursor-pointer overflow-hidden bg-black md:h-[600px]">
+                  <Image
                     src={item.image}
                     alt={item.name}
+                    fill // Use fill to cover the container
+                    sizes="(max-width: 768px) 100vw, 33vw" // Provide sizes for optimization
                     className={cn(
                       "absolute inset-0 z-10 h-full w-full object-cover transition-opacity duration-300 ease-in-out",
                       hoveredId === item.id ? "opacity-0" : "opacity-100",
@@ -113,6 +121,8 @@ export default function Testimonials() {
                         ? "opacity-50 grayscale"
                         : "",
                     )}
+                    priority={item.id <= 3} // Prioritize first few images
+                    loading={item.id <= 3 ? undefined : "lazy"} // Lazy load others
                   />
 
                   {/* Video */}
