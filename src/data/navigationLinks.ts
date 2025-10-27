@@ -1,5 +1,3 @@
-// src/data/navigation-links.ts
-
 interface NavigationItem {
   href?: string;
   label: string;

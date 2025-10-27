@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 
 export default function Hero() {
@@ -18,7 +16,6 @@ export default function Hero() {
         />
 
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(0,0,0,0)_30%,rgba(0,0,0,0.55)_100%)]" />
-
         <div className="absolute bottom-0 h-1/3 w-full bg-linear-to-t from-[#07204C]/70 to-[#22355D]/0 md:hidden" />
       </div>
 
@@ -33,7 +30,7 @@ export default function Hero() {
           Di Al Madeena, kami menuntun mereka menjadi generasi yang cerdas,
           berakhlak, dan siap menghadapi masa depan.
         </p>
-        <button className="shadow-[inset_0_0_0_2px_#fff] text-white px-12 py-4 rounded-full tracking-widest uppercase font-bold bg-transparent hover:bg-white hover:text-black dark:text-neutral-200 transition duration-200">
+        <button className="cursor-pointer rounded-full bg-transparent px-12 py-4 font-bold tracking-widest text-white uppercase shadow-[inset_0_0_0_2px_#fff] transition duration-200 hover:bg-white hover:text-[#1E88E5] dark:text-neutral-200">
           Join Us
         </button>
       </div>
