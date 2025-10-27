@@ -8,7 +8,7 @@ import { cn } from "~/lib/utils";
 
 const NewsCard = ({ item }: { item: NewsItem }) => {
   return (
-    <div className="flex flex-col overflow-hidden bg-[#f4f8fc] shadow-md transition-shadow duration-300 hover:shadow-lg">
+    <div className="flex flex-col overflow-hidden bg-white shadow-md transition-shadow duration-300 hover:shadow-lg">
       {/* Image Container */}
       <div className="relative aspect-4/3 w-full"> 
         <Image
@@ -47,7 +47,7 @@ export default function NewsSection() {
   const displayedNews = newsItemsData.slice(0, 3);
 
   return (
-    <section className="bg-[#f4f8fc] py-16 sm:py-20 lg:py-24"> 
+    <section className="bg-gray-50 py-16 sm:py-20 lg:py-24"> 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Title */}
         <h2 className="mb-10 text-left text-3xl font-bold leading-tight tracking-tight text-[#0094D9] sm:text-4xl lg:mb-12">
