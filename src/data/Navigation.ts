@@ -40,7 +40,7 @@ export const navigationLinks: NavigationItem[] = [
         description: "Struktur pengurus yayasan.",
       },
       {
-        href: "/tentang/guru-dan-karyawan",
+        href: "/About",
         label: "Guru & Karyawan",
         description: "Profil pendidik dan staf.",
       },

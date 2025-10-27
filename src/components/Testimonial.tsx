@@ -92,7 +92,7 @@ export default function Testimonials() {
           <div className="absolute -bottom-12 -right-12 w-16 h-16 md:w-24 md:h-24 bg-[#FF6B35] z-0"></div>
 
           {/* Video Container */}
-          <div className="flex flex-col md:flex-row relative z-10 shadow-2xl rounded-lg overflow-hidden"> 
+          <div className="flex flex-col md:flex-row relative z-10 shadow-2xl overflow-hidden"> 
             {testimonial.map((item) => ( 
               <div
                 key={item.id}
@@ -182,7 +182,7 @@ export default function Testimonials() {
             </button>
 
             {/* Video Player Container */}
-            <div className="bg-black rounded-lg overflow-hidden shadow-2xl">
+            <div className="bg-black overflow-hidden shadow-2xl">
               {/* Video Player */}
                <div className="aspect-video">
                  <video
