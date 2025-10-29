@@ -11,7 +11,7 @@ export default function Academic() {
 
   return (
     <section className="text-gray-900">
-      <div className="container mx-auto space-y-10 px-6">
+      <div className="container mx-auto space-y-4 px-6 md:space-y-10">
         <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
             <h2 className="text-xl font-medium text-[#0193DC] md:text-xl">

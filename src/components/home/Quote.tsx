@@ -44,7 +44,7 @@ export default function Quote() {
           initial={{ scale: 0, opacity: 0 }}
           whileInView={{ scale: 1, opacity: 1 }}
           viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.6, delay: 0.5, ease: "backOut" }}
+          transition={{ duration: 0.4, delay: 0.3, ease: "backOut" }}
         />
 
         <motion.p
@@ -52,7 +52,7 @@ export default function Quote() {
           initial={{ y: 30, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.7, delay: 0.7, ease: "easeOut" }}
+          transition={{ duration: 0.4, delay: 0.4, ease: "easeOut" }}
         >
           Growing golden generation with Islamic character. <br />
           At Al Madeena, we lead them to be a smart generation, well-mannered,

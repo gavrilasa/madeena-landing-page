@@ -21,7 +21,6 @@ export default function HomePage() {
       <Testimonials />
       <Partners />
       <News />
-      <Footer />
     </main>
   );
 }

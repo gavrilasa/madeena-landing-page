@@ -1,10 +1,8 @@
-import Navbar from "~/components/common/Navbar";
 import "~/styles/globals.css";
 
 import { type Metadata } from "next";
 import { Inter } from "next/font/google";
 import { ReactLenis } from "lenis/react";
-import Footer from "~/components/common/Footer";
 
 export const metadata: Metadata = {
   title: "Al Madeena Islamic School",
@@ -16,7 +14,7 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
-export default function RootLayout({
+export default function AdminLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
@@ -26,9 +24,7 @@ export default function RootLayout({
       </head>
       <body suppressHydrationWarning>
         <ReactLenis root />
-        <Navbar />
         {children}
-        <Footer />
       </body>
     </html>
   );
