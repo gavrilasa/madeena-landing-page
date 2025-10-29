@@ -15,13 +15,13 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   const isAdminRoute = pathname.startsWith("/admin");
-  const isLoginPage = pathname === "/admin/login";
+  const isLoginPage = pathname === "/login";
 
   if (isAdminRoute && !isLoginPage && !isLoggedIn) {
     console.log(
       `[Middleware] Unauthorized access to ${pathname}, redirecting to login.`,
     );
-    return NextResponse.redirect(new URL("/admin/login", request.url));
+    return NextResponse.redirect(new URL("/login", request.url));
   }
 
   if (isLoginPage && isLoggedIn) {

@@ -107,6 +107,7 @@ export function LoginForm({
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     disabled={isLoading}
+                    placeholder="********"
                   />
                 </Field>
                 <Field className="mt-6">
