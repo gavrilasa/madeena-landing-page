@@ -1,13 +1,16 @@
 // File: src/middleware.ts
+export const runtime = "nodejs";
+
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-
-import { serverAuthAPI } from "~/lib/auth";
+import { headers } from "next/headers";
+import { auth } from "./lib/auth";
 
 export async function middleware(request: NextRequest) {
-  const session = await serverAuthAPI.getSession({
-    headers: request.headers,
+  const session = await auth.api.getSession({
+    headers: await headers(),
   });
+
   const isLoggedIn = !!session;
   const { pathname } = request.nextUrl;
 
