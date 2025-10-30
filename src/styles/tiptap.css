@@ -1,0 +1,87 @@
+/* src/styles/tiptap.css */
+
+/* * Ini adalah file untuk menata konten editor Tiptap.
+ * Kita menggunakan @layer base untuk menyuntikkan gaya kustom ke dalam
+ * kelas 'prose' yang dihasilkan oleh @tailwindcss/typography.
+ */
+
+@layer base {
+  /* * Targetkan container editor utama yang dibuat oleh Tiptap.
+   * Ini adalah area di mana pengguna mengetik.
+   */
+  .ProseMirror {
+    /* * Hapus outline default browser saat editor aktif (fokus).
+     * Border akan ditangani oleh komponen wrapper.
+     */
+    outline: none !important;
+    min-height: 300px; /* Atur tinggi minimum untuk area pengetikan */
+  }
+
+  /* * Saat menggunakan @tailwindcss/typography, Tiptap akan membungkus
+   * konten dalam elemen dengan kelas 'prose'. Kita perlu
+   * menyesuaikan beberapa gaya default 'prose' agar sesuai
+   * untuk *input* editor, bukan *tampilan* statis.
+   */
+  .ProseMirror.prose {
+    /* Hapus batas atas/bawah default dari 'prose' */
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+
+  /* * Sesuaikan gaya untuk elemen spesifik di dalam editor.
+   */
+
+  /* Heading */
+  .ProseMirror.prose h2,
+  .ProseMirror.prose h3 {
+    margin-top: 1.25em; /* Beri sedikit ruang di atas heading */
+    margin-bottom: 0.5em; /* Kurangi ruang di bawah heading */
+  }
+
+  /* Paragraf */
+  .ProseMirror.prose p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+
+  /* List */
+  .ProseMirror.prose ul,
+  .ProseMirror.prose ol {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+
+  /* Tautan (Link) */
+  .ProseMirror.prose a {
+    color: theme(colors.primary.DEFAULT); /* Gunakan warna primer tema */
+    text-decoration: underline;
+    transition: opacity 0.2s;
+  }
+
+  .ProseMirror.prose a:hover {
+    opacity: 0.8;
+  }
+
+  /* Gambar (Image) */
+  .ProseMirror.prose img {
+    border-radius: theme(borderRadius.md); /* Beri sedikit radius pada gambar */
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+
+  /* Tampilkan border saat gambar dipilih di editor */
+  .ProseMirror img.ProseMirror-selectednode {
+    outline: 3px solid theme(colors.primary.DEFAULT);
+  }
+
+  /* * Styling untuk ekstensi Placeholder.
+   * Ini akan menampilkan teks placeholder saat editor kosong.
+   */
+  .ProseMirror p.is-editor-empty:first-child::before {
+    content: attr(data-placeholder);
+    float: left;
+    color: theme(colors.muted.foreground);
+    pointer-events: none;
+    height: 0;
+  }
+}

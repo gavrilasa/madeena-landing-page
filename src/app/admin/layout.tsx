@@ -2,6 +2,7 @@ import { SidebarProvider } from "~/components/ui/sidebar";
 import { AdminSidebar } from "~/components/admin/AdminSidebar";
 import { AdminHeader } from "~/components/admin/AdminHeader";
 import { AdminFooter } from "~/components/admin/AdminFooter";
+import "~/styles/tiptap.css";
 
 export default function AdminLayout({
   children,
