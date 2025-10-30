@@ -18,16 +18,10 @@ export async function middleware(request: NextRequest) {
   const isLoginPage = pathname === "/login";
 
   if (isAdminRoute && !isLoginPage && !isLoggedIn) {
-    console.log(
-      `[Middleware] Unauthorized access to ${pathname}, redirecting to login.`,
-    );
     return NextResponse.redirect(new URL("/login", request.url));
   }
 
   if (isLoginPage && isLoggedIn) {
-    console.log(
-      `[Middleware] Already logged in, redirecting from login to /admin.`,
-    );
     return NextResponse.redirect(new URL("/admin", request.url));
   }
 

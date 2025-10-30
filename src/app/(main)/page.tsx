@@ -7,7 +7,6 @@ import Carousel from "~/components/home/Carousel";
 import Testimonials from "~/components/home/Testimonial";
 import Partners from "~/components/home/Partners";
 import News from "~/components/home/News";
-import Footer from "~/components/common/Footer";
 
 export default function HomePage() {
   return (

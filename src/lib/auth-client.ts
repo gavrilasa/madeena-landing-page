@@ -1,10 +1,7 @@
-// File: src/lib/auth-client.ts
-"use client"; // File ini kemungkinan akan digunakan di komponen client
+"use client";
 
-import { createAuthClient } from "better-auth/react"; // Atau /client jika tidak spesifik React
+import { createAuthClient } from "better-auth/react";
 
 export const authClient = createAuthClient({});
 
-// Ekspor metode yang mungkin dibutuhkan di client, contoh:
-export const { signIn, signOut, useSession /* nama bisa berbeda */ } =
-  authClient;
+export const { signIn, signOut, useSession } = authClient;
