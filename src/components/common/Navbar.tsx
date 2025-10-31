@@ -3,6 +3,7 @@
 import Image from "next/image";
 import * as React from "react";
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -20,6 +21,14 @@ import { Separator } from "../ui/separator";
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
 
+  const [isClient, setIsClient] = useState(false);
+
+  const pathname = usePathname();
+  const isHomepage = pathname === "/";
+
+  const useTransparentStyle = isClient && isHomepage && !isScrolled;
+
+  // Efek untuk 'isScrolled'
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
@@ -31,18 +40,24 @@ export default function Navbar() {
     };
   }, []);
 
+  // 3. Efek untuk 'isClient' (hanya berjalan sekali setelah mount)
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   return (
     <header
       className={cn(
         "sticky top-0 right-0 left-0 z-50 px-4 pt-2 transition-all duration-300 md:px-6",
-        isScrolled
+        // 4. Logika 'useTransparentStyle' sekarang aman digunakan
+        !useTransparentStyle
           ? "bg-white text-gray-800 shadow-md"
           : "bg-transparent text-white",
       )}
     >
       <div className="container mx-auto -mt-1 flex h-16 items-center justify-between gap-4">
         <div className="flex h-full items-center gap-3">
-          {" "}
+          {/* 5. Menghapus {" "} dari sini untuk memperbaiki mismatch */}
           <Image
             src="https://res.cloudinary.com/dah2v3xbg/image/upload/v1761939553/LogoTextHitam_f83bfl.svg"
             alt="Logo"
@@ -53,7 +68,7 @@ export default function Navbar() {
             orientation="vertical"
             className={cn(
               "max-h-10",
-              isScrolled ? "bg-gray-300" : "bg-white/50",
+              !useTransparentStyle ? "bg-gray-300" : "bg-white/50",
             )}
           />
           <div className="text-md flex flex-col leading-tight font-medium">
@@ -74,7 +89,7 @@ export default function Navbar() {
                           navigationMenuTriggerStyle(),
                           "group h-full cursor-pointer rounded-t-lg rounded-b-none border-transparent bg-transparent px-3 py-1.5 pb-3 font-medium transition-all",
                           "hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent",
-                          isScrolled
+                          !useTransparentStyle
                             ? "text-gray-800 after:bg-gray-900 hover:text-gray-900 focus:text-gray-900 focus-visible:ring-gray-900/40 data-[state=open]:text-gray-900"
                             : "text-white after:bg-white hover:text-white focus:text-white focus-visible:ring-white/40 data-[state=open]:text-white",
                         )}
@@ -82,7 +97,6 @@ export default function Navbar() {
                         {link.label}
                       </NavigationMenuTrigger>
 
-                      {/* ... (NavigationMenuContent tidak berubah) ... */}
                       <NavigationMenuContent className="rounded-sm">
                         <ul
                           className={cn(
@@ -125,23 +139,17 @@ export default function Navbar() {
                     <NavigationMenuLink
                       href={link.href ?? "#"}
                       className={cn(
-                        // Layout
                         "group relative flex h-full flex-row items-center justify-center rounded-none border-transparent bg-transparent px-3 py-1.5 pb-3 font-medium",
                         "transition-colors outline-none focus-visible:ring-[3px]",
                         "hover:bg-transparent focus:bg-transparent",
-
-                        // === PERBAIKAN LOGIKA WARNA ===
-                        // Logika baru yang lebih bersih
-                        isScrolled
+                        !useTransparentStyle
                           ? link.active
-                            ? "font-semibold text-gray-900 hover:text-gray-900" // Aktif + Scrolled
-                            : "text-gray-800/80 hover:text-gray-900" // Inaktif + Scrolled
+                            ? "font-semibold text-gray-900 hover:text-gray-900"
+                            : "text-gray-800/80 hover:text-gray-900"
                           : link.active
-                            ? "font-semibold text-white hover:text-white" // Aktif + Not Scrolled
-                            : "text-white/80 hover:text-white", // Inaktif + Not Scrolled
-
-                        // Logika Focus (dipisah agar tidak bentrok)
-                        isScrolled
+                            ? "font-semibold text-white hover:text-white"
+                            : "text-white/80 hover:text-white",
+                        !useTransparentStyle
                           ? "focus:text-gray-900 focus-visible:ring-gray-900/40"
                           : "focus:text-white focus-visible:ring-white/40",
                       )}
@@ -151,8 +159,8 @@ export default function Navbar() {
                       <span
                         className={cn(
                           "absolute bottom-0 left-0 h-0.5 w-full origin-left scale-x-0 transform transition-transform duration-300 ease-out group-hover:scale-x-100",
-                          isScrolled ? "bg-gray-900" : "bg-white",
-                          link.active && "scale-x-100", // Tampilkan jika aktif
+                          !useTransparentStyle ? "bg-gray-900" : "bg-white",
+                          link.active && "scale-x-100",
                         )}
                       ></span>
                     </NavigationMenuLink>
@@ -163,7 +171,10 @@ export default function Navbar() {
           </NavigationMenu>
 
           <div className="md:hidden">
-            <MobileNav links={navigationLinks} isScrolled={isScrolled} />
+            <MobileNav
+              links={navigationLinks}
+              isScrolled={!useTransparentStyle}
+            />
           </div>
         </div>
       </div>

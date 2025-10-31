@@ -52,7 +52,7 @@ export default async function NewsGridPage({ params }: NewsGridPageProps) {
   });
 
   return (
-    <section className="py-16 pt-32 sm:py-24 sm:pt-40">
+    <section className="py-16 sm:py-24">
       <div className="container mx-auto mb-16 text-center">
         <h2 className="my-4 text-3xl font-bold">Berita Terbaru Kami</h2>
         <p className="text-muted-foreground mx-auto max-w-3xl text-lg">
