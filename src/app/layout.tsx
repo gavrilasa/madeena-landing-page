@@ -1,7 +1,7 @@
 import "~/styles/globals.css";
 
 import { type Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Onest } from "next/font/google";
 import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
-const inter = Inter({
+const onest = Onest({
   subsets: ["latin"],
 });
 
@@ -18,7 +18,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${inter.className}`} suppressHydrationWarning>
+    <html lang="en" className={`${onest.className}`} suppressHydrationWarning>
       <head>
         <meta name="apple-mobile-web-app-title" content="Al Madeena" />
       </head>

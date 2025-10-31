@@ -23,27 +23,27 @@ export const navigationLinks: NavigationItem[] = [
     type: "description",
     items: [
       {
-        href: "/tentang/sejarah",
+        href: "/about/history",
         label: "Sejarah",
         description: "Perjalanan berdirinya Al Madeena.",
       },
       {
-        href: "/tentang/visi-misi",
+        href: "/about/vision-mission",
         label: "Visi dan Misi",
         description: "Arah, tujuan, dan nilai inti sekolah.",
       },
       {
-        href: "/tentang/dewan-yayasan",
+        href: "/about/foundation-board",
         label: "Dewan Yayasan",
         description: "Struktur pengurus yayasan.",
       },
       {
-        href: "/About",
+        href: "/about/staff",
         label: "Guru & Karyawan",
         description: "Profil pendidik dan staf.",
       },
       {
-        href: "/tentang/partner",
+        href: "/about/partners",
         label: "Partner Kerjasama",
         description: "Kolaborasi institusi dan program.",
       },
@@ -51,48 +51,80 @@ export const navigationLinks: NavigationItem[] = [
   },
 
   {
-    label: "Akademik",
+    label: "Preschool",
     submenu: true,
-    type: "simple",
+    type: "description",
     items: [
-      { href: "/akademik/tk", label: "TK" },
-      { href: "/akademik/sd", label: "SD" },
+      {
+        href: "/preschool/programs",
+        label: "Program Unggulan",
+        description: "Program unggulan untuk menumbuhkan kecintaan belajar.",
+      },
+      {
+        href: "/preschool/curriculum",
+        label: "Kurikulum",
+        description: "Kurikulum integratif untuk potensi anak usia dini.",
+      },
+      {
+        href: "/preschool/achievements",
+        label: "Prestasi",
+        description: "Prestasi dan semangat kompetisi siswa.",
+      },
+      {
+        href: "/preschool/activities",
+        label: "Kegiatan",
+        description: "Kegiatan akademik untuk potensi menyeluruh.",
+      },
+      {
+        href: "/preschool/extracurricular",
+        label: "Ekstrakurikuler",
+        description: "Wadah penyaluran minat, bakat, dan kreativitas.",
+      },
+      {
+        href: "/preschool/facilities",
+        label: "Fasilitas",
+        description: "Fasilitas modern untuk perkembangan anak.",
+      },
     ],
   },
 
   {
-    label: "Program",
+    label: "Primary",
     submenu: true,
-    type: "icon",
+    type: "description",
     items: [
       {
-        href: "/program/tahfiz-qiroati",
-        label: "Tahfiz Qiroati",
-        icon: "BookOpenIcon",
+        href: "/primary/programs",
+        label: "Program Unggulan",
+        description: "Program integrasi kurikulum Islam & internasional.",
       },
       {
-        href: "/program/islamic-character",
-        label: "Islamic Character",
-        icon: "InfoIcon",
+        href: "/primary/curriculum",
+        label: "Kurikulum",
+        description: "Kurikulum terpadu untuk peserta didik unggul.",
       },
-      { href: "/program/bilingual", label: "Bilingual", icon: "LifeBuoyIcon" },
-    ],
-  },
-
-  {
-    label: "Fasilitas",
-    submenu: true,
-    type: "icon",
-    items: [
       {
-        href: "/fasilitas/sarana-prasarana",
-        label: "Sarana Prasarana",
-        icon: "InfoIcon",
+        href: "/primary/achievements",
+        label: "Prestasi",
+        description: "Prestasi akademik dan non-akademik siswa.",
+      },
+      {
+        href: "/primary/activities",
+        label: "Kegiatan",
+        description: "Keseimbangan intelektual, spiritual, & sosial.",
+      },
+      {
+        href: "/primary/extracurricular",
+        label: "Ekstrakurikuler",
+        description: "Wadah pengembangan potensi, minat, dan bakat.",
+      },
+      {
+        href: "/primary/facilities",
+        label: "Fasilitas",
+        description: "Fasilitas modern untuk pembelajaran efektif.",
       },
     ],
   },
-
-  { href: "/prestasi", label: "Prestasi" },
 
   {
     label: "Berita",
@@ -100,27 +132,34 @@ export const navigationLinks: NavigationItem[] = [
     type: "icon",
     items: [
       {
-        href: "/berita/terbaru",
+        href: "/news",
         label: "Berita Terbaru",
         icon: "BookOpenIcon",
       },
       {
-        href: "/berita/galeri-kegiatan",
+        href: "/news/gallery",
         label: "Galeri Kegiatan",
         icon: "LifeBuoyIcon",
       },
-      { href: "/berita/kegiatan", label: "Kegiatan", icon: "InfoIcon" },
     ],
   },
 
   {
     label: "Pendaftaran",
     submenu: true,
-    type: "simple",
+    type: "icon",
     items: [
-      { href: "/pendaftaran/alur", label: "Alur Pendaftaran" },
-      { href: "/pendaftaran/form", label: "Form Pendaftaran" },
-      { href: "/pendaftaran/faq", label: "FAQ" },
+      {
+        href: "/registration/flow",
+        label: "Alur Pendaftaran",
+        icon: "BookOpenIcon",
+      },
+      {
+        href: "/registration/form",
+        label: "Form Pendaftaran",
+        icon: "LifeBuoyIcon",
+      },
+      { href: "/registration/faq", label: "FAQ", icon: "InfoIcon" },
     ],
   },
 
@@ -129,24 +168,9 @@ export const navigationLinks: NavigationItem[] = [
     submenu: true,
     type: "icon",
     items: [
+      { href: "/contact", label: "Kontak & Alamat", icon: "InfoIcon" },
       {
-        href: "https://instagram.com/al-madeena",
-        label: "Instagram",
-        icon: "LifeBuoyIcon",
-      },
-      {
-        href: "https://tiktok.com/@al-madeena",
-        label: "Tiktok",
-        icon: "LifeBuoyIcon",
-      },
-      { href: "/kontak/alamat", label: "Alamat", icon: "InfoIcon" },
-      {
-        href: "https://wa.me/628XXYYYYZZZZ",
-        label: "CTA WA Admin",
-        icon: "LifeBuoyIcon",
-      },
-      {
-        href: "/kontak/karir",
+        href: "/career",
         label: "Karir (Lowongan Pekerjaan)",
         icon: "BookOpenIcon",
       },
