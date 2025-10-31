@@ -30,7 +30,7 @@ export default function Hero() {
           Di Al Madeena, kami menuntun mereka menjadi generasi yang cerdas,
           berakhlak, dan siap menghadapi masa depan.
         </p>
-        <button className="cursor-pointer rounded-full bg-transparent px-12 py-4 font-bold tracking-widest text-white uppercase shadow-[inset_0_0_0_2px_#fff] transition duration-200 hover:bg-white hover:text-[#1E88E5] dark:text-neutral-200">
+        <button className="cursor-pointer rounded-full bg-transparent px-12 py-4 font-bold tracking-widest text-white uppercase shadow-[inset_0_0_0_2px_#fff] transition duration-200 hover:bg-white hover:text-black dark:text-neutral-200">
           Join Us
         </button>
       </div>

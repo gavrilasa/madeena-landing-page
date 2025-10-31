@@ -1,69 +1,133 @@
+// src/components/home/Programs.tsx
 "use client";
 
-import React from "react";
-import { Carousel, Card } from "~/components/ui/apple-cards-carousel";
-import { useState } from "react";
-import { programData } from "~/data/programData";
+import React, { useState } from "react";
+import Image from "next/image";
+import { cn } from "~/lib/utils"; // Pastikan Anda mengimpor cn
 
-export default function Programs() {
-  const cards = programData.map((card, index) => (
-    <Card key={card.src} card={card} index={index} layout={false} />
-  ));
+// Data Program
+const programData = {
+  primary: [
+    {
+      title: "National Plus Curriculum",
+      imageUrl:
+        "https://res.cloudinary.com/reswara/image/upload/v1761326461/DSCF8018_1_fbj19m.png",
+    },
+    {
+      title: "Islamic Studies Curriculum",
+      imageUrl:
+        "https://res.cloudinary.com/reswara/image/upload/v1761326461/DSCF8018_1_fbj19m.png",
+    },
+    {
+      title: "Cambridge Assessment",
+      imageUrl:
+        "https://res.cloudinary.com/reswara/image/upload/v1761326461/DSCF8018_1_fbj19m.png",
+    },
+  ],
+  preschool: [
+    {
+      title: "Play-Based Learning",
+      imageUrl:
+        "https://res.cloudinary.com/reswara/image/upload/v1761326461/DSCF8018_1_fbj19m.png",
+    },
+    {
+      title: "Early Character Building",
+      imageUrl:
+        "https://res.cloudinary.com/reswara/image/upload/v1761326461/DSCF8018_1_fbj19m.png",
+    },
+    {
+      title: "Introduction to Faith",
+      imageUrl:
+        "https://res.cloudinary.com/reswara/image/upload/v1761326461/DSCF8018_1_fbj19m.png",
+    },
+  ],
+};
 
-  const tabs = ["Primary School", "Pre School"];
-  const [activeTab, setActiveTab] = useState("Primary School");
+type TabId = "primary" | "preschool";
+
+export default function Program() {
+  const [activeTab, setActiveTab] = useState<TabId>("primary");
+  const displayedPrograms = programData[activeTab];
 
   return (
-    <section className="bg-[#f4f8fc] py-8 text-gray-900 md:pt-20 md:pb-12">
-      <div className="mx-auto mb-8 max-w-7xl px-6 md:mb-12 md:px-12 lg:px-16">
-        <h1 className="mb-6 text-4xl font-bold text-[#0094D9] md:mb-8 md:text-5xl">
+    // Menggunakan bg-white seperti pada gambar
+    <section className="bg-white py-16 text-gray-900 md:py-24">
+      <div className="container mx-auto px-6">
+        {/* Judul "Our Program" */}
+        <h2 className="mb-12 text-5xl font-bold text-[#1A1A1A] md:mb-16">
           Our Program
-        </h1>
+        </h2>
 
-        {/* Tabs */}
-        <div className="mb-10 flex gap-8 border-b border-blue-200">
-          {tabs.map((tab) => (
+        {/* Wrapper untuk Tabs dan Konten */}
+        <div>
+          {/* Tabs */}
+          <div className="relative z-10 -mb-px flex -space-x-3">
             <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`pb-3 text-base font-medium transition-all duration-300 ${
-                activeTab === tab
-                  ? "border-b-2 border-[#0193DC] text-[#0193DC]"
-                  : "text-gray-400 hover:text-[#0193DC]"
-              }`}
+              onClick={() => setActiveTab("primary")}
+              className={cn(
+                "rounded-t-xl px-6 py-3 text-lg font-medium transition-colors duration-300",
+                activeTab === "primary"
+                  ? "bg-[#1A1A1A] text-white" // Warna gelap untuk tab aktif
+                  : "bg-gray-200 text-gray-600 hover:bg-gray-300",
+              )}
             >
-              {tab}
+              Primary
             </button>
-          ))}
-        </div>
-      </div>
+            <button
+              onClick={() => setActiveTab("preschool")}
+              className={cn(
+                "rounded-t-xl px-6 py-3 text-lg font-medium transition-colors duration-300",
+                activeTab === "preschool"
+                  ? "bg-[#1A1A1A] text-white" // Warna gelap untuk tab aktif
+                  : "bg-gray-200 text-gray-600 hover:bg-gray-300",
+              )}
+            >
+              Preschool
+            </button>
+          </div>
 
-      <div className="pl-6 md:pl-12 lg:pl-16">
-        <Carousel items={cards} />
+          {/* Kontainer Kartu */}
+          <div className="relative z-0">
+            <div
+              className={cn(
+                "grid grid-cols-1 overflow-hidden bg-white shadow-xl md:grid-cols-3",
+                activeTab === "primary"
+                  ? "" // Sudut kiri atas tajam
+                  : activeTab === "preschool"
+                    ? "" // Sudut kiri atas membulat
+                    : "rounded-3xl", // Fallback
+              )}
+            >
+              {displayedPrograms.map((program) => (
+                <div
+                  key={program.title}
+                  className="
+                    group relative block w-full 
+                    h-[450px]
+                    cursor-pointer overflow-hidden 
+                    transition-all duration-500 ease-in-out
+                  "
+                >
+                  <Image
+                    src={program.imageUrl}
+                    alt={program.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/30 to-transparent" />
+                  <div className="relative z-10 flex h-full flex-col justify-end p-6 text-white">
+                    <h3 className="mb-2 text-4xl font-bold text-white/95">
+                      {program.title}
+                    </h3>
+                    {/* Deskripsi tidak ada di gambar, jadi saya hanya tampilkan judul */}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );
 }
-
-// const DummyContent = () => {
-//   return (
-//     <>
-//       {[...new Array(3).fill(1)].map((_, index) => {
-//         return (
-//           <div
-//             key={"dummy-content" + index}
-//             className="mb-4 bg-[#F5F5F7] p-8 md:p-14"
-//           >
-//             <p className="mx-auto max-w-3xl font-sans text-base text-neutral-600 md:text-2xl">
-//               <span className="font-bold text-neutral-700">
-//                 Program description and details about the curriculum.
-//               </span>{" "}
-//               Learn more about our comprehensive educational approach and how we
-//               prepare students for success.
-//             </p>
-//           </div>
-//         );
-//       })}
-//     </>
-//   );
-// };

@@ -28,7 +28,7 @@ export const navigationLinks: NavigationItem[] = [
         description: "Perjalanan berdirinya Al Madeena.",
       },
       {
-        href: "/tentang/visi-misi",
+        href: "/about/vision-mision",
         label: "Visi dan Misi",
         description: "Arah, tujuan, dan nilai inti sekolah.",
       },
@@ -38,7 +38,7 @@ export const navigationLinks: NavigationItem[] = [
         description: "Struktur pengurus yayasan.",
       },
       {
-        href: "/About",
+        href: "/about/staff-profile",
         label: "Guru & Karyawan",
         description: "Profil pendidik dan staf.",
       },

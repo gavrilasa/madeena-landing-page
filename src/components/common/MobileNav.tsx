@@ -80,7 +80,7 @@ export function MobileNav({
           variant="ghost"
           size="icon"
           aria-label="Buka menu"
-          className="text-white hover:bg-white/10 md:hidden"
+          className="text-white hover:bg-white/10 lg:hidden"
         >
           <Menu className="size-5" />
         </Button>

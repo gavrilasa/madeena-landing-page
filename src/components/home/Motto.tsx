@@ -1,34 +1,43 @@
+import React from "react";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
+
 export default function Motto() {
   return (
-    <section className="relative w-full overflow-x-hidden bg-[#f4f8fc] px-6 py-24 md:px-20">
-      <div className="mx-auto flex max-w-6xl flex-col gap-20 p-4 md:gap-24 md:px-8">
-        <div className="items-left flex flex-col text-left md:items-start md:text-left">
-          <h2 className="mb-6 text-4xl font-bold text-[#1E88E5] md:text-5xl">
-            Vision
-          </h2>
-          <p className="text-md max-w-3xl leading-relaxed text-gray-800 md:text-xl">
-            To nurture a golden generation who learns with faith, character, and{" "}
-            <br />
-            excellence — becoming future leaders grounded in Islamic values.
-          </p>
-        </div>
+    // Padding vertikal pada section
+    <section className="relative w-full overflow-x-hidden bg-[#ffffff] py-24">
+      {/* Menggunakan 'container mx-auto px-6' untuk perataan tengah 
+        dan padding horizontal yang konsisten.
+      */}
+      <div className="container mx-auto px-6">
+        <div className="mb-12 grid grid-cols-1 items-center gap-6 md:mb-16 md:grid-cols-3 lg:gap-12">
+          {/* Judul */}
+          <div className="md:col-span-1">
+            <h2 className="text-4xl font-bold text-[#1A1A1A] md:text-5xl">
+              Our Vision
+            </h2>
+            <h1 className="text-4xl font-bold text-[#1A1A1A] md:text-5xl">
+              & Mision
+            </h1>
+          </div>
 
-        {/* Mission */}
-        <div className="items-left flex flex-col text-left md:ml-80 md:items-start md:text-left">
-          <h2 className="mb-6 text-4xl font-bold text-[#1E88E5] md:text-5xl">
-            Mission
-          </h2>
-          <ol className="text-md max-w-3xl list-inside list-decimal space-y-2 text-gray-800 md:text-xl">
-            <li>
-              Integrate faith and knowledge to build balanced intellectual and
-              spiritual growth.
-            </li>
-            <li>
-              Cultivate Islamic character through daily practice and positive
-              culture.
-            </li>
-            <li>Encourage creativity, confidence, and lifelong learning.</li>
-          </ol>
+          {/* Deskripsi */}
+          <div className="md:col-span-1">
+            <p className="max-w-lg text-[#828282]">
+            To nurture a golden generation who learns with faith, character, and excellence — becoming future leaders grounded in Islamic .
+            </p>
+          </div>
+
+
+          <div className="flex md:justify-center md:col-span-1 md:text-right">
+            <Link
+              href="/tentang/sejarah"
+              className="group inline-flex items-center font-medium text-black hover:underline"
+            >
+              Learn More
+              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </Link>
+          </div>
         </div>
       </div>
     </section>
