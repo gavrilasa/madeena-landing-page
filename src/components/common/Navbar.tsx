@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import * as React from "react";
+import { useState, useEffect } from "react";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -14,21 +15,54 @@ import {
 import { cn } from "~/lib/utils";
 import { MobileNav } from "./MobileNav";
 import { navigationLinks } from "~/data/home/navigationLinks";
+import { Separator } from "../ui/separator";
 
 export default function Navbar() {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
-    <header className="absolute top-2 right-0 left-0 z-50 bg-transparent px-4 py-2 text-white md:px-6">
-      <div className="container mx-auto flex h-16 items-center justify-between gap-4">
-        <div className="flex items-center gap-6">
+    <header
+      className={cn(
+        "sticky top-0 right-0 left-0 z-50 px-4 pt-2 transition-all duration-300 md:px-6",
+        isScrolled
+          ? "bg-white text-gray-800 shadow-md"
+          : "bg-transparent text-white",
+      )}
+    >
+      <div className="container mx-auto -mt-1 flex h-16 items-center justify-between gap-4">
+        <div className="flex h-full items-center gap-3">
+          {" "}
           <Image
-            src="https://res.cloudinary.com/reswara/image/upload/v1761336815/Frame_9_1_yyke1c.svg"
+            src="https://res.cloudinary.com/dah2v3xbg/image/upload/v1761939553/LogoTextHitam_f83bfl.svg"
             alt="Logo"
-            width={64}
-            height={64}
+            width={48}
+            height={48}
           />
+          <Separator
+            orientation="vertical"
+            className={cn(
+              "max-h-10",
+              isScrolled ? "bg-gray-300" : "bg-white/50",
+            )}
+          />
+          <div className="text-md flex flex-col leading-tight font-medium">
+            <span>Al Madeena</span>
+            <span className="-mt-1">Islamic School</span>
+          </div>
         </div>
 
-        <div className="flex items-center gap-2">
+        <div className="-mb-1 flex items-center gap-2">
           <NavigationMenu viewport={false} className="h-full max-md:hidden">
             <NavigationMenuList className="h-full gap-1">
               {navigationLinks.map((link, index) => (
@@ -38,15 +72,17 @@ export default function Navbar() {
                       <NavigationMenuTrigger
                         className={cn(
                           navigationMenuTriggerStyle(),
-                          "group h-full cursor-pointer rounded-t-lg rounded-b-none border-transparent bg-transparent px-3 py-1.5 pb-3 font-medium text-white transition-all",
-                          "hover:bg-transparent hover:text-white",
-                          "focus:bg-transparent focus:text-white",
-                          "data-[state=open]:bg-transparent data-[state=open]:text-white",
+                          "group h-full cursor-pointer rounded-t-lg rounded-b-none border-transparent bg-transparent px-3 py-1.5 pb-3 font-medium transition-all",
+                          "hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent",
+                          isScrolled
+                            ? "text-gray-800 after:bg-gray-900 hover:text-gray-900 focus:text-gray-900 focus-visible:ring-gray-900/40 data-[state=open]:text-gray-900"
+                            : "text-white after:bg-white hover:text-white focus:text-white focus-visible:ring-white/40 data-[state=open]:text-white",
                         )}
                       >
                         {link.label}
                       </NavigationMenuTrigger>
 
+                      {/* ... (NavigationMenuContent tidak berubah) ... */}
                       <NavigationMenuContent className="rounded-sm">
                         <ul
                           className={cn(
@@ -57,7 +93,13 @@ export default function Navbar() {
                             <li key={itemIndex}>
                               <NavigationMenuLink
                                 href={item.href}
-                                className="block rounded-sm p-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-100 hover:text-gray-900 focus:bg-gray-100 focus:outline-none"
+                                className={cn(
+                                  "block p-2 text-sm font-medium",
+                                  "text-gray-700 transition-colors",
+                                  "hover:bg-gray-100 hover:text-gray-900",
+                                  "focus:bg-gray-100 focus:text-gray-900 focus:outline-none",
+                                  "data-active:bg-gray-50 data-active:text-gray-900",
+                                )}
                               >
                                 <div className="flex items-center gap-2">
                                   {link.type === "description" ? (
@@ -83,14 +125,36 @@ export default function Navbar() {
                     <NavigationMenuLink
                       href={link.href ?? "#"}
                       className={cn(
-                        "group relative flex h-full items-center justify-center rounded-none border-transparent bg-transparent px-3 py-1.5 pb-3 font-medium text-white/80 transition-colors",
-                        "hover:bg-transparent hover:text-white focus:bg-transparent focus:text-white",
-                        link.active && "font-semibold text-white",
+                        // Layout
+                        "group relative flex h-full flex-row items-center justify-center rounded-none border-transparent bg-transparent px-3 py-1.5 pb-3 font-medium",
+                        "transition-colors outline-none focus-visible:ring-[3px]",
+                        "hover:bg-transparent focus:bg-transparent",
+
+                        // === PERBAIKAN LOGIKA WARNA ===
+                        // Logika baru yang lebih bersih
+                        isScrolled
+                          ? link.active
+                            ? "font-semibold text-gray-900 hover:text-gray-900" // Aktif + Scrolled
+                            : "text-gray-800/80 hover:text-gray-900" // Inaktif + Scrolled
+                          : link.active
+                            ? "font-semibold text-white hover:text-white" // Aktif + Not Scrolled
+                            : "text-white/80 hover:text-white", // Inaktif + Not Scrolled
+
+                        // Logika Focus (dipisah agar tidak bentrok)
+                        isScrolled
+                          ? "focus:text-gray-900 focus-visible:ring-gray-900/40"
+                          : "focus:text-white focus-visible:ring-white/40",
                       )}
-                      active={link.active}
+                      data-active={link.active}
                     >
                       {link.label}
-                      <span className="absolute bottom-0 left-0 h-0.5 w-full origin-left scale-x-0 transform bg-white transition-transform duration-300 ease-out group-hover:scale-x-100"></span>
+                      <span
+                        className={cn(
+                          "absolute bottom-0 left-0 h-0.5 w-full origin-left scale-x-0 transform transition-transform duration-300 ease-out group-hover:scale-x-100",
+                          isScrolled ? "bg-gray-900" : "bg-white",
+                          link.active && "scale-x-100", // Tampilkan jika aktif
+                        )}
+                      ></span>
                     </NavigationMenuLink>
                   )}
                 </NavigationMenuItem>
@@ -99,7 +163,7 @@ export default function Navbar() {
           </NavigationMenu>
 
           <div className="md:hidden">
-            <MobileNav links={navigationLinks} />
+            <MobileNav links={navigationLinks} isScrolled={isScrolled} />
           </div>
         </div>
       </div>

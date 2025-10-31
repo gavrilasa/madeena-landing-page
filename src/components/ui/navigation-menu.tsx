@@ -64,14 +64,14 @@ function NavigationMenuItem({
 export const navigationMenuTriggerStyle = cva(
   [
     "relative inline-flex h-9 w-max items-center justify-center rounded-none",
-    "bg-transparent px-3 py-1.5 text-sm font-medium text-white/80",
+    "bg-transparent px-3 py-1.5 text-sm font-medium", // Warna DIHAPUS
     "transition-[color,border-color,transform] outline-none",
-    "hover:text-white focus:text-white data-[state=open]:text-white",
+    // Warna hover/focus/open DIHAPUS
     "border-b-0",
     "after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-full",
-    "after:origin-left after:scale-x-0 after:bg-white after:transition-transform after:duration-300",
+    "after:origin-left after:scale-x-0 after:transition-transform after:duration-300", // Warna 'after' DIHAPUS
     "hover:after:scale-x-100 focus:after:scale-x-100 data-[state=open]:after:scale-x-100",
-    "focus-visible:ring-[3px] focus-visible:ring-white/40 focus-visible:outline-0",
+    "focus-visible:ring-[3px] focus-visible:outline-0", // Warna ring DIHAPUS
   ].join(" "),
 );
 
@@ -88,7 +88,7 @@ function NavigationMenuTrigger({
     >
       {children}
       <ChevronDownIcon
-        className="relative top-px ml-1 size-3 text-white transition duration-300 group-data-[state=open]:rotate-180"
+        className="relative top-px ml-1 size-3 transition duration-300 group-data-[state=open]:rotate-180" // Warna DIHAPUS
         aria-hidden="true"
       />
     </NavigationMenuPrimitive.Trigger>
@@ -124,7 +124,6 @@ function NavigationMenuContent({
   );
 }
 
-
 function NavigationMenuViewport({
   className,
   ...props
@@ -154,10 +153,9 @@ function NavigationMenuLink({
     <NavigationMenuPrimitive.Link
       data-slot="navigation-menu-link"
       className={cn(
-        "flex flex-col gap-1 rounded-sm p-2 text-sm text-white/90 transition-colors outline-none",
-        "hover:bg-white/15 focus:bg-white/15",
-        "data-active:text-white",
-        "[&_svg:not([class*='size-'])]:size-4 [&_svg:not([class*='text-'])]:text-white/70",
+        "flex flex-col gap-1 rounded-sm p-2 text-sm transition-colors outline-none",
+        // Warna text, hover, focus, active DIHAPUS
+        "[&_svg:not([class*='size-'])]:size-4", // Warna SVG DIHAPUS
         className,
       )}
       {...props}
