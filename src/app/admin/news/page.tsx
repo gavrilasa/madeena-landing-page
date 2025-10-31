@@ -81,8 +81,6 @@ export default function NewsDashboardPage() {
       year: "numeric",
       month: "long",
       day: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
     });
   };
 
@@ -188,16 +186,16 @@ export default function NewsDashboardPage() {
               <div className="min-w-full divide-y divide-gray-200">
                 {/* Header Tabel */}
                 <div className="grid grid-cols-10 bg-gray-50">
-                  <div className="col-span-4 px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
+                  <div className="col-span-6 px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
                     Judul
                   </div>
-                  <div className="col-span-2 px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
+                  <div className="col-span-1 px-6 py-3 text-center text-xs font-medium tracking-wider text-gray-500 uppercase">
                     Status
                   </div>
-                  <div className="col-span-3 px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
+                  <div className="col-span-2 px-6 py-3 text-center text-xs font-medium tracking-wider text-gray-500 uppercase">
                     Tanggal Publikasi
                   </div>
-                  <div className="col-span-1 px-6 py-3 text-right text-xs font-medium tracking-wider text-gray-500 uppercase">
+                  <div className="px-6 py-3 text-right text-xs font-medium tracking-wider text-gray-500 uppercase">
                     Aksi
                   </div>
                 </div>
@@ -205,10 +203,12 @@ export default function NewsDashboardPage() {
                 <div className="divide-y divide-gray-200 bg-white">
                   {articles.map((article) => (
                     <div key={article.id} className="grid grid-cols-10">
-                      <div className="col-span-4 px-6 py-4 text-sm font-medium whitespace-nowrap text-gray-900">
-                        {article.title}
+                      <div className="col-span-6 flex w-full min-w-0 items-center px-6 py-2 text-sm font-medium text-gray-900">
+                        <span className="min-w-0 flex-1 truncate">
+                          {article.title}
+                        </span>
                       </div>
-                      <div className="col-span-2 px-6 py-4 text-sm whitespace-nowrap text-gray-500">
+                      <div className="col-span-1 flex items-center justify-center px-6 text-sm whitespace-nowrap text-gray-500">
                         <span
                           className={`rounded-full px-2 py-1 text-xs font-semibold ${
                             article.status === "PUBLISHED"
@@ -219,12 +219,15 @@ export default function NewsDashboardPage() {
                           {article.status}
                         </span>
                       </div>
-                      <div className="col-span-3 px-6 py-4 text-sm whitespace-nowrap text-gray-500">
+                      <div className="col-span-2 flex items-center justify-center px-6 py-2 text-center text-sm whitespace-nowrap text-gray-500">
                         {formatDate(article.publishedAt)}
                       </div>
-                      <div className="col-span-1 px-6 py-4 text-right text-sm font-medium whitespace-nowrap">
+                      <div className="px-6 py-2 text-right text-sm font-medium whitespace-nowrap">
                         <DropdownMenu>
-                          <DropdownMenuTrigger asChild>
+                          <DropdownMenuTrigger
+                            asChild
+                            className="cursor-pointer"
+                          >
                             <Button variant="ghost" size="icon">
                               <span className="sr-only">Opsi</span>
                               <MoreVertical className="h-4 w-4" />
@@ -235,18 +238,19 @@ export default function NewsDashboardPage() {
                               onSelect={() =>
                                 router.push(`/admin/news/${article.slug}/edit`)
                               }
+                              className="cursor-pointer"
                             >
                               <Edit className="mr-2 h-4 w-4" />
                               Edit
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
                             <DropdownMenuItem
-                              className="text-red-600 focus:bg-red-50 focus:text-red-600"
+                              className="text-destructive focus:text-destructive cursor-pointer focus:bg-red-50"
                               onSelect={() =>
                                 handleDelete(article.slug, article.title)
                               }
                             >
-                              <Trash2 className="mr-2 h-4 w-4" />
+                              <Trash2 className="text-destructive mr-2 h-4 w-4" />
                               Hapus
                             </DropdownMenuItem>
                           </DropdownMenuContent>
@@ -267,12 +271,12 @@ export default function NewsDashboardPage() {
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
         <div>
-          <CardTitle>Dasbor Berita</CardTitle>
-          <CardDescription>
+          <CardTitle>Manajemen Berita</CardTitle>
+          <CardDescription className="mt-2">
             Buat, edit, dan kelola semua artikel berita di sini.
           </CardDescription>
         </div>
-        <Button asChild>
+        <Button asChild className="cursor-pointer">
           <Link href="/admin/news/create">
             <Plus className="mr-2 h-4 w-4" />
             Buat Berita Baru

@@ -20,9 +20,13 @@ const UpdateNewsArticleSchema = z.object({
  */
 export async function GET(
   request: Request,
-  { params }: { params: { slug: string } },
+  // FIX: Tipe params sekarang adalah Promise
+  { params }: { params: Promise<{ slug: string }> },
 ) {
   try {
+    // FIX: Await params untuk mendapatkan nilainya
+    const { slug } = await params;
+
     const session = await auth.api.getSession({
       headers: await headers(),
     });
@@ -31,7 +35,7 @@ export async function GET(
     }
 
     const article = await db.newsArticle.findUnique({
-      where: { slug: params.slug },
+      where: { slug: slug }, // Menggunakan slug yang sudah di-await
     });
 
     if (!article) {
@@ -56,9 +60,13 @@ export async function GET(
  */
 export async function PATCH(
   request: Request,
-  { params }: { params: { slug: string } },
+  // FIX: Tipe params sekarang adalah Promise
+  { params }: { params: Promise<{ slug: string }> },
 ) {
   try {
+    // FIX: Await params di awal fungsi
+    const { slug } = await params;
+
     const session = await auth.api.getSession({
       headers: await headers(),
     });
@@ -79,7 +87,8 @@ export async function PATCH(
     const dataToUpdate = validation.data;
 
     // Validasi keunikan slug JIKA slug diubah
-    if (dataToUpdate.slug && dataToUpdate.slug !== params.slug) {
+    if (dataToUpdate.slug && dataToUpdate.slug !== slug) {
+      // FIX: Gunakan slug yang sudah di-await
       const existingSlug = await db.newsArticle.findUnique({
         where: { slug: dataToUpdate.slug },
       });
@@ -99,7 +108,7 @@ export async function PATCH(
       // dan sebelumnya BUKAN PUBLISHED
       if (dataToUpdate.status === "PUBLISHED") {
         const currentArticle = await db.newsArticle.findUnique({
-          where: { slug: params.slug },
+          where: { slug: slug }, // FIX: Gunakan slug yang sudah di-await
           select: { status: true },
         });
         if (currentArticle?.status !== "PUBLISHED") {
@@ -111,7 +120,7 @@ export async function PATCH(
     }
 
     const updatedArticle = await db.newsArticle.update({
-      where: { slug: params.slug },
+      where: { slug: slug }, // FIX: Gunakan slug yang sudah di-await
       data: {
         ...dataToUpdate,
         // Hanya tambahkan 'publishedAt' ke data update jika nilainya didefinisikan
@@ -146,9 +155,13 @@ export async function PATCH(
  */
 export async function DELETE(
   request: Request,
-  { params }: { params: { slug: string } },
+  // FIX: Tipe params sekarang adalah Promise
+  { params }: { params: Promise<{ slug: string }> },
 ) {
   try {
+    // FIX: Await params di awal fungsi
+    const { slug } = await params;
+
     const session = await auth.api.getSession({
       headers: await headers(),
     });
@@ -157,7 +170,7 @@ export async function DELETE(
     }
 
     await db.newsArticle.delete({
-      where: { slug: params.slug },
+      where: { slug: slug }, // FIX: Gunakan slug yang sudah di-await
     });
 
     return NextResponse.json(
