@@ -1,5 +1,5 @@
 import LogoLoop from "~/components/ui/logo-loop";
-import { partnerData } from "~/data/partnerData";
+import { partnerData } from "~/data/home/partnerData";
 
 export default function Partners() {
   return (

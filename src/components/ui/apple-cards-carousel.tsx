@@ -4,17 +4,19 @@ import React, {
   useRef,
   useState,
   createContext,
-  useContext,
+  useCallback, // Import useCallback
+  useMemo, // Import useMemo
 } from "react";
+import Image, { type ImageProps } from "next/image";
 import { cn } from "~/lib/utils";
-import type { ImageProps } from "next/image";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 
 interface CarouselProps {
   items: React.JSX.Element[];
   initialScroll?: number;
 }
 
-type Card = {
+type CardData = {
   src: string;
   title: string;
   category: string;
@@ -25,7 +27,7 @@ export const CarouselContext = createContext<{
   onCardClose: (index: number) => void;
   currentIndex: number;
 }>({
-  onCardClose: () => {},
+  onCardClose: (_index: number) => {},
   currentIndex: 0,
 });
 
@@ -35,77 +37,100 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [activeArrow, setActiveArrow] = useState<'left' | 'right' | null>(null);
+  const [activeArrow, setActiveArrow] = useState<"left" | "right" | null>(null);
 
-  useEffect(() => {
-    if (carouselRef.current) {
-      carouselRef.current.scrollLeft = initialScroll;
-      checkScrollability();
-    }
-    if (mobileCarouselRef.current) {
-      mobileCarouselRef.current.scrollLeft = initialScroll;
-      checkScrollabilityMobile();
-    }
-  }, [initialScroll]);
-
-  const checkScrollability = () => {
+  const checkScrollability = useCallback(() => {
     if (carouselRef.current) {
       const { scrollLeft, scrollWidth, clientWidth } = carouselRef.current;
-      setCanScrollLeft(scrollLeft > 0);
-      setCanScrollRight(scrollLeft < scrollWidth - clientWidth);
+      setCanScrollLeft(scrollLeft > 1);
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 1);
     }
-  };
+  }, []);
 
-  const checkScrollabilityMobile = () => {
+  const checkScrollabilityMobile = useCallback(() => {
     if (mobileCarouselRef.current) {
-      const { scrollLeft, scrollWidth, clientWidth } = mobileCarouselRef.current;
-      setCanScrollLeft(scrollLeft > 0);
-      setCanScrollRight(scrollLeft < scrollWidth - clientWidth);
+      const { scrollLeft, scrollWidth, clientWidth } =
+        mobileCarouselRef.current;
+      setCanScrollLeft(scrollLeft > 1);
+      setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 1);
     }
-  };
+  }, []);
+
+  const handleResize = useCallback(() => {
+    checkScrollability();
+    checkScrollabilityMobile();
+  }, [checkScrollability, checkScrollabilityMobile]);
+
+  useEffect(() => {
+    const refs = [carouselRef, mobileCarouselRef];
+    refs.forEach((ref) => {
+      if (ref.current) {
+        ref.current.scrollLeft = initialScroll;
+      }
+    });
+    handleResize(); // Call handleResize which is now stable
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [initialScroll, handleResize]);
+
+  const debouncedCheckScrollability = useCallback(
+    (isMobile: boolean) => {
+      let timer: NodeJS.Timeout | null = null;
+      return () => {
+        if (timer) clearTimeout(timer);
+        timer = setTimeout(() => {
+          if (isMobile) {
+            checkScrollabilityMobile();
+          } else {
+            checkScrollability();
+          }
+          setActiveArrow(null);
+          timer = null;
+        }, 150);
+      };
+    },
+    [checkScrollability, checkScrollabilityMobile],
+  );
+
+  const debouncedDesktopCheck = useMemo(
+    () => debouncedCheckScrollability(false),
+    [debouncedCheckScrollability],
+  );
+  const debouncedMobileCheck = useMemo(
+    () => debouncedCheckScrollability(true),
+    [debouncedCheckScrollability],
+  );
 
   const handleScrollLeft = () => {
     const ref = window.innerWidth < 768 ? mobileCarouselRef : carouselRef;
     if (ref.current) {
-      setActiveArrow('left');
+      setActiveArrow("left");
       ref.current.scrollBy({ left: -350, behavior: "smooth" });
-      setTimeout(() => {
-        setActiveArrow(null);
-        if (window.innerWidth < 768) {
-          checkScrollabilityMobile();
-        } else {
-          checkScrollability();
-        }
-      }, 300);
     }
   };
 
   const handleScrollRight = () => {
     const ref = window.innerWidth < 768 ? mobileCarouselRef : carouselRef;
     if (ref.current) {
-      setActiveArrow('right');
+      setActiveArrow("right");
       ref.current.scrollBy({ left: 350, behavior: "smooth" });
-      setTimeout(() => {
-        setActiveArrow(null);
-        if (window.innerWidth < 768) {
-          checkScrollabilityMobile();
-        } else {
-          checkScrollability();
-        }
-      }, 300);
     }
   };
 
   const handleCardClose = (index: number) => {
     const ref = window.innerWidth < 768 ? mobileCarouselRef : carouselRef;
     if (ref.current) {
-      const cardWidth = window.innerWidth < 768 ? 230 : 384;
-      const gap = window.innerWidth < 768 ? 4 : 8;
-      const scrollPosition = (cardWidth + gap) * (index + 1);
-      ref.current.scrollTo({
-        left: scrollPosition,
-        behavior: "smooth",
-      });
+      const cardElement = ref.current.children[0]?.children[
+        index
+      ] as HTMLElement;
+      if (cardElement) {
+        const scrollPosition =
+          cardElement.offsetLeft - (ref.current.offsetLeft || 0);
+        ref.current.scrollTo({
+          left: scrollPosition,
+          behavior: "smooth",
+        });
+      }
       setCurrentIndex(index);
     }
   };
@@ -114,61 +139,60 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
     <CarouselContext.Provider
       value={{ onCardClose: handleCardClose, currentIndex }}
     >
-      <div className="relative w-full pb-12 md:pb-16">
-        {/* Desktop Layout with Arrows on Left */}
-        <div className="hidden md:flex items-center gap-8">
-          {/* Desktop Navigation Arrows - Vertical on Left */}
-          <div className="flex flex-col gap-3 ml-4">
+      <div className="relative w-full">
+        {/* Desktop Layout */}
+        <div className="hidden items-center md:flex">
+          <div className="absolute top-1/2 left-4 z-40 flex -translate-y-1/2 flex-col">
             <button
               className={cn(
-                "relative z-40 flex h-12 w-12 items-center justify-center transition-all",
-                activeArrow === 'left' ? "scale-90" : "hover:scale-110",
-                !canScrollLeft && "opacity-30"
+                "relative flex h-12 w-12 cursor-pointer items-center justify-center transition-all",
+                activeArrow === "left" ? "scale-90" : "hover:scale-110",
+                !canScrollLeft && "cursor-not-allowed opacity-30",
               )}
               onClick={handleScrollLeft}
               disabled={!canScrollLeft}
+              aria-label="Scroll left"
             >
-              <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-                <path
-                  d="M30 36L18 24L30 12"
-                  stroke={activeArrow === 'left' ? "#FFC700" : "#FFD200"}
-                  strokeWidth={activeArrow === 'left' ? "5" : "4"}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+              <ArrowLeft
+                className={cn(
+                  "h-12 w-12 transition-colors",
+                  activeArrow === "left"
+                    ? "stroke-[#FFC700]"
+                    : "stroke-[#FFD200]",
+                )}
+                strokeWidth={activeArrow === "left" ? 3 : 2.5}
+              />
             </button>
             <button
               className={cn(
-                "relative z-40 flex h-12 w-12 items-center justify-center transition-all",
-                activeArrow === 'right' ? "scale-90" : "hover:scale-110",
-                !canScrollRight && "opacity-30"
+                "relative flex h-12 w-12 cursor-pointer items-center justify-center transition-all",
+                activeArrow === "right" ? "scale-90" : "hover:scale-110",
+                !canScrollRight && "cursor-not-allowed opacity-30",
               )}
               onClick={handleScrollRight}
               disabled={!canScrollRight}
+              aria-label="Scroll right"
             >
-              <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
-                <path
-                  d="M18 12L30 24L18 36"
-                  stroke={activeArrow === 'right' ? "#FFC700" : "#FFD200"}
-                  strokeWidth={activeArrow === 'right' ? "5" : "4"}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
+              <ArrowRight
+                className={cn(
+                  "h-12 w-12 transition-colors",
+                  activeArrow === "right"
+                    ? "stroke-[#FFC700]"
+                    : "stroke-[#FFD200]",
+                )}
+                strokeWidth={activeArrow === "right" ? 3 : 2.5}
+              />
             </button>
           </div>
-
-          {/* Carousel Container */}
           <div
-            className="flex-1 overflow-x-scroll overscroll-x-auto scroll-smooth py-8 [scrollbar-width:none]"
+            className="mx-auto w-full overflow-x-scroll overscroll-x-auto scroll-smooth py-4 pl-20 [scrollbar-width:none]"
             ref={carouselRef}
-            onScroll={checkScrollability}
+            onScroll={debouncedDesktopCheck}
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
             <div className="flex flex-row justify-start">
               {items.map((item, index) => (
-                <div key={"card" + index}>{item}</div>
+                <div key={"card-desktop-" + index}>{item}</div>
               ))}
             </div>
           </div>
@@ -179,38 +203,39 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
           <div
             className="flex w-full overflow-x-scroll overscroll-x-auto scroll-smooth py-4 [scrollbar-width:none]"
             ref={mobileCarouselRef}
-            onScroll={checkScrollabilityMobile}
+            onScroll={debouncedMobileCheck}
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
-            <div className="flex flex-row justify-start">
+            <div className="flex flex-row justify-start px-6">
               {items.map((item, index) => (
-                <div key={"card" + index}>{item}</div>
+                <div key={"card-mobile-" + index}>{item}</div>
               ))}
             </div>
           </div>
-
-          {/* Mobile Navigation Arrows */}
-          <div className="flex justify-center gap-8 mt-4">
+          <div className="flex justify-center gap-8">
             <button
               className={cn(
-                "w-12 h-12 border-2 border-[#0094D9] flex items-center justify-center transform rotate-45 transition-colors",
-                activeArrow === 'left' ? "bg-[#0094D9]/20 scale-95" : "hover:bg-[#0094D9]/10",
-                !canScrollLeft && "opacity-30"
+                "flex h-12 w-12 rotate-45 transform cursor-pointer items-center justify-center border-2 border-[#0094D9] transition-colors",
+                activeArrow === "left"
+                  ? "scale-95 bg-[#0094D9]/20"
+                  : "hover:bg-[#0094D9]/10",
+                !canScrollLeft && "cursor-not-allowed opacity-30",
               )}
               onClick={handleScrollLeft}
               disabled={!canScrollLeft}
+              aria-label="Scroll left"
             >
               <svg
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
                 fill="none"
-                className="transform -rotate-45"
+                className="-rotate-45 transform"
               >
                 <path
                   d="M15 18L9 12L15 6"
                   stroke="#0094D9"
-                  strokeWidth={activeArrow === 'left' ? "5" : "3"}
+                  strokeWidth={activeArrow === "left" ? "5" : "3"}
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
@@ -218,24 +243,27 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
             </button>
             <button
               className={cn(
-                "w-12 h-12 border-2 border-[#0094D9] flex items-center justify-center transform rotate-45 transition-colors",
-                activeArrow === 'right' ? "bg-[#0094D9]/20 scale-95" : "hover:bg-[#0094D9]/50",
-                !canScrollRight && "opacity-30"
+                "flex h-12 w-12 rotate-45 transform cursor-pointer items-center justify-center border-2 border-[#0094D9] transition-colors",
+                activeArrow === "right"
+                  ? "scale-95 bg-[#0094D9]/20"
+                  : "hover:bg-[#0094D9]/50",
+                !canScrollRight && "cursor-not-allowed opacity-30",
               )}
               onClick={handleScrollRight}
               disabled={!canScrollRight}
+              aria-label="Scroll right"
             >
               <svg
                 width="24"
                 height="24"
                 viewBox="0 0 24 24"
                 fill="none"
-                className="transform -rotate-45"
+                className="-rotate-45 transform"
               >
                 <path
                   d="M9 6L15 12L9 18"
                   stroke="#0094D9"
-                  strokeWidth={activeArrow === 'right' ? "5" : "3"}
+                  strokeWidth={activeArrow === "right" ? "5" : "3"}
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
@@ -244,31 +272,17 @@ export const Carousel = ({ items, initialScroll = 0 }: CarouselProps) => {
           </div>
         </div>
       </div>
-
-      <style jsx>{`
-        div::-webkit-scrollbar {
-          display: none;
-        }
-      `}</style>
     </CarouselContext.Provider>
   );
 };
 
-export const Card = ({
-  card,
-  index,
-  layout = false,
-}: {
-  card: Card;
-  index: number;
-  layout?: boolean;
-}) => {
+export const Card = ({ card, index }: { card: CardData; index: number }) => {
   return (
     <div className="relative shrink-0">
-      <div className="relative z-10 flex h-[300px] md:h-[500px] w-[200px] md:w-[350px] flex-col items-start justify-end overflow-hidden bg-gray-900">
-        <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/30 to-transparent z-20" />
+      <div className="relative z-10 flex h-[400px] w-[300px] flex-col items-start justify-end overflow-hidden bg-gray-900 md:h-[500px] md:w-[350px]">
+        <div className="absolute inset-0 z-20 bg-linear-to-t from-black/80 via-black/30 to-transparent" />
         <div className="relative z-30 p-4 md:p-8">
-          <p className="text-left font-sans text-lg md:text-3xl font-bold text-white leading-tight">
+          <p className="text-left font-sans text-lg leading-tight font-bold text-white md:text-3xl">
             {card.title}
           </p>
         </div>
@@ -277,49 +291,50 @@ export const Card = ({
           alt={card.title}
           fill
           className="absolute inset-0 z-10 object-cover"
+          priority={index < 3}
         />
       </div>
       {index === 0 && (
-        <div className="relative bottom-12 md:bottom-20 left-0 w-50 md:w-87 h-20 md:h-30 bg-[#FFD200]"></div>
+        <div className="relative bottom-12 left-0 h-20 w-50 bg-[#FFD200] md:bottom-20 md:h-30 md:w-87"></div>
       )}
     </div>
   );
 };
 
 export const BlurImage = ({
-  height,
-  width,
-  src,
   className,
   alt,
+  src,
   fill,
+  width,
+  height,
+  priority,
   ...rest
 }: ImageProps) => {
   const [isLoading, setLoading] = useState(true);
-  
-  const imgStyle = fill ? {
-    position: 'absolute' as const,
-    height: '100%',
-    width: '100%',
-    inset: 0,
-    objectFit: 'cover' as const,
-  } : {};
-  
+
+  const imageProps = fill
+    ? {
+        fill: true,
+        sizes: "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw",
+      }
+    : { width: width, height: height };
+
   return (
-    <img
+    <Image
       className={cn(
-        "h-full w-full transition duration-300",
-        isLoading ? "blur-0" : "blur-0",
+        "transition duration-300",
+        isLoading ? "scale-105 blur-sm" : "blur-0 scale-100",
         className,
       )}
+      src={src}
+      alt={alt || "Background image"}
       onLoad={() => setLoading(false)}
-      src={src as string}
-      width={fill ? undefined : width}
-      height={fill ? undefined : height}
-      loading="lazy"
+      loading={priority ? undefined : "lazy"}
       decoding="async"
-      alt={alt || "Background of a beautiful view"}
-      style={imgStyle}
+      priority={priority}
+      {...imageProps}
+      {...rest}
     />
   );
 };

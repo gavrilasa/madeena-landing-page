@@ -3,25 +3,23 @@ import Quote from "~/components/home/Quote";
 import Academic from "~/components/home/Academic";
 import Motto from "~/components/home/Motto";
 import Programs from "~/components/home/Programs";
-import Carousel from "~/components/home/Carousel";
+// import Carousel from "~/components/home/Carousel";
 import Testimonials from "~/components/home/Testimonial";
 import Partners from "~/components/home/Partners";
 import News from "~/components/home/News";
-import Footer from "~/components/common/Footer";
 
 export default function HomePage() {
   return (
-    <main>
+    <main className="space-y-8 bg-white">
       <Hero />
       <Quote />
       <Academic />
       <Motto />
       <Programs />
-      <Carousel />
+      {/* <Carousel /> */}
       <Testimonials />
       <Partners />
       <News />
-      <Footer />
     </main>
   );
 }

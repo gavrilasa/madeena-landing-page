@@ -212,7 +212,7 @@ export default function StaffProfile() {
                 <div className="overflow-hidden rounded-lg bg-white shadow-md transition-shadow duration-300 hover:shadow-2xl">
                   {/* Colored Header with Photo */}
                   <div
-                    className={`relative bg-gradient-to-br ${staff.color} aspect-[3/4] overflow-hidden`}
+                    className={`relative bg-linear-to-br ${staff.color} aspect-3/4 overflow-hidden`}
                   >
                     <div className="absolute inset-0 flex items-end">
                       <Image
@@ -299,7 +299,7 @@ export default function StaffProfile() {
               <div className="flex flex-col md:flex-row">
                 {/* Colored Header with Photo */}
                 <div
-                  className={`relative bg-gradient-to-br ${selectedStaffData.color} aspect-[3/4] overflow-hidden md:aspect-auto md:w-1/2 md:rounded-l-lg`}
+                  className={`relative bg-linear-to-br ${selectedStaffData.color} aspect-3/4 overflow-hidden md:aspect-auto md:w-1/2 md:rounded-l-lg`}
                 >
                   <div className="absolute inset-0">
                     <Image

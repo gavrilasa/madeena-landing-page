@@ -1,8 +1,11 @@
+"use client";
+
 import Image from "next/image";
+import { motion } from "framer-motion";
 
 export default function Hero() {
   return (
-    <section className="relative flex h-screen w-screen items-end justify-start overflow-hidden md:items-center">
+    <section className="relative -mt-17 flex h-screen w-screen items-end justify-start overflow-hidden md:items-center">
       <div className="absolute inset-0">
         <Image
           src="https://res.cloudinary.com/dah2v3xbg/image/upload/w_3824,q_auto:good,f_auto/v1761338343/DSCF7772_1_nwjcdw.webp"
@@ -20,19 +23,41 @@ export default function Hero() {
       </div>
 
       <div className="relative z-10 max-w-sm px-5 pb-10 text-left text-white sm:max-w-md sm:px-10 md:max-w-2xl md:px-20 md:pb-0 lg:max-w-3xl lg:px-28 xl:px-32">
-        <p className="mb-2 text-[9px] tracking-wider uppercase opacity-90 sm:text-xs md:text-sm lg:text-base xl:text-lg">
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 0.9, y: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="mb-2 text-[9px] tracking-wider uppercase sm:text-xs md:text-sm lg:text-base xl:text-lg"
+        >
           AL MADEENA ISLAMIC BILINGUAL SCHOOL
-        </p>
-        <h1 className="mb-4 text-3xl leading-tight font-semibold drop-shadow-[0_4px_6px_rgba(0,0,0,0.3)] sm:text-3xl md:text-4xl md:leading-[1.1] lg:text-5xl">
+        </motion.p>
+        <motion.h1
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
+          className="mb-4 text-3xl leading-tight font-semibold drop-shadow-[0_4px_6px_rgba(0,0,0,0.3)] sm:text-3xl md:text-4xl md:leading-[1.1] lg:text-5xl"
+        >
           Growing Golden Generation with Islamic Character.
-        </h1>
-        <p className="mb-6 max-w-xs text-lg leading-relaxed text-gray-100/90 sm:max-w-md sm:text-sm md:max-w-xl md:text-base md:leading-snug lg:max-w-2xl lg:text-lg xl:text-xl">
+        </motion.h1>
+        <motion.p
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 0.9, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.4, ease: "easeOut" }}
+          className="mb-6 max-w-xs text-lg leading-relaxed text-gray-100/90 sm:max-w-md sm:text-sm md:max-w-xl md:text-base md:leading-snug lg:max-w-2xl lg:text-lg xl:text-xl"
+        >
           Di Al Madeena, kami menuntun mereka menjadi generasi yang cerdas,
           berakhlak, dan siap menghadapi masa depan.
-        </p>
-        <button className="cursor-pointer rounded-full bg-transparent px-12 py-4 font-bold tracking-widest text-white uppercase shadow-[inset_0_0_0_2px_#fff] transition duration-200 hover:bg-white hover:text-black dark:text-neutral-200">
+        </motion.p>
+        <motion.button
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.6, ease: "easeOut" }}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="cursor-pointer rounded-full bg-transparent px-12 py-4 font-bold tracking-widest text-white uppercase shadow-[inset_0_0_0_2px_#fff] transition duration-200 hover:bg-white hover:text-[#1E88E5] dark:text-neutral-200"
+        >
           Join Us
-        </button>
+        </motion.button>
       </div>
     </section>
   );

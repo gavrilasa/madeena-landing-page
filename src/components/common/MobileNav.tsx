@@ -68,10 +68,12 @@ export function MobileNav({
   links,
   ctaHref = "#pendaftaran",
   ctaLabel = "Pendaftaran",
+  isScrolled, // Terima prop isScrolled
 }: {
   links: NavigationItem[];
   ctaHref?: string;
   ctaLabel?: string;
+  isScrolled: boolean; // Definisikan tipe prop
 }) {
   return (
     <Sheet>
@@ -80,7 +82,13 @@ export function MobileNav({
           variant="ghost"
           size="icon"
           aria-label="Buka menu"
-          className="text-white hover:bg-white/10 lg:hidden"
+          className={cn(
+            "lg:hidden",
+            // Terapkan kelas secara kondisional
+            isScrolled
+              ? "text-gray-800 hover:bg-gray-100"
+              : "text-white hover:bg-white/10 lg:hidden",
+          )}
         >
           <Menu className="size-5" />
         </Button>

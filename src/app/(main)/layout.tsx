@@ -1,31 +1,16 @@
 import Navbar from "~/components/common/Navbar";
-import "~/styles/globals.css";
+import { ReactLenis } from "lenis/react";
+import Footer from "~/components/common/Footer";
 
-import { type Metadata } from "next";
-import { Inter } from "next/font/google";
-
-export const metadata: Metadata = {
-  title: "Al Madeena Islamic School",
-  description: "Al Madeena Islamic School",
-  icons: [{ rel: "icon", url: "/favicon.ico" }],
-};
-
-const inter = Inter({
-  subsets: ["latin"],
-});
-
-export default function RootLayout({
+export default function LandingPageLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${inter.className}`} suppressHydrationWarning>
-      <head>
-        <meta name="apple-mobile-web-app-title" content="Al Madeena" />
-      </head>
-      <body suppressHydrationWarning>
-        <Navbar />
-        {children}
-      </body>
-    </html>
+    <>
+      <ReactLenis root />
+      <Navbar />
+      {children}
+      <Footer />
+    </>
   );
 }
