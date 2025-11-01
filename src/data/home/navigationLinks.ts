@@ -38,7 +38,7 @@ export const navigationLinks: NavigationItem[] = [
         description: "Struktur pengurus yayasan.",
       },
       {
-        href: "/about/staff",
+        href: "/about/staff-profile",
         label: "Guru & Karyawan",
         description: "Profil pendidik dan staf.",
       },

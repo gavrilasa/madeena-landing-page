@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 
 export default function Quote() {
   return (
-    <section className="relative -mt-8 flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-[#f4f8fc] text-center">
+    <section className="relative -mt-8 flex min-h-screen w-full flex-col items-center justify-center overflow-hidden bg-white text-center">
       <motion.div
         initial={{ x: -100, y: -100, opacity: 0 }}
         whileInView={{ x: 0, y: 0, opacity: 1 }}
@@ -48,7 +48,7 @@ export default function Quote() {
         />
 
         <motion.p
-          className="max-w-2xl px-4 text-center text-base leading-relaxed font-medium text-[#0094D9] sm:text-xl md:text-2xl"
+          className="max-w-2xl px-4 text-center text-base leading-relaxed font-medium text-black sm:text-xl md:text-2xl"
           initial={{ y: 30, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
           viewport={{ once: true, amount: 0.3 }}

@@ -1,9 +1,7 @@
 import StaffProfile from "~/components/about/StaffProfile";
 
-export default function AboutPage() {
+export default function StaffProfilePage() {
   return (
-    <main>
       <StaffProfile />
-    </main>
   );
 }

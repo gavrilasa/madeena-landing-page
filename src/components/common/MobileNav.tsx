@@ -83,11 +83,11 @@ export function MobileNav({
           size="icon"
           aria-label="Buka menu"
           className={cn(
-            "md:hidden",
+            "lg:hidden",
             // Terapkan kelas secara kondisional
             isScrolled
               ? "text-gray-800 hover:bg-gray-100"
-              : "text-white hover:bg-white/10",
+              : "text-white hover:bg-white/10 lg:hidden",
           )}
         >
           <Menu className="size-5" />

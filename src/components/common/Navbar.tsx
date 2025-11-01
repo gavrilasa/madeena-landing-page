@@ -63,6 +63,7 @@ export default function Navbar() {
             alt="Logo"
             width={48}
             height={48}
+            priority
           />
           <Separator
             orientation="vertical"
@@ -78,7 +79,7 @@ export default function Navbar() {
         </div>
 
         <div className="-mb-1 flex items-center gap-2">
-          <NavigationMenu viewport={false} className="h-full max-md:hidden">
+          <NavigationMenu viewport={false} className="h-full max-lg:hidden">
             <NavigationMenuList className="h-full gap-1">
               {navigationLinks.map((link, index) => (
                 <NavigationMenuItem key={index} className="h-full">
@@ -170,7 +171,7 @@ export default function Navbar() {
             </NavigationMenuList>
           </NavigationMenu>
 
-          <div className="md:hidden">
+          <div className="lg:hidden">
             <MobileNav
               links={navigationLinks}
               isScrolled={!useTransparentStyle}
