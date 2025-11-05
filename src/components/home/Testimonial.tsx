@@ -4,7 +4,10 @@ import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 import { testimonialData } from "~/data/home/testimonialData";
 import { cn } from "~/lib/utils";
+import { motion } from "framer-motion"; // Impor motion
+import { FaPlay } from "react-icons/fa"; // Impor ikon
 
+// --- Fungsionalitas Video (Utuh dari file Anda) ---
 export default function Testimonials() {
   const [hoveredId, setHoveredId] = useState<number | null>(null);
   const [selectedVideo, setSelectedVideo] = useState<number | null>(null);
@@ -14,17 +17,14 @@ export default function Testimonials() {
 
   const handleMouseEnter = (id: number) => {
     setHoveredId(id);
-    const existingTimeout = playTimeoutRef.current[id]; // Store in variable
+    const existingTimeout = playTimeoutRef.current[id];
     if (existingTimeout) {
-      clearTimeout(existingTimeout); // Clear using the variable
+      clearTimeout(existingTimeout);
     }
-    // Assign directly, setTimeout returns NodeJS.Timeout or number
     playTimeoutRef.current[id] = setTimeout(() => {
       const video = videoRefs.current[id];
       if (video) {
-        // Add type annotation for error in catch block
         video.play().catch((error: Error) => {
-          // Access .name safely now
           if (error.name !== "AbortError") {
             console.error("Gagal memulai video:", error);
           }
@@ -34,9 +34,9 @@ export default function Testimonials() {
   };
 
   const handleMouseLeave = (id: number) => {
-    const existingTimeout = playTimeoutRef.current[id]; // Store in variable
+    const existingTimeout = playTimeoutRef.current[id];
     if (existingTimeout) {
-      clearTimeout(existingTimeout); // Clear using the variable
+      clearTimeout(existingTimeout);
       playTimeoutRef.current[id] = null;
     }
     setHoveredId(null);
@@ -84,109 +84,141 @@ export default function Testimonials() {
   const selectedTestimonial = testimonialData.find(
     (t) => t.id === selectedVideo,
   );
+  // --- Akhir Fungsionalitas Video ---
+
+  // --- Animasi (Diambil dari desain Academic/GetToKnow) ---
+  const fadeIn = {
+    initial: { opacity: 0, y: 50 },
+    whileInView: { opacity: 1, y: 0 },
+    transition: { duration: 0.8, ease: "easeOut" },
+  } as const;
+
+  const staggerContainer = {
+    hidden: { opacity: 0 },
+    whileInView: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  } as const;
+  // --- Akhir Animasi ---
 
   return (
-    <section className="overflow-x-hidden bg-[#f4f8fc] px-6 py-16 md:px-12 md:py-24 lg:px-16">
+    <section className="overflow-x-hidden bg-white px-6 py-16 md:px-12 md:py-24 lg:px-16">
       <div className="mx-auto max-w-7xl">
-        <h2 className="mb-12 text-center text-4xl font-bold text-[#0094D9] md:mb-20 md:text-5xl lg:text-6xl">
-          Lets Hear What They Say!
-        </h2>
-
-        <div className="relative mx-auto max-w-6xl">
-          {/* Squares */}
-          <div className="absolute -top-4 -right-4 z-0 h-14 w-14 bg-[#0094D9] md:h-24 md:w-24"></div>
-          <div className="absolute -bottom-12 -left-12 z-0 h-28 w-28 bg-[#FFD200] md:h-36 md:w-36"></div>
-          <div className="absolute -right-12 -bottom-12 z-0 h-16 w-16 bg-[#FF6B35] md:h-24 md:w-24"></div>
-
-          {/* Video Container */}
-          <div className="relative z-10 flex flex-col overflow-hidden shadow-2xl md:flex-row">
-            {testimonialData.map((item) => (
-              <div
-                key={item.id}
-                className="group relative flex-1"
-                onMouseEnter={() => handleMouseEnter(item.id)}
-                onMouseLeave={() => handleMouseLeave(item.id)}
-                onClick={() => handleVideoClick(item.id)}
-              >
-                <div className="relative h-[350px] cursor-pointer overflow-hidden bg-black md:h-[600px]">
-                  <Image
-                    src={item.image}
-                    alt={item.name}
-                    fill // Use fill to cover the container
-                    sizes="(max-width: 768px) 100vw, 33vw" // Provide sizes for optimization
-                    className={cn(
-                      "absolute inset-0 z-10 h-full w-full object-cover transition-opacity duration-300 ease-in-out",
-                      hoveredId === item.id ? "opacity-0" : "opacity-100",
-                      hoveredId !== null && hoveredId !== item.id
-                        ? "opacity-50 grayscale"
-                        : "",
-                    )}
-                    priority={item.id <= 3} // Prioritize first few images
-                    loading={item.id <= 3 ? undefined : "lazy"} // Lazy load others
-                  />
-
-                  {/* Video */}
-                  <video
-                    ref={(el) => {
-                      videoRefs.current[item.id] = el;
-                    }}
-                    className={cn(
-                      "absolute inset-0 z-0 h-full w-full object-cover transition-opacity duration-300 ease-in-out",
-                      hoveredId === item.id ? "opacity-100" : "opacity-0",
-                    )}
-                    loop
-                    muted
-                    playsInline
-                    preload="metadata"
-                  >
-                    <source src={item.video} type="video/mp4" />
-                  </video>
-
-                  {/* Gradient Overlay */}
-                  <div
-                    className={cn(
-                      "absolute inset-0 z-20 bg-linear-to-t from-black/70 via-black/30 to-transparent transition-opacity duration-300",
-                      hoveredId === item.id ? "opacity-10" : "opacity-100",
-                    )}
-                  />
-
-                  {/* Content */}
-                  <div className="absolute right-0 bottom-0 left-0 z-30 p-6 text-white md:p-8">
-                    <h3
-                      className={cn(
-                        "mb-2 text-2xl font-bold drop-shadow-md md:text-3xl",
-                        hoveredId === item.id ? "opacity-100" : "opacity-100",
-                        hoveredId !== null && hoveredId !== item.id
-                          ? "opacity-0"
-                          : "",
-                      )}
-                    >
-                      {item.type}
-                    </h3>
-                    <p
-                      className={cn(
-                        "text-sm leading-relaxed opacity-90 transition-opacity duration-300 md:text-base",
-                        hoveredId === item.id ? "opacity-100" : "opacity-90",
-                        hoveredId !== null && hoveredId !== item.id
-                          ? "opacity-0"
-                          : "",
-                      )}
-                    >
-                      {item.text}
-                    </p>
-                  </div>
-                </div>
-              </div>
-            ))}
+        {/* Header Section (Dari file Anda) */}
+        <motion.div
+          className="mb-12 grid grid-cols-1 items-start gap-6 md:mb-16 md:grid-cols-3 lg:gap-12"
+          initial="initial"
+          whileInView="whileInView"
+          variants={fadeIn}
+          viewport={{ once: true, amount: 0.2 }}
+        >
+          <div className="md:col-span-1">
+            <h2 className="text-3xl font-bold text-[#1A1A1A] md:text-4xl">
+              Let's Hear
+            </h2>
+            <h1 className="text-3xl font-bold text-[#1A1A1A] md:text-4xl ">
+              What They Say
+            </h1>
           </div>
-        </div>
+          <div className="md:col-span-1 md:pt-2">
+            <p className="max-w-lg text-[#828282]">
+              Al Madeena is a modern Islamic school that blends faith and
+              knowledge to nurture intelligent, kind, and confident learners
+              prepared for the future.
+            </p>
+          </div>
+        </motion.div>
 
-        <div className="mt-16 flex justify-center">
-          <div className="h-1 w-64 bg-linear-to-r from-transparent via-[#0094D9] to-transparent"></div>
-        </div>
+        {/* --- Container Kartu Grid --- */}
+        <motion.div
+          className="relative z-10 grid grid-cols-1 gap-6 md:gap-8 lg:grid-cols-3"
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="whileInView"
+          viewport={{ once: true, amount: 0.1 }}
+        >
+          {testimonialData.map((item) => (
+            <motion.div
+              key={item.id}
+              className={cn(
+                "group relative cursor-pointer overflow-hidden",
+                "rounded-3xl", // Sudut membulat
+                "border border-gray-200 bg-white shadow-lg", // Gaya kartu
+                "transition-all duration-300 ease-in-out hover:shadow-2xl",
+                hoveredId !== null && hoveredId !== item.id
+                  ? "opacity-60 grayscale" // Fungsionalitas Grayscale
+                  : "opacity-100 grayscale-0",
+              )}
+              onMouseEnter={() => handleMouseEnter(item.id)}
+              onMouseLeave={() => handleMouseLeave(item.id)}
+              onClick={() => handleVideoClick(item.id)}
+              variants={fadeIn} // Stagger child
+              layout
+            >
+              {/* 1. Video/Image Container (h-64) */}
+              <div className="relative h-[450px] w-full overflow-hidden bg-black rounded-3xl"> {/* Rounded penuh pada container video */}
+                {/* Gambar */}
+                <Image
+                  src={item.image}
+                  alt={item.name}
+                  fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                  className={cn(
+                    "absolute inset-0 z-10 h-full w-full object-cover transition-opacity duration-300 ease-in-out",
+                    hoveredId === item.id ? "opacity-0" : "opacity-100",
+                  )}
+                  priority={item.id <= 3}
+                />
+                {/* Video */}
+                <video
+                  ref={(el) => {
+                    videoRefs.current[item.id] = el;
+                  }}
+                  className={cn(
+                    "absolute inset-0 z-0 h-full w-full object-cover transition-opacity duration-300 ease-in-out",
+                    hoveredId === item.id ? "opacity-100" : "opacity-0",
+                  )}
+                  loop
+                  muted
+                  playsInline
+                  preload="metadata"
+                >
+                  <source src={item.video} type="video/mp4" />
+                </video>
+
+                {/* --- TEKS PUTIH & ICON PLAY DI DALAM GAMBAR --- */}
+                <div
+                  className={cn(
+                    "absolute inset-0 z-20 flex flex-col items-center justify-end p-12",
+                    "bg-linear-to-t from-black/70 via-black/30 to-transparent",
+                    "transition-opacity duration-300 ease-in-out",
+                    // Hilang saat di-hover (video diputar)
+                    hoveredId === item.id ? "opacity-0" : "opacity-100",
+                  )}
+                >
+                  <h3 className="mb-1 text-2xl font-bold text-white drop-shadow-md text-center">
+                    {item.name}
+                  </h3>
+                  <p className="text-sm text-white/90 drop-shadow-md text-center">
+                    {item.type}
+                  </p>
+                  <p className="mt-4 text-base leading-relaxed text-white/90 drop-shadow-md text-center">
+                    &quot;{item.text}&quot;
+                  </p>
+                </div>
+                {/* --- AKHIR TEKS PUTIH & ICON PLAY --- */}
+              </div>
+              {/* --- BAGIAN FOOTER PUTIH DIHAPUS --- */}
+            </motion.div>
+          ))}
+        </motion.div>
+        {/* --- AKHIR CONTAINER GRID --- */}
       </div>
 
-      {/* Video Player Modal */}
+      {/* Video Player Modal (Utuh dari file Anda) */}
       {selectedVideo && selectedTestimonial && (
         <div
           className="fixed inset-0 z-50 flex cursor-pointer items-center justify-center bg-black/90 p-4"
@@ -198,7 +230,7 @@ export default function Testimonials() {
           >
             <button
               onClick={handleCloseModal}
-              className="absolute -top-2 -right-2 z-10 rounded-full bg-black/50 p-1.5 text-white transition-colors hover:bg-black/70 md:-top-4 md:-right-4"
+              className="absolute -top-2 -right-2 z-10 rounded-full bg-black/50 p-1.5 text-white transition-colors hover:bg-black/70 md:top-2 md:right-2"
               aria-label="Tutup pemutar video"
             >
               <svg
@@ -215,10 +247,7 @@ export default function Testimonials() {
                 />
               </svg>
             </button>
-
-            {/* Video Player Container */}
             <div className="overflow-hidden bg-black shadow-2xl">
-              {/* Video Player */}
               <div className="aspect-video">
                 <video
                   ref={modalVideoRef}
@@ -232,13 +261,11 @@ export default function Testimonials() {
                   Browser Anda tidak mendukung tag video.
                 </video>
               </div>
-
-              {/* Video Info */}
-              <div className="bg-gray-900 p-4 md:p-6">
-                <h3 className="mb-1 text-xl font-bold text-white md:mb-2 md:text-2xl">
+              <div className="bg-white p-4 md:p-6">
+                <h3 className="mb-1 text-xl font-bold text-black md:mb-2 md:text-2xl">
                   {selectedTestimonial.type} - {selectedTestimonial.name}
                 </h3>
-                <p className="text-sm text-gray-300 md:text-base">
+                <p className="text-sm text-gray-900 md:text-base">
                   {selectedTestimonial.text}
                 </p>
               </div>

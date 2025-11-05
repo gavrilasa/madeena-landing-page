@@ -1,65 +1,91 @@
 "use client";
 
-import Image from "next/image";
+import { motion } from "framer-motion";
+import { newsItemsData } from "~/data/home/newsData";
 import Link from "next/link";
-import { newsItemsData, type NewsItem } from "~/data/home/newsData";
-import { cn } from "~/lib/utils";
+import { NewsCard } from "~/components/news/NewsCard";
+import { ArrowRight } from "lucide-react";
 
-const NewsCard = ({ item }: { item: NewsItem }) => {
-  return (
-    <div className="flex flex-col overflow-hidden shadow-md transition-shadow duration-300 hover:shadow-lg">
-      {/* Image Container */}
-      <div className="relative aspect-4/3 w-full">
-        <Image
-          src={item.imageUrl}
-          alt={item.altText}
-          fill
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          className="object-cover"
-        />
-      </div>
-
-      {/* Content Container */}
-      <div className="flex grow flex-col bg-[#0094D9] p-5 text-white md:p-6">
-        <h3 className="mb-2 text-lg leading-snug font-semibold md:text-xl">
-          {item.title}
-        </h3>
-        <p className="mb-4 grow text-sm text-gray-100 md:text-base">
-          {item.description}
-        </p>
-        <Link
-          href={item.linkUrl}
-          className={cn(
-            "mt-auto self-start rounded bg-[#FFD500] px-4 py-2 text-sm font-semibold text-gray-700 transition-colors duration-200 hover:bg-yellow-400 focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 focus:ring-offset-[#0094D9] focus:outline-none",
-          )}
-        >
-          Selengkapnya
-        </Link>
-      </div>
-    </div>
-  );
+// 2. Tipe data yang dibutuhkan oleh NewsCard (dari file yang Anda berikan)
+type NewsArticleData = {
+  slug: string;
+  title: string;
+  summary: string;
+  featuredImage: string;
+  publishedAt: Date | null;
 };
+
+// Animasi fade-in untuk section
+const fadeIn = {
+  initial: { opacity: 0, y: 50 },
+  whileInView: { opacity: 1, y: 0 },
+  transition: { duration: 0.8, ease: "easeOut" },
+} as const;
 
 // Main News Section Component
 export default function NewsSection() {
-  // Get the first 3 items or however many you want to display
+  // Ambil 3 berita pertama dari data statis Anda
   const displayedNews = newsItemsData.slice(0, 3);
 
   return (
-    <section className="py-16 sm:py-20 lg:py-24">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Title */}
-        <h2 className="mb-10 text-left text-3xl leading-tight font-bold tracking-tight text-[#0094D9] sm:text-4xl lg:mb-12">
-          News & <br></br>Announcements
-        </h2>
+    <motion.section
+      className="bg-white py-16 text-gray-900 md:py-24"
+      initial="initial"
+      whileInView="whileInView"
+      variants={fadeIn}
+      viewport={{ once: true, amount: 0.2 }}
+    >
+      <div className="container mx-auto px-6">
+      <div className="mb-12 grid grid-cols-1 items-start gap-6 md:mb-16 md:grid-cols-3 lg:gap-12">
+          {/* Judul */}
+          <div className="md:col-span-1">
+            <h2 className="text-4xl font-bold text-[#1A1A1A] md:text-5xl">
+              News &
+            </h2>
+            <h1 className="text-4xl font-bold text-[#1A1A1A] md:text-5xl">
+              Announcement
+            </h1>
+          </div>
 
-        {/* Grid for News Cards */}
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-4">
-          {displayedNews.map((item) => (
-            <NewsCard key={item.id} item={item} />
-          ))}
+          {/* Deskripsi */}
+          <div className="md:col-span-1 md:pt-2">
+            <p className="max-w-lg text-[#828282]">
+              Al Madeena is a modern Islamic school that blends faith and
+              knowledge to nurture intelligent, kind, and confident learners
+              prepared for the future.
+            </p>
+          </div>
+
+          {/* Link "Learn More" */}
+          <div className="flex md:col-span-1 md:items-center md:justify-center md:pt-2">
+            <Link
+              href="/news" // Anda bisa ganti link tujuannya
+              className="group inline-flex items-center font-medium text-black hover:underline"
+            >
+              Learn More
+              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </Link>
+          </div>
+        </div>
+
+        {/* 3. Gunakan grid standar, karena kartu baru Anda tidak memiliki animasi flex-grow */}
+        <div className="grid grid-cols-1 gap-x-8 gap-y-12 md:grid-cols-3">
+          {displayedNews.map((item) => {
+            
+            // 4. Adaptasi data dari 'NewsItem' (data lama) ke 'NewsArticleData' (tipe baru)
+            const article: NewsArticleData = {
+              slug: item.linkUrl.replace("/news/", ""), // Ekstrak slug dari linkUrl
+              title: item.title,
+              summary: item.description,
+              featuredImage: item.imageUrl,
+              publishedAt: null, // Data statis Anda tidak memiliki tanggal, jadi kita kirim null
+            };
+
+            // 5. Render NewsCard yang baru dengan data yang sudah diadaptasi
+            return <NewsCard key={item.id} article={article} />;
+          })}
         </div>
       </div>
-    </section>
+    </motion.section>
   );
 }
