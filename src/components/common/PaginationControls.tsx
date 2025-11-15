@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Button } from "~/components/ui/button"; // Asumsi path ini benar
+import { Button } from "~/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
 interface PaginationControlsProps {
@@ -16,7 +16,6 @@ export function PaginationControls({
   const hasPrev = currentPage > 1;
   const hasNext = currentPage < totalPages;
 
-  // Halaman 1 akan diarahkan ke /news, bukan /news/1
   const prevPageUrl = currentPage === 2 ? "/news" : `/news/${currentPage - 1}`;
   const nextPageUrl = `/news/${currentPage + 1}`;
 

@@ -1,3 +1,4 @@
+// src/components/about/StaffGridClient.tsx
 "use client";
 
 import { useState } from "react";
@@ -33,7 +34,7 @@ const staffData = [
     email: "ahmad.fauzi@almadeena.sch.id",
     instagram: "@ahmad.fauzi",
     image:
-      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=500&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=500&auto-format&fit=crop",
     pronouns: "He/Him",
     quote: "Leading with compassion and Islamic values",
     nip: "2023-00001",
@@ -47,7 +48,7 @@ const staffData = [
     email: "siti.nurhaliza@almadeena.sch.id",
     instagram: "@siti.nurhaliza",
     image:
-      "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=500&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=500&auto-format&fit=crop",
     pronouns: "She/Her",
     quote: "Empowering students through education",
     nip: "2023-00002",
@@ -61,7 +62,7 @@ const staffData = [
     email: "m.rizki@almadeena.sch.id",
     instagram: "@m.rizki",
     image:
-      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=500&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=500&auto-format&fit=crop",
     pronouns: "He/Him",
     quote: "Making math fun and easy",
     nip: "2023-00003",
@@ -75,7 +76,7 @@ const staffData = [
     email: "f.zahra@almadeena.sch.id",
     instagram: "@f.zahra",
     image:
-      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=500&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=500&auto-format&fit=crop",
     pronouns: "She/Her",
     quote: "Opening doors through language",
     nip: "2023-00004",
@@ -89,7 +90,7 @@ const staffData = [
     email: "h.abdullah@almadeena.sch.id",
     instagram: "@h.abdullah",
     image:
-      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=500&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=500&auto-format&fit=crop",
     pronouns: "He/Him",
     quote: "Managing resources with integrity",
     nip: "2023-00005",
@@ -103,7 +104,7 @@ const staffData = [
     email: "a.putri@almadeena.sch.id",
     instagram: "@a.putri",
     image:
-      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=500&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=500&auto-format&fit=crop",
     pronouns: "She/Her",
     quote: "Supporting innovation and technology",
     nip: "2023-00006",
@@ -113,7 +114,7 @@ const staffData = [
 
 const fastTween = { type: "tween", duration: 0.3, ease: "easeInOut" } as const;
 
-export default function StaffProfile() {
+export default function StaffGridClient() {
   const [selectedDepartment, setSelectedDepartment] = useState("all");
   const [selectedStaff, setSelectedStaff] = useState<number | null>(null);
 
@@ -133,53 +134,9 @@ export default function StaffProfile() {
   const selectedStaffData = staffData.find((s) => s.id === selectedStaff);
 
   return (
-    // Root div
-    <div className="bg-white text-neutral-800">
-      
-      <div className="absolute inset-0 h-[40vh] md:h-[50vh] w-full flex items-center justify-center text-white overflow-hidden">
-          <Image
-            src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?q=80&w=1920&auto=format&fit=crop"
-            alt="Visi Misi Al Madeena"
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover object-center"
-          />
-          {/* Overlay Gelap */}
-          <div className="absolute inset-0 bg-black/50" />
-        </div>
-      {/* Hero Section - Tetap full-width */}
-      <motion.div
-        // DIPERBAIKI: bg-linear-to-br menjadi bg-gradient-to-br
-        className="relative h-[40vh] md:h-[40vh] w-full flex items-center justify-center text-white overflow-hidden"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-      >
-        <div className="text-center"> {/* Disederhanakan dari kode Anda */}
-          <div className="relative inline-block">
-            <h1 className="font-chalk relative mb-4 text-4xl font-bold text-white md:text-6xl lg:text-7xl">
-              <span className="relative inline-block">
-                Meet The Team
-                <div className="absolute right-0 -bottom-2 left-0 h-1 -rotate-1 transform bg-yellow-300 opacity-70"></div>
-              </span>
-            </h1>
-            <div className="absolute -top-6 -right-8 rotate-12 transform text-3xl text-yellow-300">
-              ★
-            </div>
-            <div className="absolute -bottom-4 -left-6 text-2xl text-[#FE7D01]">
-              ♥
-            </div>
-          </div>
-          <p className="font-handwriting mt-6 text-md text-white/90 md:text-xl">
-            Our Dedicated Educators & Staff
-          </p>
-        </div>
-      </motion.div>
-
-      {/* BARU: Container untuk Konten (Filter + Grid) */}
+    <>
+      {/* Container untuk Konten (Filter + Grid) */}
       <div className="container mx-auto px-6 py-8 md:py-16">
-        
         {/* Filter (Style diperbaiki agar konsisten) */}
         <div className="mb-12 flex flex-wrap justify-center gap-3">
           <button
@@ -187,7 +144,7 @@ export default function StaffProfile() {
             className={`rounded-full px-5 py-2 text-sm font-medium transition-all ${
               selectedDepartment === "all"
                 ? "bg-black text-white" // Style konsisten
-                : "border border-gray-900 bg-white text-gray-900 hover:bg-black hover:border-black hover:text-white"
+                : "border border-gray-900 bg-white text-gray-900 hover:border-black hover:bg-black hover:text-white"
             }`}
           >
             All Staff
@@ -199,7 +156,7 @@ export default function StaffProfile() {
               className={`rounded-full px-5 py-2 text-sm font-medium transition-all ${
                 selectedDepartment === dept.id
                   ? "bg-black text-white" // Style konsisten
-                  : "border border-gray-900 bg-white text-gray-900 hover:bg-black hover:border-black hover:text-white"
+                  : "border border-gray-900 bg-white text-gray-900 hover:border-black hover:bg-black hover:text-white"
               }`}
             >
               {dept.name}
@@ -248,7 +205,7 @@ export default function StaffProfile() {
                         alt="Logo"
                         width={2400}
                         height={60}
-                        className="h-auto w-full max-w-[200px] mx-auto object-contain" // Dibuat responsif
+                        className="mx-auto h-auto w-full max-w-[200px] object-contain" // Dibuat responsif
                       />
                     </div>
 
@@ -271,7 +228,6 @@ export default function StaffProfile() {
         </div>
       </div>
       {/* --- Akhir dari Container Konten --- */}
-
 
       {/* Modal (Tetap di root level untuk overlay) */}
       <AnimatePresence>
@@ -328,13 +284,13 @@ export default function StaffProfile() {
                 {/* White Info Section */}
                 <div className="flex flex-col bg-white p-6 md:w-1/2 md:rounded-r-lg">
                   <div className="mb-4 border-b-2 border-gray-900 pb-4 text-center">
-                  <Image
-                        src="https://res.cloudinary.com/reswara/image/upload/v1761586656/Logo_Footer_1_u8eako.svg"
-                        alt="Logo"
-                        width={2400}
-                        height={60}
-                        className="h-auto w-full max-w-[200px] mx-auto object-contain" // Dibuat responsif
-                      />
+                    <Image
+                      src="https://res.cloudinary.com/reswara/image/upload/v1761586656/Logo_Footer_1_u8eako.svg"
+                      alt="Logo"
+                      width={2400}
+                      height={60}
+                      className="mx-auto h-auto w-full max-w-[200px] object-contain" // Dibuat responsif
+                    />
                   </div>
 
                   <div className="flex-1 space-y-4">
@@ -352,7 +308,7 @@ export default function StaffProfile() {
 
                     <div className="rounded bg-gray-50 p-3">
                       <p className="text-sm leading-relaxed text-gray-700 italic">
-                        "{selectedStaffData.quote}"
+                        &quot{selectedStaffData.quote}&quot
                       </p>
                     </div>
 
@@ -416,6 +372,6 @@ export default function StaffProfile() {
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </>
   );
 }

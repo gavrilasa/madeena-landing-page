@@ -22,15 +22,9 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isClient, setIsClient] = useState(false);
 
-  const pathname = usePathname(); // Tetap diperlukan untuk active link
-  
-  // const isHomepage = pathname === "/"; // <-- BARIS INI TIDAK DIPERLUKAN LAGI
+  const pathname = usePathname();
 
-  // --- PERUBAHAN UTAMA DI SINI ---
-  // Kita hapus pengecekan 'isHomepage'. Sekarang transparansi
-  // hanya bergantung pada 'isClient' dan '!isScrolled'.
   const useTransparentStyle = isClient && !isScrolled;
-  // --- AKHIR PERUBAHAN ---
 
   useEffect(() => {
     const handleScroll = () => {
@@ -83,8 +77,7 @@ export default function Navbar() {
               {navigationLinks.map((link, index) => {
                 const isActive =
                   link.href === pathname ||
-                  (link.items &&
-                    link.items.some((item) => item.href === pathname));
+                  link.items?.some((item) => item.href === pathname);
 
                 return (
                   <NavigationMenuItem key={index} className="h-full">

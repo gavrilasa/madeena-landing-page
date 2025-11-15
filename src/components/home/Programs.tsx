@@ -11,34 +11,34 @@ const programData = {
     {
       title: "National Plus Curriculum",
       imageUrl:
-        "https://res.cloudinary.com/reswara/image/upload/v1761326461/DSCF8018_1_fbj19m.png",
+        "https://res.cloudinary.com/dah2v3xbg/image/upload/v1763224535/Primary-Academic_yadxyh.webp",
     },
     {
       title: "Islamic Studies Curriculum",
       imageUrl:
-        "https://res.cloudinary.com/reswara/image/upload/v1761326461/DSCF8018_1_fbj19m.png",
+        "https://res.cloudinary.com/dah2v3xbg/image/upload/v1763224535/Primary-Academic_yadxyh.webp",
     },
     {
       title: "Cambridge Assessment",
       imageUrl:
-        "https://res.cloudinary.com/reswara/image/upload/v1761326461/DSCF8018_1_fbj19m.png",
+        "https://res.cloudinary.com/dah2v3xbg/image/upload/v1763224535/Primary-Academic_yadxyh.webp",
     },
   ],
   preschool: [
     {
       title: "Play-Based Learning",
       imageUrl:
-        "https://res.cloudinary.com/reswara/image/upload/v1761326461/DSCF8018_1_fbj19m.png",
+        "https://res.cloudinary.com/dah2v3xbg/image/upload/v1763224680/Preschool-Academic_jt56ik.webp",
     },
     {
       title: "Early Character Building",
       imageUrl:
-        "https://res.cloudinary.com/reswara/image/upload/v1761326461/DSCF8018_1_fbj19m.png",
+        "https://res.cloudinary.com/dah2v3xbg/image/upload/v1763224680/Preschool-Academic_jt56ik.webp",
     },
     {
       title: "Introduction to Faith",
       imageUrl:
-        "https://res.cloudinary.com/reswara/image/upload/v1761326461/DSCF8018_1_fbj19m.png",
+        "https://res.cloudinary.com/dah2v3xbg/image/upload/v1763224680/Preschool-Academic_jt56ik.webp",
     },
   ],
 };
@@ -101,12 +101,7 @@ export default function Program() {
               {displayedPrograms.map((program) => (
                 <div
                   key={program.title}
-                  className="
-                    group relative block w-full 
-                    h-[450px]
-                    cursor-pointer overflow-hidden 
-                    transition-all duration-500 ease-in-out
-                  "
+                  className="group relative block h-[450px] w-full cursor-pointer overflow-hidden transition-all duration-500 ease-in-out"
                 >
                   <Image
                     src={program.imageUrl}

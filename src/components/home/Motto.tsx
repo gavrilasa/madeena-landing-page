@@ -24,14 +24,14 @@ export default function Motto() {
           {/* Deskripsi */}
           <div className="md:col-span-1">
             <p className="max-w-lg text-[#828282]">
-            To nurture a golden generation who learns with faith, character, and excellence — becoming future leaders grounded in Islamic .
+              To nurture a golden generation who learns with faith, character,
+              and excellence — becoming future leaders grounded in Islamic .
             </p>
           </div>
 
-
-          <div className="flex md:justify-center md:col-span-1 md:text-right">
+          <div className="flex md:col-span-1 md:justify-center md:text-right">
             <Link
-              href="/tentang/sejarah"
+              href="/about/vision-mission"
               className="group inline-flex items-center font-medium text-black hover:underline"
             >
               Learn More

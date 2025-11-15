@@ -1,7 +1,8 @@
+// src/components/about/FoundationBoardGridClient.tsx
 "use client";
 
 import { useState } from "react";
-import Image from "next/image"; // <-- PASTIKAN IMAGE DIIMPOR
+import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 
 // --- Data (Tidak berubah) ---
@@ -48,7 +49,7 @@ const boardData = [
     email: "info@almadeena.sch.id",
     instagram: "@almadeena.islamic.school",
     image:
-      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=500&auto-format&fit=crop",
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=500&auto=format&fit=crop",
     pronouns: "She/Her",
     quote: "Memimpin dengan hati untuk generasi berkarakter.",
     nip: "YYS-00003",
@@ -76,7 +77,7 @@ const boardData = [
     email: "info@almadeena.sch.id",
     instagram: "@almadeena.islamic.school",
     image:
-      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=500&auto-format&fit=crop",
+      "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=500&auto=format&fit=crop",
     pronouns: "She/Her",
     quote: "Mengelola amanah untuk masa depan anak-anak.",
     nip: "YYS-00005",
@@ -86,7 +87,7 @@ const boardData = [
 
 const fastTween = { type: "tween", duration: 0.3, ease: "easeInOut" } as const;
 
-export default function FoundationBoardPage() {
+export default function FoundationBoardGridClient() {
   const [selectedStaff, setSelectedStaff] = useState<number | null>(null);
 
   const handleCardClick = (id: number) => {
@@ -100,47 +101,8 @@ export default function FoundationBoardPage() {
   const selectedStaffData = boardData.find((s) => s.id === selectedStaff);
 
   return (
-    <div className="bg-white text-neutral-800">
-      {/* --- HERO SECTION BARU (DARI STAFFPROFILE) --- */}
-      <div className="absolute inset-0 h-[40vh] md:h-[50vh] w-full flex items-center justify-center text-white overflow-hidden">
-        <Image
-          src="https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=1920&auto-format&fit=crop"
-          alt="Dewan Yayasan Al Madeena" // Alt text diubah
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover object-center"
-        />
-        {/* Overlay Gelap */}
-        <div className="absolute inset-0 bg-black/50" />
-      </div>
-      <motion.div
-        className="relative h-[40vh] md:h-[40vh] w-full flex items-center justify-center text-white overflow-hidden"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-      >
-        <div className="text-center">
-          <div className="relative inline-block">
-            <h1 className="font-chalk relative mb-4 text-4xl font-bold text-white md:text-6xl lg:text-7xl">
-              <span className="relative inline-block">
-                Dewan Yayasan {/* Judul diubah */}
-                <div className="absolute right-0 -bottom-2 left-0 h-1 -rotate-1 transform bg-yellow-300 opacity-70"></div>
-              </span>
-            </h1>
-            <div className="absolute -top-6 -right-8 rotate-12 transform text-3xl text-yellow-300">
-              ★
-            </div>
-            <div className="absolute -bottom-4 -left-6 text-2xl text-[#FE7D01]">
-              ♥
-            </div>
-          </div>
-          <p className="font-handwriting mt-6 text-md text-white/90 md:text-xl">
-            Yayasan Al Madeena Cendekia Muslim {/* Subtitle diubah */}
-          </p>
-        </div>
-      </motion.div>
-      {/* --- AKHIR HERO SECTION BARU --- */}
+    <>
+      {/* --- HERO SECTION TELAH DIHAPUS --- */}
 
       {/* Konten (Grid Kartu) */}
       <div className="container mx-auto max-w-7xl px-6 py-16 md:py-24">
@@ -183,7 +145,7 @@ export default function FoundationBoardPage() {
                         alt="Logo"
                         width={2400}
                         height={60}
-                        className="h-auto w-full max-w-[200px] mx-auto object-contain"
+                        className="mx-auto h-auto w-full max-w-[200px] object-contain"
                       />
                     </div>
 
@@ -266,7 +228,7 @@ export default function FoundationBoardPage() {
                       alt="Logo"
                       width={2400}
                       height={60}
-                      className="h-auto w-full max-w-[200px] mx-auto object-contain"
+                      className="mx-auto h-auto w-full max-w-[200px] object-contain"
                     />
                   </div>
 
@@ -349,6 +311,6 @@ export default function FoundationBoardPage() {
           </motion.div>
         )}
       </AnimatePresence>
-    </div>
+    </>
   );
 }

@@ -36,7 +36,7 @@ export default function Quote() {
 
       <div className="container flex flex-col items-center gap-8">
         <motion.img
-          src="https://res.cloudinary.com/reswara/image/upload/v1761321700/Frame_7_ihs1mi.svg"
+          src="https://res.cloudinary.com/dah2v3xbg/image/upload/v1763222897/Logo-Al-Madeena-Transparent_dnzxtk.svg"
           alt="Al Madeena Logo"
           width={150}
           height={150}

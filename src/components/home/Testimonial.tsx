@@ -5,7 +5,6 @@ import Image from "next/image";
 import { testimonialData } from "~/data/home/testimonialData";
 import { cn } from "~/lib/utils";
 import { motion } from "framer-motion"; // Impor motion
-import { FaPlay } from "react-icons/fa"; // Impor ikon
 
 // --- Fungsionalitas Video (Utuh dari file Anda) ---
 export default function Testimonials() {
@@ -117,9 +116,9 @@ export default function Testimonials() {
         >
           <div className="md:col-span-1">
             <h2 className="text-3xl font-bold text-[#1A1A1A] md:text-4xl">
-              Let's Hear
+              Let&apos;s Hear
             </h2>
-            <h1 className="text-3xl font-bold text-[#1A1A1A] md:text-4xl ">
+            <h1 className="text-3xl font-bold text-[#1A1A1A] md:text-4xl">
               What They Say
             </h1>
           </div>
@@ -159,7 +158,9 @@ export default function Testimonials() {
               layout
             >
               {/* 1. Video/Image Container (h-64) */}
-              <div className="relative h-[450px] w-full overflow-hidden bg-black rounded-3xl"> {/* Rounded penuh pada container video */}
+              <div className="relative h-[450px] w-full overflow-hidden rounded-3xl bg-black">
+                {" "}
+                {/* Rounded penuh pada container video */}
                 {/* Gambar */}
                 <Image
                   src={item.image}
@@ -188,7 +189,6 @@ export default function Testimonials() {
                 >
                   <source src={item.video} type="video/mp4" />
                 </video>
-
                 {/* --- TEKS PUTIH & ICON PLAY DI DALAM GAMBAR --- */}
                 <div
                   className={cn(
@@ -199,13 +199,13 @@ export default function Testimonials() {
                     hoveredId === item.id ? "opacity-0" : "opacity-100",
                   )}
                 >
-                  <h3 className="mb-1 text-2xl font-bold text-white drop-shadow-md text-center">
+                  <h3 className="mb-1 text-center text-2xl font-bold text-white drop-shadow-md">
                     {item.name}
                   </h3>
-                  <p className="text-sm text-white/90 drop-shadow-md text-center">
+                  <p className="text-center text-sm text-white/90 drop-shadow-md">
                     {item.type}
                   </p>
-                  <p className="mt-4 text-base leading-relaxed text-white/90 drop-shadow-md text-center">
+                  <p className="mt-4 text-center text-base leading-relaxed text-white/90 drop-shadow-md">
                     &quot;{item.text}&quot;
                   </p>
                 </div>
