@@ -5,7 +5,7 @@ import { ArrowRight } from "lucide-react";
 export default function Motto() {
   return (
     // Padding vertikal pada section
-    <section className="relative w-full overflow-x-hidden bg-[#ffffff] py-24">
+    <section className="relative w-full overflow-x-hidden bg-[#ffffff] py-8">
       {/* Menggunakan 'container mx-auto px-6' untuk perataan tengah 
         dan padding horizontal yang konsisten.
       */}

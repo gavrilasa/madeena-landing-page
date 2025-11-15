@@ -16,7 +16,7 @@ interface CarouselProps {
   initialScroll?: number;
 }
 
-type CardData = {
+export type CardData = {
   src: string;
   title: string;
   category: string;

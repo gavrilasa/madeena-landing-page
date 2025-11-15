@@ -1,4 +1,4 @@
-import VisionMision from "./VisionMision";
+import VisionMision from "~/components/about/VisionMission";
 
 export default function VisionMisionPage() {
   return (

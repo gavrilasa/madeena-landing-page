@@ -4,9 +4,9 @@ import { Mail, Youtube, MessageCircle, MapPin } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="relative w-full overflow-hidden bg-[#f4f8fc]">
+    <footer className="relative w-full overflow-hidden bg-white">
       <div
-        className="absolute inset-0 bg-cover bg-bottom bg-no-repeat md:bg-contain"
+        className="absolute inset-0 bg-cover bg-bottom bg-no-repeat md:bg-cover lg:bg-contain"
         style={{
           backgroundImage: "url('/bg-footer.svg')",
         }}
@@ -17,7 +17,7 @@ export default function Footer() {
         <div className="flex flex-col items-start justify-between gap-8 text-white lg:flex-row lg:gap-12">
           {/* Kiri: Logo + Alamat + Sosial */}
           <div className="flex w-full flex-col justify-between space-y-6 md:space-y-8 lg:w-1/2">
-            <div className="flex items-center justify-start">
+            <div className="flex items-center justify-start md:pt-6 lg:pt-0">
               <Image
                 src="https://res.cloudinary.com/reswara/image/upload/v1761454291/Logo_Footer_xkhjuw.svg"
                 alt="Logo"

@@ -23,7 +23,7 @@ export const navigationLinks: NavigationItem[] = [
     type: "description",
     items: [
       {
-        href: "/tentang/sejarah",
+        href: "/about/history",
         label: "Sejarah",
         description: "Perjalanan berdirinya Al Madeena.",
       },
@@ -33,7 +33,7 @@ export const navigationLinks: NavigationItem[] = [
         description: "Arah, tujuan, dan nilai inti sekolah.",
       },
       {
-        href: "/tentang/dewan-yayasan",
+        href: "/about/foundation-board",
         label: "Dewan Yayasan",
         description: "Struktur pengurus yayasan.",
       },
@@ -43,7 +43,7 @@ export const navigationLinks: NavigationItem[] = [
         description: "Profil pendidik dan staf.",
       },
       {
-        href: "/tentang/partner",
+        href: "/about/partners",
         label: "Partner Kerjasama",
         description: "Kolaborasi institusi dan program.",
       },

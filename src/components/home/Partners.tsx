@@ -3,7 +3,7 @@ import { partnerData } from "~/data/home/partnerData";
 
 export default function Partners() {
   return (
-    <div className="bg-[#f4f8fc] p-10">
+    <div className="bg-white p-10">
       <LogoLoop
         logos={partnerData}
         speed={60}
@@ -13,7 +13,7 @@ export default function Partners() {
         pauseOnHover
         scaleOnHover
         fadeOut
-        fadeOutColor="#f4f8fc"
+        fadeOutColor="#ffffff"
         ariaLabel="Al Madeena Partner Logos"
       />
     </div>
