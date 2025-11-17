@@ -1,42 +1,8 @@
 // src/components/about/VisionMissionContentClient.tsx
 "use client";
 
-import Image from "next/image";
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
-
-const quickLinks = [
-  {
-    title: "Sejarah Sekolah",
-    href: "/profil/sejarah",
-    image:
-      "https://images.unsplash.com/photo-1580582932707-520aed937b7b?q=80&w=800&auto-format&fit=crop",
-  },
-  {
-    title: "Fasilitas Kami",
-    href: "/profil/fasilitas",
-    image:
-      "https://images.unsplash.com/photo-1519452575417-564c1401ecc0?q=80&w=800&auto-format&fit=crop",
-  },
-  {
-    title: "Struktur Organisasi",
-    href: "/profil/struktur",
-    image:
-      "https://images.unsplash.com/photo-1551836022-d5d88e9218df?q=80&w=800&auto-format&fit=crop",
-  },
-  {
-    title: "Prestasi",
-    href: "/akademik/prestasi",
-    image:
-      "https://images.unsplash.com/photo-1580582932707-520aed937b7b?q=80&w=800&auto-format&fit=crop",
-  },
-  {
-    title: "Ekstrakurikuler",
-    href: "/kehidupan-sekolah/ekstrakurikuler",
-    image:
-      "https://images.unsplash.com/photo-1542273917363-3b1817f69a2d?q=80&w=800&auto-format&fit=crop",
-  },
-];
+import AboutQuickLinks from "~/components/about/AboutQuickLinks";
 
 const misiPreschool = [
   "Mengenalkan anak berbahasa Inggris dengan baik dan benar",
@@ -104,38 +70,7 @@ export default function VisionMissionContentClient() {
         </div>
       </motion.div>
 
-      <motion.div {...fadeIn}>
-        <div className="container mx-auto px-6 py-16 md:py-24">
-          <h2 className="mb-10 text-3xl font-bold text-neutral-900">
-            Jelajahi Tentang Kami
-          </h2>
-          <div className="grid grid-cols-2 gap-6 md:grid-cols-3 lg:grid-cols-5">
-            {quickLinks.map((link) => (
-              <a
-                key={link.title}
-                href={link.href}
-                className="group bg-white shadow-md transition-shadow duration-300 hover:shadow-xl"
-              >
-                <div className="relative h-48 overflow-hidden">
-                  <Image
-                    src={link.image}
-                    alt={link.title}
-                    layout="fill"
-                    objectFit="cover"
-                    className="transition-transform duration-300 group-hover:scale-110"
-                  />
-                </div>
-                <div className="flex items-center justify-between p-5">
-                  <h3 className="font-bold text-neutral-800 transition-colors group-hover:text-[#FE7D01]">
-                    {link.title}
-                  </h3>
-                  <ArrowRight className="text-neutral-400 transition-colors group-hover:text-[#FE7D01]" />
-                </div>
-              </a>
-            ))}
-          </div>
-        </div>
-      </motion.div>
+      <AboutQuickLinks />
     </>
   );
 }

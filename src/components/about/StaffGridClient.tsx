@@ -4,6 +4,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+import AboutQuickLinks from "./AboutQuickLinks";
 
 // --- Data ---
 const departments = [
@@ -372,6 +373,7 @@ export default function StaffGridClient() {
           </motion.div>
         )}
       </AnimatePresence>
+      <AboutQuickLinks />
     </>
   );
 }

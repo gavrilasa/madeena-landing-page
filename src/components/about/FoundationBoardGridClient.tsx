@@ -4,6 +4,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
+import AboutQuickLinks from "./AboutQuickLinks";
 
 // --- Data (Tidak berubah) ---
 const departments = [
@@ -310,6 +311,7 @@ export default function FoundationBoardGridClient() {
             </motion.div>
           </motion.div>
         )}
+        <AboutQuickLinks />
       </AnimatePresence>
     </>
   );
