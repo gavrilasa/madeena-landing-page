@@ -105,7 +105,7 @@ export default function Testimonials() {
 
   return (
     <section className="overflow-x-hidden bg-white px-6 py-16 md:px-12 md:py-24 lg:px-16">
-      <div className="mx-auto max-w-7xl">
+      <div className="container mx-auto px-6">
         {/* Header Section (Dari file Anda) */}
         <motion.div
           className="mb-12 grid grid-cols-1 items-start gap-6 md:mb-16 md:grid-cols-3 lg:gap-12"

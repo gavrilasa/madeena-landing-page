@@ -46,7 +46,7 @@ export default function Academic() {
             </p>
           </div>
 
-          <div className="flex w-full justify-start xl:col-span-1 xl:items-start xl:justify-end xl:pt-2">
+          <div className="flex w-full justify-start xl:col-span-1 xl:items-start xl:justify-center xl:pt-2">
             <Link
               href="/tentang/sejarah"
               className="group inline-flex items-center font-medium text-black hover:underline"

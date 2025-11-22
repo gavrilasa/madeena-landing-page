@@ -25,7 +25,7 @@ export default async function HomePage() {
   return (
     <main className="space-y-8 bg-white">
       <Hero />
-      <Quote />
+      {/* <Quote /> */}
       <Academic />
       <Motto />
       <Programs />
