@@ -20,7 +20,7 @@ interface NewsProps {
 export default function News({ articles = [] }: NewsProps) {
   return (
     <motion.div className="container mx-auto px-6 py-16" {...fadeIn}>
-      <div className="mb-12 grid grid-cols-1 items-start gap-6 md:mb-16 xl:grid-cols-3 xl:gap-12">
+        <div className="mb-12 grid grid-cols-1 items-start gap-6 md:mb-16 xl:grid-cols-3 xl:gap-12">
           <div className="xl:col-span-1">
             <h2 className="text-4xl font-bold text-[#1A1A1A] md:text-5xl">
               Berita & Kegiatan
