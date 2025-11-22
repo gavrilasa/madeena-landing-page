@@ -19,24 +19,29 @@ export default function Programs() {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header & Tabs */}
         <div className="mb-4 flex flex-col gap-6 md:mb-8">
-        <div className="flex items-start">
-          <div className="">
-            <h2 className="text-4xl font-bold text-[#1A1A1A] md:text-5xl">
-              Our Program
-            </h2>
-          </div>
+          {/* Title and Learn More Grid */}
+          <div className="mb-4 grid grid-cols-1 items-center gap-6 md:mb-8 md:grid-cols-3 lg:gap-12">
+            {/* Title */}
+            <div className="md:col-span-1">
+              <h2 className="text-4xl font-bold text-[#1A1A1A] md:text-5xl">
+                Our Program
+              </h2>
+            </div>
 
+            {/* Empty middle column for spacing */}
+            <div className="md:col-span-1"></div>
 
-          <div className="flex w-full justify-end xl:col-span-1 xl:items-end xl:justify-end xl:pt-2">
-            <Link
-              href="/news"
-              className="group inline-flex items-center font-medium text-black hover:underline"
-            >
-              Learn More
-              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </Link>
+            {/* Learn More */}
+            <div className="flex md:col-span-1 md:justify-center md:text-right">
+              <Link
+                href="/primary/programs"
+                className="group inline-flex items-center font-medium text-black hover:underline"
+              >
+                Learn More
+                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </Link>
+            </div>
           </div>
-        </div>
 
           {/* Custom Tab Navigation */}
           <div className="flex w-full border-b border-gray-200">
