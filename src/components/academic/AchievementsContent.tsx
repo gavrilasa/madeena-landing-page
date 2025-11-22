@@ -5,7 +5,6 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { achievementsData } from "~/data/academic/achievmentsData";
-import { cn } from "~/lib/utils";
 
 interface AchievementsContentProps {
   category: "preschool" | "primary";
@@ -27,7 +26,6 @@ export default function AchievementsContent({
   return (
     <section className="w-full bg-white py-16 md:py-24">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {data.map((item, index) => (
             <motion.div
@@ -44,7 +42,7 @@ export default function AchievementsContent({
                 src={item.image}
                 alt={item.title}
                 fill
-                className="object-cover transition-transform duration-700 group-hover:scale-110 opacity-80 group-hover:opacity-60"
+                className="object-cover opacity-80 transition-transform duration-700 group-hover:scale-110 group-hover:opacity-60"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
 
@@ -55,7 +53,7 @@ export default function AchievementsContent({
               <div className="absolute inset-0 flex flex-col justify-between p-6 sm:p-8">
                 {/* Top: Title */}
                 <div>
-                  <h3 className="text-xl font-medium leading-tight text-white md:text-2xl">
+                  <h3 className="text-xl leading-tight font-medium text-white md:text-2xl">
                     {item.title}
                   </h3>
                 </div>

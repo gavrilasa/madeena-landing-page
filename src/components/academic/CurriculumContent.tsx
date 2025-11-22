@@ -3,7 +3,6 @@
 
 import { motion } from "framer-motion";
 import { BookOpen, GraduationCap } from "lucide-react";
-import { cn } from "~/lib/utils";
 import Image from "next/image";
 
 // Tipe data untuk item kurikulum
@@ -58,8 +57,6 @@ const Illustration = (props: React.SVGProps<SVGSVGElement>) => {
 export default function CurriculumContent({
   level,
   data,
-  title,
-  subtitle,
   visualAlt,
   visualImage,
 }: CurriculumContentProps) {
@@ -68,9 +65,8 @@ export default function CurriculumContent({
   return (
     <section className="bg-white py-16 md:py-24">
       <div className="container mx-auto px-6">
-
         {/* Content Grid */}
-        <div className="grid py-10 grid-cols-1 gap-12 lg:grid-cols-6 lg:gap-20">
+        <div className="grid grid-cols-1 gap-12 py-10 lg:grid-cols-6 lg:gap-20">
           {/* Left Side: Sticky Image */}
           <div className="col-span-2 h-fit lg:sticky lg:top-24">
             <motion.div
@@ -100,10 +96,10 @@ export default function CurriculumContent({
 
           {/* Right Side: Process List */}
           <ul className="col-span-4 flex w-full flex-col lg:pl-10">
-            {data.map((item, index) => (
+            {data.map((item, _index) => (
               <li
                 key={item.id}
-                className="relative flex flex-col gap-6 border-t border-gray-200 py-10 md:flex-row md:gap-10 first:border-t-0 lg:first:border-t"
+                className="relative flex flex-col gap-6 border-t border-gray-200 py-10 first:border-t-0 md:flex-row md:gap-10 lg:first:border-t"
               >
                 <Illustration className="absolute top-10 right-0 hidden md:block" />
 

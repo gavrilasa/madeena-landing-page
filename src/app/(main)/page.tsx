@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import Hero from "~/components/home/Hero";
-import Quote from "~/components/home/Quote";
+// import Quote from "~/components/home/Quote";
 import Academic from "~/components/home/Academic";
 import Motto from "~/components/home/Motto";
 import Programs from "~/components/home/Programs";
