@@ -17,6 +17,7 @@ import { cn } from "~/lib/utils";
 import { MobileNav } from "./MobileNav";
 import { navigationLinks } from "~/data/home/navigationLinks";
 import { Separator } from "../ui/separator";
+import * as Icons from "lucide-react"; // Import all icons
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -106,39 +107,53 @@ export default function Navbar() {
                         <NavigationMenuContent className="rounded-sm">
                           <ul
                             className={cn(
-                              "mt-0 border-0 bg-white text-gray-800 shadow-none md:min-w-56",
+                              "mt-0 border-0 bg-white text-gray-800 shadow-none md:min-w-64",
                             )}
                           >
-                            {link.items.map((item, itemIndex) => (
-                              <li key={itemIndex}>
-                                <NavigationMenuLink
-                                  href={item.href}
-                                  data-active={item.href === pathname}
-                                  className={cn(
-                                    "block p-2 text-sm font-medium",
-                                    "text-gray-700 transition-colors",
-                                    "hover:bg-gray-300 hover:text-gray-900",
-                                    "focus:bg-gray-300 focus:text-gray-900 focus:outline-none",
-                                    "data-active:bg-white data-active:font-semibold data-active:text-gray-900",
-                                  )}
-                                >
-                                  <div className="flex items-center gap-2">
-                                    {link.type === "description" ? (
+                            {link.items.map((item, itemIndex) => {
+                              // Dynamic Icon Component
+                              const IconComponent = item.icon
+                                ? (Icons[
+                                    item.icon as keyof typeof Icons
+                                  ] as React.ElementType)
+                                : null;
+
+                              return (
+                                <li key={itemIndex}>
+                                  <NavigationMenuLink
+                                    href={item.href}
+                                    data-active={item.href === pathname}
+                                    className={cn(
+                                      "block p-3 text-sm",
+                                      "text-gray-700 transition-colors",
+                                      "hover:bg-gray-100 hover:text-gray-900",
+                                      "focus:bg-gray-100 focus:text-gray-900 focus:outline-none",
+                                      "data-active:bg-gray-50 data-active:font-semibold data-active:text-gray-900",
+                                    )}
+                                  >
+                                    <div className="flex items-start gap-3">
+                                      {/* Always render Icon if available, regardless of type */}
+                                      {IconComponent && (
+                                        <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-gray-100 text-gray-600 group-hover:text-primary">
+                                          <IconComponent className="h-5 w-5" />
+                                        </div>
+                                      )}
+
                                       <div className="flex-1 space-y-1">
-                                        <div className="font-medium">
+                                        <div className="font-medium leading-none">
                                           {item.label}
                                         </div>
-                                        <p className="line-clamp-2 text-xs font-light text-gray-500">
-                                          {item.description}
-                                        </p>
+                                        {item.description && (
+                                          <p className="line-clamp-2 text-xs leading-snug text-gray-500">
+                                            {item.description}
+                                          </p>
+                                        )}
                                       </div>
-                                    ) : (
-                                      <span>{item.label}</span>
-                                    )}
-                                  </div>
-                                </NavigationMenuLink>
-                              </li>
-                            ))}
+                                    </div>
+                                  </NavigationMenuLink>
+                                </li>
+                              );
+                            })}
                           </ul>
                         </NavigationMenuContent>
                       </>

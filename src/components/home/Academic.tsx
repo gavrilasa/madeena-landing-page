@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { cn } from "~/lib/utils";
+import SpinningLogo from "~/components/common/Circlular";
 
 const academicCards = [
   {
@@ -46,7 +47,7 @@ export default function Academic() {
             </p>
           </div>
 
-          <div className="flex w-full justify-start xl:col-span-1 xl:items-start xl:justify-end xl:pt-2">
+          <div className="flex w-full justify-start xl:col-span-1 xl:items-start xl:justify-center xl:pt-2">
             <Link
               href="/tentang/sejarah"
               className="group inline-flex items-center font-medium text-black hover:underline"
@@ -71,7 +72,6 @@ export default function Academic() {
                 "xl:aspect-auto xl:h-[450px]",
 
                 "cursor-pointer overflow-hidden rounded-3xl",
-                "shadow-lg transition-shadow duration-300 ease-in-out hover:shadow-xl",
               )}
             >
               <Image
@@ -81,7 +81,7 @@ export default function Academic() {
                 sizes="(max-width: 1280px) 100vw, 50vw"
                 className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/40 to-transparent" />
+              <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/40 to-transparent" />
 
               <div className="relative z-10 flex h-full flex-col items-start justify-end p-6 text-white md:p-8">
                 <h3 className="text-4xl font-bold text-white md:text-5xl">
@@ -93,6 +93,8 @@ export default function Academic() {
               </div>
             </Link>
           ))}
+
+          {/* Spinning Logo - Centered between cards */}
           <div
             className="absolute z-20 hidden xl:block"
             style={{
@@ -101,15 +103,12 @@ export default function Academic() {
               transform: "translate(-50%, -50%)",
             }}
           >
-            <div className="relative h-40 w-40 rounded-full bg-white p-2">
-              <Image
-                src="https://res.cloudinary.com/dah2v3xbg/image/upload/v1763222836/Logo-Al-Madeena_cqdg3w.svg"
-                alt="Al Madeena Logo"
-                fill
-                sizes="160px"
-                className="rounded-full border-white object-cover p-2"
-              />
-            </div>
+            <SpinningLogo
+              src="https://res.cloudinary.com/dah2v3xbg/image/upload/v1763222836/Logo-Al-Madeena_cqdg3w.svg"
+              alt="Al Madeena Logo"
+              size={160}
+              speed={20}
+            />
           </div>
         </div>
       </div>

@@ -1,127 +1,94 @@
-// src/components/home/Programs.tsx
 "use client";
 
-import React, { useState } from "react";
-import Image from "next/image";
-import { cn } from "~/lib/utils"; // Pastikan Anda mengimpor cn
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { cn } from "~/lib/utils";
+import { programsData } from "~/data/academic/programsData";
+import ProgramCarousel from "~/components/common/Carousel";
+import Link from "next/link";
+import { ArrowRight } from "lucide-react";
 
-// Data Program
-const programData = {
-  primary: [
-    {
-      title: "National Plus Curriculum",
-      imageUrl:
-        "https://res.cloudinary.com/dah2v3xbg/image/upload/v1763224535/Primary-Academic_yadxyh.webp",
-    },
-    {
-      title: "Islamic Studies Curriculum",
-      imageUrl:
-        "https://res.cloudinary.com/dah2v3xbg/image/upload/v1763224535/Primary-Academic_yadxyh.webp",
-    },
-    {
-      title: "Cambridge Assessment",
-      imageUrl:
-        "https://res.cloudinary.com/dah2v3xbg/image/upload/v1763224535/Primary-Academic_yadxyh.webp",
-    },
-  ],
-  preschool: [
-    {
-      title: "Play-Based Learning",
-      imageUrl:
-        "https://res.cloudinary.com/dah2v3xbg/image/upload/v1763224680/Preschool-Academic_jt56ik.webp",
-    },
-    {
-      title: "Early Character Building",
-      imageUrl:
-        "https://res.cloudinary.com/dah2v3xbg/image/upload/v1763224680/Preschool-Academic_jt56ik.webp",
-    },
-    {
-      title: "Introduction to Faith",
-      imageUrl:
-        "https://res.cloudinary.com/dah2v3xbg/image/upload/v1763224680/Preschool-Academic_jt56ik.webp",
-    },
-  ],
-};
+type Category = "primary" | "preschool";
 
-type TabId = "primary" | "preschool";
-
-export default function Program() {
-  const [activeTab, setActiveTab] = useState<TabId>("primary");
-  const displayedPrograms = programData[activeTab];
+export default function Programs() {
+  const [activeTab, setActiveTab] = useState<Category>("primary");
+  const data = programsData[activeTab];
 
   return (
-    // Menggunakan bg-white seperti pada gambar
-    <section className="bg-white py-16 text-gray-900 md:py-24">
-      <div className="container mx-auto px-6">
-        {/* Judul "Our Program" */}
-        <h2 className="mb-12 text-5xl font-bold text-[#1A1A1A] md:mb-16">
-          Our Program
-        </h2>
+    <section className="w-full bg-white py-16 md:py-24">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Header & Tabs */}
+        <div className="mb-4 flex flex-col gap-6 md:mb-8">
+          {/* Title and Learn More Grid */}
+          <div className="mb-4 grid grid-cols-1 items-center gap-6 md:mb-8 md:grid-cols-3 lg:gap-12">
+            {/* Title */}
+            <div className="md:col-span-1">
+              <h2 className="text-4xl font-bold text-[#1A1A1A] md:text-5xl">
+                Our Program
+              </h2>
+            </div>
 
-        {/* Wrapper untuk Tabs dan Konten */}
-        <div>
-          {/* Tabs */}
-          <div className="relative z-10 -mb-px flex -space-x-3">
-            <button
-              onClick={() => setActiveTab("primary")}
-              className={cn(
-                "rounded-t-xl px-6 py-3 text-lg font-medium transition-colors duration-300",
-                activeTab === "primary"
-                  ? "bg-[#1A1A1A] text-white" // Warna gelap untuk tab aktif
-                  : "bg-gray-200 text-gray-600 hover:bg-gray-300",
-              )}
-            >
-              Primary
-            </button>
-            <button
-              onClick={() => setActiveTab("preschool")}
-              className={cn(
-                "rounded-t-xl px-6 py-3 text-lg font-medium transition-colors duration-300",
-                activeTab === "preschool"
-                  ? "bg-[#1A1A1A] text-white" // Warna gelap untuk tab aktif
-                  : "bg-gray-200 text-gray-600 hover:bg-gray-300",
-              )}
-            >
-              Preschool
-            </button>
+            {/* Empty middle column for spacing */}
+            <div className="md:col-span-1"></div>
+
+            {/* Learn More */}
+            <div className="flex md:col-span-1 md:justify-center md:text-right">
+              <Link
+                href="/primary/programs"
+                className="group inline-flex items-center font-medium text-black hover:underline"
+              >
+                Learn More
+                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </Link>
+            </div>
           </div>
 
-          {/* Kontainer Kartu */}
-          <div className="relative z-0">
-            <div
-              className={cn(
-                "grid grid-cols-1 overflow-hidden bg-white shadow-xl md:grid-cols-3",
-                activeTab === "primary"
-                  ? "" // Sudut kiri atas tajam
-                  : activeTab === "preschool"
-                    ? "" // Sudut kiri atas membulat
-                    : "rounded-3xl", // Fallback
-              )}
-            >
-              {displayedPrograms.map((program) => (
-                <div
-                  key={program.title}
-                  className="group relative block h-[450px] w-full cursor-pointer overflow-hidden transition-all duration-500 ease-in-out"
-                >
-                  <Image
-                    src={program.imageUrl}
-                    alt={program.title}
-                    fill
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
+          {/* Custom Tab Navigation */}
+          <div className="flex w-full border-b border-gray-200">
+            <div className="flex gap-8">
+              <button
+                onClick={() => setActiveTab("primary")}
+                className={cn(
+                  "relative pb-3 text-lg font-medium transition-colors duration-300",
+                  activeTab === "primary"
+                    ? "text-black"
+                    : "text-gray-400 hover:text-gray-600"
+                )}
+              >
+                Primary School
+                {activeTab === "primary" && (
+                  <motion.div
+                    layoutId="activeTab"
+                    className="absolute bottom-0 left-0 h-[3px] w-full bg-black"
+                    transition={{ type: "spring", stiffness: 500, damping: 30 }}
                   />
-                  <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/30 to-transparent" />
-                  <div className="relative z-10 flex h-full flex-col justify-end p-6 text-white">
-                    <h3 className="mb-2 text-4xl font-bold text-white/95">
-                      {program.title}
-                    </h3>
-                    {/* Deskripsi tidak ada di gambar, jadi saya hanya tampilkan judul */}
-                  </div>
-                </div>
-              ))}
+                )}
+              </button>
+
+              <button
+                onClick={() => setActiveTab("preschool")}
+                className={cn(
+                  "relative pb-3 text-lg font-medium transition-colors duration-300",
+                  activeTab === "preschool"
+                    ? "text-black"
+                    : "text-gray-400 hover:text-gray-600"
+                )}
+              >
+                Pre School
+                {activeTab === "preschool" && (
+                  <motion.div
+                    layoutId="activeTab"
+                    className="absolute bottom-0 left-0 h-[3px] w-full bg-black"
+                    transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                  />
+                )}
+              </button>
             </div>
           </div>
         </div>
+
+        {/* Carousel */}
+        <ProgramCarousel items={data} />
       </div>
     </section>
   );
