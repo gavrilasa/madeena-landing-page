@@ -1,10 +1,10 @@
-// src/components/CurriculumContent.tsx
+// src/components/academic/CurriculumContent.tsx
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, BookOpen, GraduationCap } from "lucide-react"; 
-import { cn } from "../../lib/utils";
+import { motion } from "framer-motion";
+import { BookOpen, GraduationCap } from "lucide-react";
+import { cn } from "~/lib/utils";
+import Image from "next/image";
 
 // Tipe data untuk item kurikulum
 interface CurriculumItem {
@@ -15,13 +15,45 @@ interface CurriculumItem {
 }
 
 interface CurriculumContentProps {
-  level: "preschool" | "primary"; // String yang dapat diserialisasi
+  level: "preschool" | "primary";
   data: CurriculumItem[];
   title: string;
   subtitle: string;
   visualAlt: string;
-  visualImage: string; // URL gambar visual
+  visualImage: string;
 }
+
+const Illustration = (props: React.SVGProps<SVGSVGElement>) => {
+  return (
+    <svg
+      width="22"
+      height="20"
+      viewBox="0 0 22 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...props}
+    >
+      <line
+        x1="0.607422"
+        y1="2.57422"
+        x2="21.5762"
+        y2="2.57422"
+        stroke="currentColor"
+        strokeWidth="4"
+        className="text-primary/20"
+      />
+      <line
+        x1="19.5762"
+        y1="19.624"
+        x2="19.5762"
+        y2="4.57422"
+        stroke="currentColor"
+        strokeWidth="4"
+        className="text-primary/20"
+      />
+    </svg>
+  );
+};
 
 export default function CurriculumContent({
   level,
@@ -31,133 +63,67 @@ export default function CurriculumContent({
   visualAlt,
   visualImage,
 }: CurriculumContentProps) {
-  const [openFeatureIndex, setOpenFeatureIndex] = useState<number | null>(0);
-
-  const toggleFeature = (index: number) => {
-    setOpenFeatureIndex(openFeatureIndex === index ? null : index);
-  };
-
-  // Logika penentuan Icon dilakukan di dalam Client Component
-  const Icon = level === 'primary' ? GraduationCap : BookOpen;
+  const Icon = level === "primary" ? GraduationCap : BookOpen;
 
   return (
-    <section className="py-16 md:py-24 bg-white overflow-hidden">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header Section */}
-        <div className="text-center max-w-4xl mx-auto mb-16">
-          <p className="text-sm font-semibold text-primary uppercase tracking-wider mb-2 flex justify-center items-center gap-2">
-            <Icon className="w-5 h-5" /> {/* Menggunakan Icon yang sudah ditentukan */}
-            Program Kurikulum
-          </p>
-          <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl text-gray-900 mb-4">
-            {title}
-          </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            {subtitle}
-          </p>
-        </div>
+    <section className="bg-white py-16 md:py-24">
+      <div className="container mx-auto px-6">
 
-        {/* Layout: Kiri (Visual) - Kanan (Accordion) */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
-          {/* Visual Side - Responsif */}
-          <motion.div
-            key={level} // Animasi transisi saat berpindah level jika komponen ini digunakan untuk toggling
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
-            className="relative aspect-4/3 rounded-2xl overflow-hidden shadow-2xl group border-4 border-white"
-          >
-            <img
-              // Ganti src ini dengan path gambar dari folder public Anda
-              src={visualImage}
-              alt={visualAlt}
-              className="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-700"
-            />
-            <div className="absolute inset-0 bg-linear-to-t from-primary/70 to-transparent flex items-end p-8">
-              <h3 className="text-white text-3xl font-bold">
-                {level === 'primary' ? 'Primary' : 'Preschool'} Excellence
-              </h3>
-            </div>
-          </motion.div>
-
-          {/* Accordion List Side (Features) - Responsif */}
-          <div className="space-y-4">
-            {data.map((item, index) => (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
-                className={cn(
-                  "border rounded-xl overflow-hidden transition-all duration-300",
-                  openFeatureIndex === index
-                    ? "border-primary bg-primary/5 shadow-lg"
-                    : "border-gray-200 bg-white hover:border-primary/20"
-                )}
-              >
-                <button
-                  onClick={() => toggleFeature(index)}
-                  className="w-full flex items-center justify-between p-5 text-left group"
-                >
-                  <div className="flex items-center gap-5">
-                    <span
-                      className={cn(
-                        "text-2xl font-bold transition-colors min-w-[30px] text-center",
-                        openFeatureIndex === index
-                          ? "text-primary"
-                          : "text-gray-300 group-hover:text-primary/60"
-                      )}
-                    >
-                      {item.number}
-                    </span>
-                    <h3
-                      className={cn(
-                        "text-lg font-semibold transition-colors",
-                        openFeatureIndex === index
-                          ? "text-gray-900"
-                          : "text-gray-600 group-hover:text-gray-900"
-                      )}
-                    >
-                      {item.title}
-                    </h3>
-                  </div>
-                  <div
-                    className={cn(
-                      "p-2 rounded-full transition-colors duration-300",
-                      openFeatureIndex === index
-                        ? "bg-primary text-white"
-                        : "bg-gray-100 text-gray-500 group-hover:bg-primary/10 group-hover:text-primary"
-                    )}
-                  >
-                    <ChevronDown
-                      className={cn(
-                        "w-5 h-5 transition-transform duration-300",
-                        openFeatureIndex === index ? "rotate-180" : ""
-                      )}
-                    />
-                  </div>
-                </button>
-
-                <AnimatePresence>
-                  {openFeatureIndex === index && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3, ease: "easeInOut" }}
-                      className="overflow-hidden" 
-                    >
-                      <div className="px-5 pb-5 pl-16">
-                        <p className="text-gray-600 leading-relaxed border-l-2 border-primary/30 pl-4">
-                          {item.description}
-                        </p>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.div>
-            ))}
+        {/* Content Grid */}
+        <div className="grid py-10 grid-cols-1 gap-12 lg:grid-cols-6 lg:gap-20">
+          {/* Left Side: Sticky Image */}
+          <div className="col-span-2 h-fit lg:sticky lg:top-24">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5 }}
+              className="relative aspect-3/4 w-full overflow-hidden rounded-2xl shadow-2xl lg:aspect-auto lg:h-[600px]"
+            >
+              <Image
+                src={visualImage}
+                alt={visualAlt}
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 33vw"
+              />
+              <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent" />
+              <div className="absolute bottom-0 left-0 p-8">
+                <div className="mb-2 flex h-12 w-12 items-center justify-center rounded-xl bg-white/20 backdrop-blur-md">
+                  <Icon className="h-6 w-6 text-white" />
+                </div>
+                <h3 className="text-2xl font-bold text-white">
+                  {level === "primary" ? "Primary" : "Preschool"} Excellence
+                </h3>
+              </div>
+            </motion.div>
           </div>
+
+          {/* Right Side: Process List */}
+          <ul className="col-span-4 flex w-full flex-col lg:pl-10">
+            {data.map((item, index) => (
+              <li
+                key={item.id}
+                className="relative flex flex-col gap-6 border-t border-gray-200 py-10 md:flex-row md:gap-10 first:border-t-0 lg:first:border-t"
+              >
+                <Illustration className="absolute top-10 right-0 hidden md:block" />
+
+                {/* Number */}
+                <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-gray-100 text-xl font-bold tracking-tight text-gray-900">
+                  {item.number}
+                </div>
+
+                {/* Content */}
+                <div className="flex-1 pr-0 md:pr-12">
+                  <h3 className="mb-3 text-2xl font-bold tracking-tight text-gray-900">
+                    {item.title}
+                  </h3>
+                  <p className="text-lg leading-relaxed text-gray-600">
+                    {item.description}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>

@@ -11,7 +11,8 @@ interface SubmenuItem {
   href: string;
   label: string;
   description?: string;
-  icon?: "BookOpenIcon" | "LifeBuoyIcon" | "InfoIcon";
+  // Allow any string so we can use any Lucide icon name
+  icon?: string;
 }
 
 export const navigationLinks: NavigationItem[] = [
@@ -26,26 +27,31 @@ export const navigationLinks: NavigationItem[] = [
         href: "/about/history",
         label: "Sejarah",
         description: "Perjalanan berdirinya Al Madeena.",
+        icon: "History",
       },
       {
         href: "/about/vision-mission",
         label: "Visi dan Misi",
         description: "Arah, tujuan, dan nilai inti sekolah.",
+        icon: "Target",
       },
       {
         href: "/about/foundation-board",
         label: "Dewan Yayasan",
         description: "Struktur pengurus yayasan.",
+        icon: "Users",
       },
       {
         href: "/about/staff-profile",
         label: "Guru & Karyawan",
         description: "Profil pendidik dan staf.",
+        icon: "UserCheck",
       },
       {
         href: "/about/partners",
         label: "Partner Kerjasama",
         description: "Kolaborasi institusi dan program.",
+        icon: "Handshake",
       },
     ],
   },
@@ -59,31 +65,37 @@ export const navigationLinks: NavigationItem[] = [
         href: "/preschool/programs",
         label: "Program Unggulan",
         description: "Program unggulan untuk menumbuhkan kecintaan belajar.",
+        icon: "Star",
       },
       {
         href: "/preschool/curriculum",
         label: "Kurikulum",
         description: "Kurikulum integratif untuk potensi anak usia dini.",
+        icon: "BookOpen",
       },
       {
         href: "/preschool/achievements",
         label: "Prestasi",
         description: "Prestasi dan semangat kompetisi siswa.",
+        icon: "Trophy",
       },
       {
         href: "/preschool/activities",
         label: "Kegiatan",
         description: "Kegiatan akademik untuk potensi menyeluruh.",
+        icon: "Activity",
       },
       {
         href: "/preschool/extracurricular",
         label: "Ekstrakurikuler",
         description: "Wadah penyaluran minat, bakat, dan kreativitas.",
+        icon: "Palette",
       },
       {
         href: "/preschool/facilities",
         label: "Fasilitas",
         description: "Fasilitas modern untuk perkembangan anak.",
+        icon: "Building2",
       },
     ],
   },
@@ -97,31 +109,37 @@ export const navigationLinks: NavigationItem[] = [
         href: "/primary/programs",
         label: "Program Unggulan",
         description: "Program integrasi kurikulum Islam & internasional.",
+        icon: "Star",
       },
       {
         href: "/primary/curriculum",
         label: "Kurikulum",
         description: "Kurikulum terpadu untuk peserta didik unggul.",
+        icon: "BookOpen",
       },
       {
         href: "/primary/achievements",
         label: "Prestasi",
         description: "Prestasi akademik dan non-akademik siswa.",
+        icon: "Trophy",
       },
       {
         href: "/primary/activities",
         label: "Kegiatan",
         description: "Keseimbangan intelektual, spiritual, & sosial.",
+        icon: "Activity",
       },
       {
         href: "/primary/extracurricular",
         label: "Ekstrakurikuler",
         description: "Wadah pengembangan potensi, minat, dan bakat.",
+        icon: "Palette",
       },
       {
         href: "/primary/facilities",
         label: "Fasilitas",
         description: "Fasilitas modern untuk pembelajaran efektif.",
+        icon: "Building2",
       },
     ],
   },
@@ -134,12 +152,14 @@ export const navigationLinks: NavigationItem[] = [
       {
         href: "/news",
         label: "Berita Terbaru",
-        icon: "BookOpenIcon",
+        icon: "Newspaper",
+        description: "Informasi terkini seputar kegiatan dan prestasi sekolah.",
       },
       {
         href: "/news/gallery",
         label: "Galeri Kegiatan",
-        icon: "LifeBuoyIcon",
+        icon: "Images",
+        description: "Dokumentasi foto dan video kegiatan sekolah.",
       },
     ],
   },
@@ -152,14 +172,21 @@ export const navigationLinks: NavigationItem[] = [
       {
         href: "/registration/flow",
         label: "Alur Pendaftaran",
-        icon: "BookOpenIcon",
+        icon: "GitMerge", // Flow icon
+        description: "Panduan langkah demi langkah pendaftaran siswa baru.",
       },
       {
         href: "/registration/form",
         label: "Form Pendaftaran",
-        icon: "LifeBuoyIcon",
+        icon: "FileText",
+        description: "Formulir digital untuk pendaftaran calon siswa.",
       },
-      { href: "/registration/faq", label: "FAQ", icon: "InfoIcon" },
+      {
+        href: "/contact/faq",
+        label: "FAQ",
+        icon: "HelpCircle",
+        description: "Pertanyaan yang sering diajukan seputar pendaftaran.",
+      },
     ],
   },
 
@@ -168,11 +195,17 @@ export const navigationLinks: NavigationItem[] = [
     submenu: true,
     type: "icon",
     items: [
-      { href: "/contact", label: "Kontak & Alamat", icon: "InfoIcon" },
+      {
+        href: "/contact",
+        label: "Kontak & Alamat",
+        icon: "MapPin",
+        description: "Informasi kontak dan lokasi sekolah kami.",
+      },
       {
         href: "/career",
         label: "Karir (Lowongan Pekerjaan)",
-        icon: "BookOpenIcon",
+        icon: "Briefcase",
+        description: "Bergabunglah dengan tim pendidik dan staf kami.",
       },
     ],
   },

@@ -48,7 +48,7 @@ const fadeIn = {
 export default function AboutQuickLinks() {
   return (
     <motion.div {...fadeIn}>
-      <div className="container mx-auto border-t border-gray-100 px-6 py-16 md:py-24">
+      <div className="container mx-auto px-6 py-16 md:py-24">
         <h2 className="mb-10 text-center text-3xl font-bold text-neutral-900 md:text-left">
           Jelajahi Tentang Kami
         </h2>
