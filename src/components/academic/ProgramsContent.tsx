@@ -5,7 +5,6 @@ import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { programsData } from "~/data/academic/programsData";
-import { cn } from "~/lib/utils";
 
 interface ProgramsContentProps {
   category: "preschool" | "primary";
@@ -25,7 +24,6 @@ export default function ProgramsContent({ category }: ProgramsContentProps) {
   return (
     <section className="w-full bg-white py-16 md:py-24">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-
         {/* Content Grid */}
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
           {data.map((item, index) => {
@@ -52,7 +50,7 @@ export default function ProgramsContent({ category }: ProgramsContentProps) {
 
                 {/* Dark Overlay for Readability - Gradient matches reference style */}
                 <div className="absolute inset-0 bg-black/60 transition-opacity group-hover:bg-black/70" />
-                
+
                 {/* Top: Icon */}
                 <div className="relative z-10 flex h-10 w-10 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm">
                   <Icon className="h-5 w-5 text-white" />
@@ -60,10 +58,10 @@ export default function ProgramsContent({ category }: ProgramsContentProps) {
 
                 {/* Middle: Content */}
                 <div className="relative z-10 mt-auto mb-6">
-                  <h3 className="mb-2 text-xl font-bold leading-tight md:text-2xl">
+                  <h3 className="mb-2 text-xl leading-tight font-bold md:text-2xl">
                     {item.title}
                   </h3>
-                  <p className="text-sm text-white/80 line-clamp-3">
+                  <p className="line-clamp-3 text-sm text-white/80">
                     {item.description}
                   </p>
                 </div>

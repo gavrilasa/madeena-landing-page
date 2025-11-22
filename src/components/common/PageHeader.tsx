@@ -31,7 +31,7 @@ export default function PageHeader({
         <div className="text-center">
           <div className="relative inline-block max-w-full">
             {/* Updated title sizing for better mobile responsiveness */}
-            <h1 className="font-chalk relative mb-4 text-3xl font-bold text-white sm:text-4xl md:text-6xl lg:text-7xl leading-tight wrap-break-word">
+            <h1 className="font-chalk relative mb-4 text-3xl leading-tight font-bold wrap-break-word text-white sm:text-4xl md:text-6xl lg:text-7xl">
               <span className="relative inline-block">
                 {title}
                 <div className="absolute right-0 -bottom-2 left-0 h-1 -rotate-1 transform bg-yellow-300 opacity-70"></div>
@@ -46,7 +46,7 @@ export default function PageHeader({
             </div>
           </div>
           {/* Updated subtitle sizing */}
-          <p className="font-handwriting mt-4 text-sm text-white/90 sm:mt-6 sm:text-base md:text-xl max-w-[90vw] mx-auto">
+          <p className="font-handwriting mx-auto mt-4 max-w-prose text-sm text-white/90 sm:mt-6 sm:text-base md:text-xl">
             {subtitle}
           </p>
         </div>
