@@ -99,7 +99,7 @@ export default function AchievementsContent({
           whileInView="whileInView"
           viewport={{ once: true }}
           variants={fadeIn}
-          className="relative rounded-3xl bg-gray-50 p-8 text-center md:p-12 border border-gray-100"
+          className="relative p-8 text-center md:p-12"
         >
           <Quote className="mx-auto mb-4 h-8 w-8 text-gray-300" />
           <div

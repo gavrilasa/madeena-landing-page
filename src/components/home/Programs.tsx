@@ -15,7 +15,7 @@ export default function Programs() {
   const data = programsData[activeTab];
 
   return (
-    <section className="w-full bg-white py-16 md:py-24">
+    <section className="w-full bg-white py-4 md:py-8">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header & Tabs */}
         <div className="mb-4 flex flex-col gap-6 md:mb-8">

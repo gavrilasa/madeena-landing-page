@@ -71,16 +71,6 @@ export function ContactContent() {
                     Kota Cirebon 45123
                   </p>
                 </div>
-                <Button variant="outline" className="w-full group" asChild>
-                  <a 
-                    href="https://maps.google.com" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                  >
-                    Lihat di Google Maps
-                    <ArrowRight className="ml-2 size-4 transition-transform group-hover:translate-x-1" />
-                  </a>
-                </Button>
               </CardContent>
             </Card>
           </motion.div>
@@ -96,7 +86,7 @@ export function ContactContent() {
             <Card className="h-full hover:shadow-md transition-shadow duration-300 border-border bg-card">
               <CardHeader>
                 <div className="flex items-center gap-3 mb-2">
-                  <div className="flex size-10 items-center justify-center rounded-lg bg-green-500/10 text-green-600">
+                  <div className="flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
                     <Phone className="size-5" />
                   </div>
                   <CardTitle className="text-xl">WhatsApp & Telepon</CardTitle>
@@ -142,7 +132,7 @@ export function ContactContent() {
             <Card className="h-full hover:shadow-md transition-shadow duration-300 border-border bg-card">
               <CardHeader>
                 <div className="flex items-center gap-3 mb-2">
-                  <div className="flex size-10 items-center justify-center rounded-lg bg-blue-500/10 text-blue-600">
+                  <div className="flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
                     <Mail className="size-5" />
                   </div>
                   <CardTitle className="text-xl">Email Korespondensi</CardTitle>
@@ -182,7 +172,7 @@ export function ContactContent() {
             <Card className="h-full hover:shadow-md transition-shadow duration-300 border-border bg-card">
               <CardHeader>
                 <div className="flex items-center gap-3 mb-2">
-                  <div className="flex size-10 items-center justify-center rounded-lg bg-purple-500/10 text-purple-600">
+                  <div className="flex size-10 items-center justify-center rounded-lg bg-primary/10 text-primary">
                     <Instagram className="size-5" />
                   </div>
                   <CardTitle className="text-xl">Sosial Media</CardTitle>
@@ -199,7 +189,7 @@ export function ContactContent() {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <Instagram className="mr-2 size-5 text-pink-600" />
+                      <Instagram className="mr-2 size-5 text-primary" />
                       <span className="font-medium">@almadeena.islamic.school</span>
                     </a>
                   </Button>
@@ -209,7 +199,7 @@ export function ContactContent() {
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <Youtube className="mr-2 size-5 text-red-600" />
+                      <Youtube className="mr-2 size-5 text-primary" />
                       <span className="font-medium">Al Madeena Islamic School</span>
                     </a>
                   </Button>
