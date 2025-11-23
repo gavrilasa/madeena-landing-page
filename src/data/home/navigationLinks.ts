@@ -175,7 +175,7 @@ export const navigationLinks: NavigationItem[] = [
         description: "Panduan langkah demi langkah pendaftaran siswa baru.",
       },
       {
-        href: "/contact/faq",
+        href: "/registration/faq",
         label: "FAQ",
         icon: "HelpCircle",
         description: "Pertanyaan yang sering diajukan seputar pendaftaran.",
@@ -189,13 +189,13 @@ export const navigationLinks: NavigationItem[] = [
     type: "icon",
     items: [
       {
-        href: "/contact",
+        href: "/contact/information",
         label: "Kontak & Alamat",
         icon: "MapPin",
         description: "Informasi kontak dan lokasi sekolah kami.",
       },
       {
-        href: "/career",
+        href: "/contact/career",
         label: "Karir (Lowongan Pekerjaan)",
         icon: "Briefcase",
         description: "Bergabunglah dengan tim pendidik dan staf kami.",
