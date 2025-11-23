@@ -1,78 +1,96 @@
 export const extracurricularData = {
-    preschool: [
-      {
-        id: 1,
-        title: "Little Chef",
-        description:
-          "Mengasah kemandirian dan kreativitas anak melalui kegiatan memasak sederhana yang menyenangkan dan aman. Anak-anak belajar mengenal bahan makanan dan bekerja sama.",
-        image:
-          "https://images.unsplash.com/photo-1628336707631-7966e01230c3?q=80&w=3570&auto=format&fit=crop",
-        link: "#",
-      },
-      {
-        id: 2,
-        title: "Creative Art & Craft",
-        description:
-          "Wadah ekspresi diri bagi anak-anak untuk berkreasi dengan warna, bentuk, dan tekstur. Melatih motorik halus dan imajinasi melalui berbagai proyek seni tangan.",
-        image:
-          "https://images.unsplash.com/photo-1596464716127-f9a82741cacb?q=80&w=3552&auto=format&fit=crop",
-        link: "#",
-      },
-      {
-        id: 3,
-        title: "Swimming Class",
-        description:
-          "Pengenalan air dan teknik dasar berenang yang menyenangkan. Membangun keberanian, kepercayaan diri, dan kesehatan fisik anak sejak dini.",
-        image:
-          "https://images.unsplash.com/photo-1530549387789-4c1017266635?q=80&w=3570&auto=format&fit=crop",
-        link: "#",
-      },
-      {
-        id: 4,
-        title: "Gardening Fun",
-        description:
-          "Mengajarkan anak mencintai alam dengan kegiatan menanam dan merawat tanaman. Menumbuhkan rasa tanggung jawab dan kepedulian terhadap lingkungan.",
-        image:
-          "https://images.unsplash.com/photo-1592419044706-39796d40f98c?q=80&w=3425&auto=format&fit=crop",
-        link: "#",
-      },
-    ],
-    primary: [
-      {
-        id: 1,
-        title: "Robotics & Coding",
-        description:
-          "Memperkenalkan siswa pada dunia teknologi masa depan melalui pemrograman dasar dan perakitan robot. Melatih logika berpikir sistematis dan pemecahan masalah.",
-        image:
-          "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=3570&auto=format&fit=crop",
-        link: "#",
-      },
-      {
-        id: 2,
-        title: "Archery (Panahan)",
-        description:
-          "Olahraga sunnah yang melatih fokus, ketenangan, dan kekuatan fisik. Membangun karakter disiplin dan konsentrasi tinggi pada siswa.",
-        image:
-          "https://images.unsplash.com/photo-1554189097-ffe63e675e99?q=80&w=3571&auto=format&fit=crop",
-        link: "#",
-      },
-      {
-        id: 3,
-        title: "Public Speaking & Tahfidz",
-        description:
-          "Mengembangkan kemampuan komunikasi yang percaya diri dan santun, dipadukan dengan program penguatan hafalan Al-Qur'an untuk membentuk pemimpin masa depan.",
-        image:
-          "https://images.unsplash.com/photo-1544531586-fde5298cdd40?q=80&w=3570&auto=format&fit=crop",
-        link: "#",
-      },
-      {
-        id: 4,
-        title: "Futsal & Sports Club",
-        description:
-          "Wadah penyaluran energi positif dan bakat olahraga siswa. Mengajarkan kerjasama tim, sportivitas, dan menjaga kebugaran tubuh.",
-        image:
-          "https://images.unsplash.com/photo-1575361204480-aadea25e6e68?q=80&w=3571&auto=format&fit=crop",
-        link: "#",
-      },
-    ],
-  };
+  preschool: [
+    {
+      id: 1,
+      title: "Qiroati",
+      description:
+        "Penguatan kemampuan membaca Al-Qur'an dengan tajwid yang benar serta pembiasaan cinta terhadap kalam Allah sejak usia dini.",
+      image:
+        "https://images.unsplash.com/photo-1609599006353-e629aaabfeae?q=80&w=1000&auto=format&fit=crop",
+      link: "#",
+    },
+    {
+      id: 2,
+      title: "Robotic",
+      description:
+        "Mengenalkan konsep teknologi dan sains sederhana melalui permainan robotik yang melatih logika berpikir, kreativitas, serta kemampuan problem solving anak.",
+      image:
+        "https://images.unsplash.com/photo-1561557944-6e7860d1a7eb?q=80&w=1000&auto=format&fit=crop",
+      link: "#",
+    },
+    {
+      id: 3,
+      title: "Tari (Nari)",
+      description:
+        "Mengembangkan ekspresi diri, rasa percaya diri, dan koordinasi motorik anak melalui gerakan tari yang ceria dan edukatif.",
+      image:
+        "https://images.unsplash.com/photo-1518834107812-67b0b7c58434?q=80&w=1000&auto=format&fit=crop",
+      link: "#",
+    },
+    {
+      id: 4,
+      title: "Taekwondo",
+      description:
+        "Melatih kedisiplinan, fokus, serta kekuatan fisik dan mental melalui seni bela diri yang dikemas sesuai dengan usia anak.",
+      image:
+        "https://images.unsplash.com/photo-1555597673-b21d5c935865?q=80&w=1000&auto=format&fit=crop",
+      link: "#",
+    },
+    {
+      id: 5,
+      title: "English Club",
+      description:
+        "Mengasah kemampuan komunikasi global anak dengan kegiatan interaktif seperti lagu, permainan, dan percakapan sederhana dalam Bahasa Inggris.",
+      image:
+        "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=1000&auto=format&fit=crop",
+      link: "#",
+    },
+  ],
+  primary: [
+    {
+      id: 1,
+      title: "English Club",
+      description:
+        "Mengasah kemampuan berbahasa Inggris melalui percakapan, permainan edukatif, dan proyek kreatif yang interaktif.",
+      image:
+        "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=1000&auto=format&fit=crop",
+      link: "#",
+    },
+    {
+      id: 2,
+      title: "Math Club",
+      description:
+        "Menumbuhkan kecintaan terhadap matematika dengan pendekatan eksploratif, logis, dan problem solving yang menantang.",
+      image:
+        "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?q=80&w=1000&auto=format&fit=crop",
+      link: "#",
+    },
+    {
+      id: 3,
+      title: "Coding Class",
+      description:
+        "Memperkenalkan dunia teknologi dan logika pemrograman sejak dini agar siswa siap menghadapi era digital dengan kreatif dan inovatif.",
+      image:
+        "https://images.unsplash.com/photo-1580894894513-541e068a3e2b?q=80&w=1000&auto=format&fit=crop",
+      link: "#",
+    },
+    {
+      id: 4,
+      title: "Taekwondo",
+      description:
+        "Membentuk kedisiplinan, keberanian, dan semangat pantang menyerah melalui seni bela diri yang menanamkan nilai sportivitas dan kontrol diri.",
+      image:
+        "https://images.unsplash.com/photo-1517438476312-10d79c077509?q=80&w=1000&auto=format&fit=crop",
+      link: "#",
+    },
+    {
+      id: 5,
+      title: "Seni Tari (Nari)",
+      description:
+        "Mengembangkan ekspresi diri, keindahan gerak, dan rasa percaya diri melalui kegiatan menari yang menggembirakan dan bernilai budaya.",
+      image:
+        "https://images.unsplash.com/photo-1535525153412-5a42439a210d?q=80&w=1000&auto=format&fit=crop",
+      link: "#",
+    },
+  ],
+};

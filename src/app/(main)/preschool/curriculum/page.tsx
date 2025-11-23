@@ -3,6 +3,7 @@
 import PageHeader from "~/components/common/PageHeader";
 import CurriculumContent from "~/components/academic/CurriculumContent";
 import { curriculumData } from "~/data/academic/curriculumData";
+import PreschoolQuickLinks from "~/components/academic/PreschoolQuickLinks";
 
 export const metadata = {
   title: "Kurikulum Preschool - Al Madeena",
@@ -30,6 +31,7 @@ export default function PreschoolCurriculumPage() {
         visualAlt="Gambar anak-anak preschool sedang bermain di kelas"
         visualImage="https://res.cloudinary.com/dah2v3xbg/image/upload/v1763224680/Preschool-Academic_jt56ik.webp"
       />
+      <PreschoolQuickLinks />
     </div>
   );
 }

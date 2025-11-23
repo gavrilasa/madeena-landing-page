@@ -113,9 +113,11 @@ export default function CurriculumContent({
                   <h3 className="mb-3 text-2xl font-bold tracking-tight text-gray-900">
                     {item.title}
                   </h3>
-                  <p className="text-lg leading-relaxed text-gray-600">
-                    {item.description}
-                  </p>
+                  {/* Modified to use dangerouslySetInnerHTML for supporting lists and bold text */}
+                  <div 
+                    className="text-lg leading-relaxed text-gray-600"
+                    dangerouslySetInnerHTML={{ __html: item.description }}
+                  />
                 </div>
               </li>
             ))}

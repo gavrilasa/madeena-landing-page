@@ -1,5 +1,6 @@
 import AchievementsContent from "~/components/academic/AchievementsContent";
 import PageHeader from "~/components/common/PageHeader";
+import PreschoolQuickLinks from "~/components/academic/PreschoolQuickLinks";
 
 export default function PreschoolAchievementsPage() {
   return (
@@ -10,6 +11,7 @@ export default function PreschoolAchievementsPage() {
         imageUrl="https://res.cloudinary.com/dah2v3xbg/image/upload/v1763225823/TemplatePageHeader_tnecsg.webp"
       />
       <AchievementsContent category="preschool" />
+      <PreschoolQuickLinks />
     </main>
   );
 }

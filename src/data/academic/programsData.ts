@@ -1,3 +1,4 @@
+// src/data/academic/programsData.ts
 import {
   BookOpen,
   Globe,
@@ -6,6 +7,8 @@ import {
   Award,
   Users,
   Smile,
+  Book,
+  PenTool,
 } from "lucide-react";
 
 export const programsData = {
@@ -17,7 +20,7 @@ export const programsData = {
         "Menanamkan kecintaan pada Al-Qur'an sejak dini melalui hafalan surat-surat pendek dengan metode leveling. Anak-anak dibimbing agar hafalannya kuat, fasih, dan tertanam dalam hati.",
       icon: BookOpen,
       image:
-        "https://res.cloudinary.com/dah2v3xbg/image/upload/v1763224535/Primary-Academic_yadxyh.webp",
+        "https://images.unsplash.com/photo-1609599006353-e629aaabfeae?q=80&w=1000&auto=format&fit=crop",
       link: "#",
       cta: "Learn more",
     },
@@ -26,9 +29,9 @@ export const programsData = {
       title: "Qiroati Learning",
       description:
         "Mengenalkan bacaan Al-Qur'an dengan metode Qiroati yang sistematis dan sesuai kemampuan anak. Tujuannya agar anak mampu membaca Al-Qur'an dengan tartil dan cinta terhadap kalamullah.",
-      icon: Star,
+      icon: Book,
       image:
-        "https://res.cloudinary.com/dah2v3xbg/image/upload/v1763224535/Primary-Academic_yadxyh.webp",
+        "https://images.unsplash.com/photo-1584817790025-988c55747030?q=80&w=1000&auto=format&fit=crop",
       link: "#",
       cta: "Discover method",
     },
@@ -39,7 +42,7 @@ export const programsData = {
         "Menggunakan bahasa Indonesia dan Inggris dalam aktivitas sehari-hari untuk membiasakan anak berkomunikasi dengan percaya diri di lingkungan global tanpa meninggalkan nilai-nilai Islami.",
       icon: Globe,
       image:
-        "https://res.cloudinary.com/dah2v3xbg/image/upload/v1763224535/Primary-Academic_yadxyh.webp",
+        "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=1000&auto=format&fit=crop",
       link: "#",
       cta: "Explore language",
     },
@@ -50,7 +53,7 @@ export const programsData = {
         "Pembelajaran berbasis sentra yang melibatkan anak dalam aktivitas bermain sambil belajar sesuai tahap perkembangan — seperti sentra ibadah, seni, balok, persiapan, bahan alam, dan peran. Setiap kegiatan dirancang untuk mengembangkan kecerdasan majemuk anak.",
       icon: Smile,
       image:
-        "https://res.cloudinary.com/dah2v3xbg/image/upload/v1763224535/Primary-Academic_yadxyh.webp",
+        "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?q=80&w=1000&auto=format&fit=crop",
       link: "#",
       cta: "See centers",
     },
@@ -61,7 +64,7 @@ export const programsData = {
         "Menanamkan nilai-nilai keislaman dan akhlak mulia melalui pembiasaan harian: doa, adab, shalat berjamaah, dan perilaku baik dalam keseharian. Anak dibimbing menjadi pribadi beriman, santun, dan peduli terhadap sesama.",
       icon: Heart,
       image:
-        "https://res.cloudinary.com/dah2v3xbg/image/upload/v1763224535/Primary-Academic_yadxyh.webp",
+        "https://images.unsplash.com/photo-1566004100631-35d015d6a491?q=80&w=1000&auto=format&fit=crop",
       link: "#",
       cta: "Discover values",
     },
@@ -69,67 +72,89 @@ export const programsData = {
   primary: [
     {
       id: 1,
-      title: "Tahfizh Program",
+      title: "Integrasi Pendidikan",
       description:
-        "Membiasakan siswa mencintai dan menghafal Al-Qur'an dengan metode yang menyenangkan, sistematis, dan sesuai kemampuan. Program ini menanamkan nilai kesabaran, kedisiplinan, serta kecintaan kepada kalamullah.",
-      icon: BookOpen,
+        "Menghadirkan program unggulan yang mengintegrasikan pendidikan Islam, kurikulum nasional, dan standar internasional untuk membentuk generasi berilmu, berakhlak, dan siap bersaing di era global.",
+      icon: Users,
       image:
-        "https://res.cloudinary.com/dah2v3xbg/image/upload/v1763224680/Preschool-Academic_jt56ik.webp",
+        "https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=1000&auto=format&fit=crop",
       link: "#",
       cta: "Learn more",
     },
     {
       id: 2,
-      title: "Qiroati Learning",
+      title: "Holistic Development",
       description:
-        "Mengajarkan kemampuan membaca Al-Qur'an menggunakan metode Qiroati, sehingga siswa dapat membaca dengan tartil dan fasih. Pembelajaran dilakukan secara bertahap dengan pendampingan guru bersertifikat (Syahadah).",
+        "Setiap program dirancang secara holistik agar siswa berkembang dalam aspek spiritual, akademik, sosial, dan karakter secara seimbang.",
       icon: Star,
       image:
-        "https://res.cloudinary.com/dah2v3xbg/image/upload/v1763224680/Preschool-Academic_jt56ik.webp",
+        "https://images.unsplash.com/photo-1577896334614-50170c63a8c9?q=80&w=1000&auto=format&fit=crop",
       link: "#",
-      cta: "See method",
+      cta: "See approach",
     },
     {
       id: 3,
-      title: "Bilingual Environment",
+      title: "Tahfizh Program",
       description:
-        "Menerapkan lingkungan belajar dwibahasa (Bahasa Indonesia dan Bahasa Inggris) untuk menumbuhkan kemampuan komunikasi global tanpa meninggalkan identitas keislaman. Aktivitas bilingual diterapkan dalam pembelajaran dan kegiatan harian.",
-      icon: Globe,
+        "Membiasakan siswa mencintai dan menghafal Al-Qur'an dengan metode yang menyenangkan, sistematis, dan sesuai kemampuan.",
+      icon: BookOpen,
       image:
-        "https://res.cloudinary.com/dah2v3xbg/image/upload/v1763224680/Preschool-Academic_jt56ik.webp",
+        "https://images.unsplash.com/photo-1609599006353-e629aaabfeae?q=80&w=1000&auto=format&fit=crop",
       link: "#",
       cta: "Read more",
     },
     {
       id: 4,
+      title: "Qiroati Learning",
+      description:
+        "Mengajarkan kemampuan membaca Al-Qur'an menggunakan metode Qiroati, sehingga siswa dapat membaca dengan tartil dan fasih.",
+      icon: Book,
+      image:
+        "https://images.unsplash.com/photo-1584817790025-988c55747030?q=80&w=1000&auto=format&fit=crop",
+      link: "#",
+      cta: "See method",
+    },
+    {
+      id: 5,
+      title: "Bilingual Environment",
+      description:
+        "Menerapkan lingkungan belajar dwibahasa (Bahasa Indonesia dan Bahasa Inggris) untuk menumbuhkan kemampuan komunikasi global.",
+      icon: Globe,
+      image:
+        "https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=1000&auto=format&fit=crop",
+      link: "#",
+      cta: "Explore language",
+    },
+    {
+      id: 6,
       title: "Cambridge-Based Assessment",
       description:
-        "Menggunakan sistem penilaian berbasis Cambridge untuk memantau perkembangan akademik siswa sesuai standar internasional. Penilaian ini mendukung pembelajaran aktif, berpikir kritis, dan kemampuan problem solving.",
+        "Menggunakan sistem penilaian berbasis Cambridge untuk memantau perkembangan akademik siswa sesuai standar internasional.",
       icon: Award,
       image:
-        "https://res.cloudinary.com/dah2v3xbg/image/upload/v1763224680/Preschool-Academic_jt56ik.webp",
+        "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?q=80&w=1000&auto=format&fit=crop",
       link: "#",
       cta: "See achievements",
     },
     {
-      id: 5,
+      id: 7,
       title: "Islamic Character Building",
       description:
-        "Menanamkan nilai-nilai akhlakul karimah melalui pembiasaan ibadah, adab, dan kegiatan keislaman. Program ini membantu siswa menjadi pribadi beriman, santun, disiplin, dan peduli terhadap sesama.",
+        "Menanamkan nilai-nilai akhlakul karimah melalui pembiasaan ibadah, adab, dan kegiatan keislaman sehari-hari.",
       icon: Heart,
       image:
-        "https://res.cloudinary.com/dah2v3xbg/image/upload/v1763224680/Preschool-Academic_jt56ik.webp",
+        "https://images.unsplash.com/photo-1542810634-71277d95dcbb?q=80&w=1000&auto=format&fit=crop",
       link: "#",
       cta: "Discover values",
     },
     {
-      id: 6,
+      id: 8,
       title: "Kurikulum Agama / Madrasah",
       description:
-        "Memperkaya pembelajaran dengan kurikulum agama yang komprehensif, mencakup aqidah, fiqih, akhlak, dan sejarah Islam. Siswa diarahkan untuk memahami dan mengamalkan ajaran Islam dalam kehidupan sehari-hari dengan penuh kesadaran dan kecintaan.",
-      icon: Users,
+        "Memperkaya pembelajaran dengan kurikulum agama yang komprehensif, mencakup aqidah, fiqih, akhlak, dan sejarah Islam.",
+      icon: PenTool,
       image:
-        "https://res.cloudinary.com/dah2v3xbg/image/upload/v1763224680/Preschool-Academic_jt56ik.webp",
+        "https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?q=80&w=1000&auto=format&fit=crop",
       link: "#",
       cta: "View curriculum",
     },

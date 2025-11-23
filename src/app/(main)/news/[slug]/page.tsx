@@ -9,6 +9,7 @@ import ImageExtension from "@tiptap/extension-image";
 import { type JSONContent } from "@tiptap/core";
 import { Badge } from "~/components/ui/badge";
 import { NewsCard } from "~/components/news/NewsCard";
+import PageHeader from "~/components/common/PageHeader";
 
 interface NewsDetailPageProps {
   params: Promise<{
@@ -76,49 +77,57 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
   });
 
   return (
-    <main className="container mx-auto max-w-6xl px-4 py-16 pt-32 sm:py-24 sm:pt-40">
-      <article className="flex flex-col items-center gap-8">
-        <header className="flex max-w-4xl flex-col items-center gap-4">
-          <Badge variant="outline" className="text-md px-4 py-1">
-            News
-          </Badge>
-          <h1 className="text-primary text-center text-3xl leading-tight font-bold wrap-break-word md:text-5xl">
-            {article.title}
-          </h1>
-          <p className="text-muted-foreground">
-            {formatDate(article.publishedAt)}
-          </p>
-        </header>
+    <div className="bg-white text-neutral-800">
+      <PageHeader
+        title="Berita & Kegiatan"
+        subtitle="Informasi terkini seputar kegiatan dan prestasi sekolah"
+        imageUrl="https://res.cloudinary.com/dah2v3xbg/image/upload/v1763225823/TemplatePageHeader_tnecsg.webp"
+      />
 
-        <div className="relative mb-8 aspect-video w-full max-w-5xl overflow-hidden rounded-lg">
-          <Image
-            src={article.featuredImage}
-            alt={article.title}
-            fill
-            priority
-            sizes="(max-width: 768px) 100vw, 896px"
-            className="object-cover"
-          />
-        </div>
+      <main className="container mx-auto max-w-6xl px-4 py-16 sm:py-24">
+        <article className="flex flex-col items-center gap-8">
+          <header className="flex max-w-4xl flex-col items-center gap-4">
+            <Badge variant="outline" className="text-md px-4 py-1">
+              News
+            </Badge>
+            <h1 className="text-primary text-center text-3xl leading-tight font-bold wrap-break-word md:text-5xl">
+              {article.title}
+            </h1>
+            <p className="text-muted-foreground">
+              {formatDate(article.publishedAt)}
+            </p>
+          </header>
 
-        <div
-          className="prose prose-lg dark:prose-invert max-w-prose text-justify"
-          dangerouslySetInnerHTML={{ __html: htmlContent }}
-        />
-      </article>
-
-      {moreArticles.length > 0 && (
-        <section className="mt-16 w-full border-t pt-12">
-          <h2 className="text-primary mb-8 text-2xl font-bold md:text-4xl">
-            More News
-          </h2>
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {moreArticles.map((relatedArticle) => (
-              <NewsCard key={relatedArticle.slug} article={relatedArticle} />
-            ))}
+          <div className="relative mb-8 aspect-video w-full max-w-5xl overflow-hidden rounded-lg">
+            <Image
+              src={article.featuredImage}
+              alt={article.title}
+              fill
+              priority
+              sizes="(max-width: 768px) 100vw, 896px"
+              className="object-cover"
+            />
           </div>
-        </section>
-      )}
-    </main>
+
+          <div
+            className="prose prose-lg dark:prose-invert max-w-prose text-justify"
+            dangerouslySetInnerHTML={{ __html: htmlContent }}
+          />
+        </article>
+
+        {moreArticles.length > 0 && (
+          <section className="mt-16 w-full border-t pt-12">
+            <h2 className="text-primary mb-8 text-2xl font-bold md:text-4xl">
+              More News
+            </h2>
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+              {moreArticles.map((relatedArticle) => (
+                <NewsCard key={relatedArticle.slug} article={relatedArticle} />
+              ))}
+            </div>
+          </section>
+        )}
+      </main>
+    </div>
   );
 }

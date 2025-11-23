@@ -1,8 +1,10 @@
-// src/app/news/[[...page]]/page.tsx
+// src/app/(main)/news/[[...page]]/page.tsx
 
 import { db } from "~/server/db";
 import { NewsCard } from "~/components/news/NewsCard";
 import { PaginationControls } from "~/components/common/PaginationControls";
+import PageHeader from "~/components/common/PageHeader";
+
 const ITEMS_PER_PAGE = 9;
 
 interface NewsGridPageProps {
@@ -52,37 +54,39 @@ export default async function NewsGridPage({ params }: NewsGridPageProps) {
   });
 
   return (
-    <section className="py-16 sm:py-24">
-      <div className="container mx-auto mb-16 text-center">
-        <h2 className="my-4 text-3xl font-bold">Berita Terbaru Kami</h2>
-        <p className="text-muted-foreground mx-auto max-w-3xl text-lg">
-          Baca berita, pengumuman, dan cerita terbaru dari kegiatan sekolah
-          kami.
-        </p>
-      </div>
+    <main className="bg-white text-neutral-800">
+      <PageHeader
+        title="Berita Terbaru"
+        subtitle="Baca berita, pengumuman, dan cerita terbaru dari kegiatan sekolah kami."
+        imageUrl="https://res.cloudinary.com/dah2v3xbg/image/upload/v1763225823/TemplatePageHeader_tnecsg.webp"
+      />
 
-      {articles.length > 0 ? (
-        <>
-          <div className="container mx-auto grid grid-cols-1 items-start gap-16 md:grid-cols-2 lg:grid-cols-3">
-            {articles.map((article) => (
-              <NewsCard key={article.slug} article={article} />
-            ))}
-          </div>
+      <section className="py-16 sm:py-24">
+        {articles.length > 0 ? (
+          <>
+            <div className="container mx-auto grid grid-cols-1 items-start gap-16 md:grid-cols-2 lg:grid-cols-3 px-4 sm:px-6 lg:px-8">
+              {articles.map((article) => (
+                <NewsCard key={article.slug} article={article} />
+              ))}
+            </div>
 
-          <div className="mt-24 text-center">
-            {totalPages > 1 && (
-              <PaginationControls
-                currentPage={currentPage}
-                totalPages={totalPages}
-              />
-            )}
+            <div className="container mx-auto mt-24 text-center px-4 sm:px-6 lg:px-8">
+              {totalPages > 1 && (
+                <PaginationControls
+                  currentPage={currentPage}
+                  totalPages={totalPages}
+                />
+              )}
+            </div>
+          </>
+        ) : (
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <p className="text-muted-foreground text-center">
+              Belum ada berita yang diterbitkan.
+            </p>
           </div>
-        </>
-      ) : (
-        <p className="text-muted-foreground text-center">
-          Belum ada berita yang diterbitkan.
-        </p>
-      )}
-    </section>
+        )}
+      </section>
+    </main>
   );
 }
