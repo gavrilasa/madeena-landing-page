@@ -122,9 +122,8 @@ export function NewsArticleForm({
     slug: initialData?.slug ?? "",
     summary: initialData?.summary ?? "",
     featuredImage: initialData?.featuredImage ?? "",
-    // Memberikan nilai default yang valid sesuai skema Zod
-    // FIX: Mengganti any[] dengan unknown[] untuk type assertion yang lebih aman
-    content: (initialData?.content as { type: string; content: unknown[] }) ?? {
+    // PERBAIKAN: Casting ke 'FormData["content"]' agar sesuai dengan tipe inferensi Zod
+    content: (initialData?.content as FormData["content"]) ?? {
       type: "doc",
       content: [],
     },

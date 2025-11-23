@@ -1,3 +1,4 @@
+// src/components/common/Navbar.tsx
 "use client";
 
 import Image from "next/image";
@@ -17,15 +18,51 @@ import { cn } from "~/lib/utils";
 import { MobileNav } from "./MobileNav";
 import { navigationLinks } from "~/data/home/navigationLinks";
 import { Separator } from "../ui/separator";
-import * as Icons from "lucide-react"; // Import all icons
+import * as Icons from "lucide-react";
 
-export default function Navbar() {
+interface NavbarProps {
+  forceSolid?: boolean; // Opsi manual untuk memaksa navbar solid
+}
+
+export default function Navbar({ forceSolid }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isClient, setIsClient] = useState(false);
 
-  const pathname = usePathname();
+  // Default ke string kosong untuk keamanan jika null
+  const pathname = usePathname() || "";
 
-  const useTransparentStyle = isClient && !isScrolled;
+  // --- LOGIKA BARU: WHITELIST TRANSPARAN ---
+
+  // 1. Daftar awalan path yang PASTI Transparan (karena punya Page Header)
+  const transparentPrefixes = [
+    "/about",
+    "/preschool",
+    "/primary",
+    "/gallery",
+    "/contact",
+    "/registration",
+  ];
+
+  // 2. Cek apakah halaman saat ini boleh transparan
+  const isTransparentPage =
+    pathname === "/" || // Homepage
+    transparentPrefixes.some((prefix) => pathname.startsWith(prefix)) || // Halaman statis ber-header
+    pathname === "/news" || // Halaman list berita (punya header)
+    pathname.startsWith("/news/page/"); // Halaman paginasi berita (punya header)
+
+  // Catatan: Logika di atas otomatis mengecualikan "/news/[slug]" (Detail Berita).
+  // Karena "/news/judul-berita" TIDAK sama dengan "/news" DAN TIDAK mulai dengan "/news/page/".
+  // Jadi Detail Berita akan dianggap FALSE (Tidak Transparan) -> Solid.
+
+  // --- HASIL AKHIR STYLE ---
+
+  // Navbar Transparan HANYA JIKA:
+  // 1. Sudah di client (isClient)
+  // 2. TIDAK dipaksa solid lewat props (!forceSolid)
+  // 3. Halaman terdaftar sebagai transparan (isTransparentPage)
+  // 4. User BELUM scroll (!isScrolled)
+  const useTransparentStyle =
+    isClient && !forceSolid && isTransparentPage && !isScrolled;
 
   useEffect(() => {
     const handleScroll = () => {
@@ -46,8 +83,8 @@ export default function Navbar() {
       className={cn(
         "sticky top-0 right-0 left-0 z-50 px-4 pt-2 transition-all duration-300 md:px-6",
         !useTransparentStyle
-          ? "bg-white text-gray-800 shadow-md"
-          : "bg-transparent text-white",
+          ? "bg-white text-gray-800 shadow-md" // Style Solid (Putih)
+          : "bg-transparent text-white", // Style Transparan
       )}
     >
       <div className="container mx-auto -mt-1 flex h-16 items-center justify-between gap-4">
@@ -111,7 +148,6 @@ export default function Navbar() {
                             )}
                           >
                             {link.items.map((item, itemIndex) => {
-                              // Dynamic Icon Component
                               const IconComponent = item.icon
                                 ? (Icons[
                                     item.icon as keyof typeof Icons
@@ -132,15 +168,14 @@ export default function Navbar() {
                                     )}
                                   >
                                     <div className="flex items-start gap-3">
-                                      {/* Always render Icon if available, regardless of type */}
                                       {IconComponent && (
-                                        <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-gray-100 text-gray-600 group-hover:text-primary">
+                                        <div className="group-hover:text-primary mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-md bg-gray-100 text-gray-600">
                                           <IconComponent className="h-5 w-5" />
                                         </div>
                                       )}
 
                                       <div className="flex-1 space-y-1">
-                                        <div className="font-medium leading-none">
+                                        <div className="leading-none font-medium">
                                           {item.label}
                                         </div>
                                         {item.description && (
@@ -196,6 +231,8 @@ export default function Navbar() {
           <div className="lg:hidden">
             <MobileNav
               links={navigationLinks}
+              // Pass kondisi solid state ke MobileNav
+              // Jika Solid (useTransparentStyle = FALSE), maka isScrolled = TRUE (agar ikon gelap)
               isScrolled={!useTransparentStyle}
             />
           </div>

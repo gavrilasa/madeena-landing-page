@@ -70,19 +70,19 @@ export default function Footer() {
                     Kota Cirebon 45123
                   </p>
                 </div>
-                
+
                 {/* Primary Contacts with Icons */}
-                <div className="flex flex-col gap-3 text-md text-white/90">
-                  <a 
-                    href="https://wa.me/6285215599906" 
-                    target="_blank" 
+                <div className="text-md flex flex-col gap-3 text-white/90">
+                  <a
+                    href="https://wa.me/6285215599906"
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-2 transition-opacity hover:opacity-80"
                   >
                     <MessageCircle className="h-4 w-4" />
                     <span>08521-55999-06</span>
                   </a>
-                  <a 
+                  <a
                     href="mailto:primary.almadeena@gmail.com"
                     className="flex items-center gap-2 transition-opacity hover:opacity-80"
                   >
@@ -108,17 +108,17 @@ export default function Footer() {
                 </div>
 
                 {/* Preschool Contacts with Icons */}
-                <div className="flex flex-col gap-3 text-md text-white/90">
-                  <a 
-                    href="https://wa.me/6282119222822" 
-                    target="_blank" 
+                <div className="text-md flex flex-col gap-3 text-white/90">
+                  <a
+                    href="https://wa.me/6282119222822"
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="flex items-center gap-2 transition-opacity hover:opacity-80"
                   >
                     <MessageCircle className="h-4 w-4" />
                     <span>0821-1922-2822</span>
                   </a>
-                  <a 
+                  <a
                     href="mailto:halo.almadeena@gmail.com"
                     className="flex items-center gap-2 transition-opacity hover:opacity-80"
                   >
@@ -135,20 +135,17 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
-                
               >
                 <Instagram className="h-6 w-6 cursor-pointer transition hover:scale-110 md:h-7 md:w-7" />
               </a>
               <a
-              href="https://www.youtube.com/@almadeenaislamicschool"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Instagram"
+                href="https://www.youtube.com/@almadeenaislamicschool"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
               >
                 <Youtube className="h-6 w-6 cursor-pointer transition hover:scale-110 md:h-7 md:w-7" />
               </a>
-              
-              
             </div>
           </div>
 

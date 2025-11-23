@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import { z } from "zod";
 import { auth } from "~/lib/auth"; //
 import { db } from "~/server/db"; //
+import type { Prisma } from "@prisma/client";
 
 // Skema Zod untuk validasi data berita yang masuk
 const NewsArticleSchema = z.object({
@@ -90,10 +91,7 @@ export async function POST(request: Request) {
         slug,
         summary,
         featuredImage,
-        // Prisma mengharapkan 'any' atau 'JsonValue' untuk tipe Json,
-        // jadi 'unknown' perlu di-cast jika TypeScript masih ketat.
-        // Namun, 'unknown' dari Zod seharusnya cukup aman untuk diteruskan.
-        content: content as any, // Cast di sini aman setelah validasi Zod
+        content: content as Prisma.InputJsonValue,
         status,
         publishedAt,
       },

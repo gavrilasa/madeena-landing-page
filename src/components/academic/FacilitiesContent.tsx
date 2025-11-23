@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { type ElementType } from "react"; // 1. Tambahkan import ini
 import { facilitiesData } from "~/data/academic/facilitiesdata";
 import { cn } from "~/lib/utils";
 import * as Icons from "lucide-react";
@@ -25,15 +26,16 @@ export default function FacilitiesContent({
 
   return (
     <section className="bg-white py-16 md:py-24">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 ">
-
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {data.map((item, index) => {
-            // Dynamically load the icon component
-            const IconComponent = (Icons as any)[item.icon] || Icons.Building2;
-            
+            // 2. & 3. Perbaikan: Gunakan tipe Record dan operator nullish coalescing (??)
+            const IconComponent =
+              (Icons as unknown as Record<string, ElementType>)[item.icon] ??
+              Icons.Building2;
+
             // Logic to vary card spans for the "bento" look
-            // Pattern: 
+            // Pattern:
             // Index 0: Col-span-2 (Large horizontal)
             // Index 1: Col-span-1 (Standard vertical)
             // Index 2: Col-span-1
@@ -49,7 +51,7 @@ export default function FacilitiesContent({
                   // Mobile: always 1 column. Desktop: vary based on logic
                   "col-span-1",
                   isLarge ? "md:col-span-2" : "md:col-span-1",
-                  "h-[400px] md:h-[450px]" // Fixed height for consistency
+                  "h-[400px] md:h-[450px]", // Fixed height for consistency
                 )}
                 initial="initial"
                 whileInView="whileInView"
@@ -61,7 +63,7 @@ export default function FacilitiesContent({
                   src={item.image}
                   alt={item.title}
                   fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-105 opacity-60 group-hover:opacity-50"
+                  className="object-cover opacity-60 transition-transform duration-700 group-hover:scale-105 group-hover:opacity-50"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 33vw"
                 />
 

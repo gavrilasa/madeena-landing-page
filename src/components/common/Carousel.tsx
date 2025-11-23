@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, type ElementType } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 
@@ -8,7 +8,7 @@ interface ProgramCard {
   id: number;
   title: string;
   description: string;
-  icon?: any;
+  icon?: ElementType;
   image: string;
   link: string;
   cta: string;

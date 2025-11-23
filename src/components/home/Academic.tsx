@@ -83,11 +83,11 @@ export default function Academic() {
               />
               <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/40 to-transparent" />
 
-              <div className="relative z-10 flex h-full flex-col items-start justify-end p-6 text-white md:p-8">
+              <div className="relative z-10 flex h-full flex-col items-start justify-end gap-3 p-6 text-white md:p-8">
                 <h3 className="text-4xl font-bold text-white md:text-5xl">
                   {card.title}
                 </h3>
-                <p className="mt-2 max-w-xs text-sm leading-relaxed text-white/90">
+                <p className="max-w-md text-sm leading-relaxed text-white/90">
                   {card.description}
                 </p>
               </div>
@@ -104,8 +104,10 @@ export default function Academic() {
             }}
           >
             <SpinningLogo
-              src="https://res.cloudinary.com/dah2v3xbg/image/upload/v1763222836/Logo-Al-Madeena_cqdg3w.svg"
-              alt="Al Madeena Logo"
+              src="https://res.cloudinary.com/dah2v3xbg/image/upload/v1763885433/outer-text-logo_plu5w0.svg"
+              alt="Al Madeena Text"
+              innerSrc="https://res.cloudinary.com/dah2v3xbg/image/upload/v1763885433/logo-without-text_iuydhz.svg"
+              innerAlt="Al Madeena Logo"
               size={160}
               speed={20}
             />

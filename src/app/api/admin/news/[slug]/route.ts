@@ -74,7 +74,7 @@ export async function PATCH(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    const body = await request.json();
+    const body = (await request.json()) as unknown;
     const validation = UpdateNewsArticleSchema.safeParse(body);
 
     if (!validation.success) {

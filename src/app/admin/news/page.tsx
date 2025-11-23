@@ -13,7 +13,7 @@ import {
   Newspaper,
 } from "lucide-react";
 
-// Impor komponen UI dari ShadCN
+// Impor komponen UI
 import { Button } from "~/components/ui/button";
 import {
   Card,
@@ -32,20 +32,28 @@ import {
 import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
 import { Skeleton } from "~/components/ui/skeleton";
 
-// Definisikan tipe data yang sesuai dengan model Prisma NewsArticle
+// 1. Import komponen AlertDialog
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "~/components/ui/alert-dialog";
+
 interface NewsArticle {
   id: string;
   title: string;
   slug: string;
   status: string;
-  publishedAt: string | null; // Datetime akan menjadi string saat di-fetch
+  publishedAt: string | null;
   createdAt: string;
   updatedAt: string;
 }
 
-/**
- * Komponen untuk menampilkan baris-baris skeleton saat loading
- */
 function LoadingSkeletons() {
   return (
     <div className="space-y-4">
@@ -65,16 +73,20 @@ function LoadingSkeletons() {
   );
 }
 
-/**
- * Komponen utama untuk dasbor berita
- */
 export default function NewsDashboardPage() {
   const [articles, setArticles] = useState<NewsArticle[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  // 2. State untuk melacak artikel mana yang akan dihapus
+  // Jika null, berarti dialog tertutup. Jika ada isinya, dialog terbuka.
+  const [articleToDelete, setArticleToDelete] = useState<{
+    slug: string;
+    title: string;
+  } | null>(null);
+
   const router = useRouter();
 
-  // Fungsi untuk memformat tanggal
   const formatDate = (dateString: string | null) => {
     if (!dateString) return "-";
     return new Date(dateString).toLocaleDateString("id-ID", {
@@ -84,7 +96,6 @@ export default function NewsDashboardPage() {
     });
   };
 
-  // Fungsi untuk mengambil data artikel
   async function loadArticles() {
     setIsLoading(true);
     setError(null);
@@ -103,25 +114,19 @@ export default function NewsDashboardPage() {
     }
   }
 
-  // Mengambil data saat komponen dimuat
   useEffect(() => {
     void loadArticles();
   }, []);
 
-  // Fungsi untuk menangani penghapusan artikel
-  const handleDelete = (slug: string, title: string) => {
-    toast.error(`Anda yakin ingin menghapus "${title}"?`, {
-      action: {
-        label: "Hapus",
-        onClick: () => deleteArticle(slug),
-      },
-      cancel: {
-        label: "Batal",
-      },
-    });
-  };
+  // 3. Fungsi eksekusi hapus (dipanggil saat tombol "Lanjutkan" di dialog diklik)
+  async function executeDelete() {
+    if (!articleToDelete) return;
 
-  async function deleteArticle(slug: string) {
+    const { slug } = articleToDelete;
+
+    // Tutup dialog segera agar UI terasa responsif
+    setArticleToDelete(null);
+
     const promise = fetch(`/api/admin/news/${slug}`, {
       method: "DELETE",
     });
@@ -140,7 +145,6 @@ export default function NewsDashboardPage() {
     });
   }
 
-  // Fungsi untuk merender konten utama
   const renderContent = () => {
     if (isLoading) {
       return <LoadingSkeletons />;
@@ -176,15 +180,12 @@ export default function NewsDashboardPage() {
       );
     }
 
-    // Jika ada data, tampilkan tabel
     return (
       <div className="flow-root">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
           <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
             <div className="rounded-lg border">
-              {/* Tabel Kustom */}
               <div className="min-w-full divide-y divide-gray-200">
-                {/* Header Tabel */}
                 <div className="grid grid-cols-10 bg-gray-50">
                   <div className="col-span-6 px-6 py-3 text-left text-xs font-medium tracking-wider text-gray-500 uppercase">
                     Judul
@@ -199,7 +200,6 @@ export default function NewsDashboardPage() {
                     Aksi
                   </div>
                 </div>
-                {/* Body Tabel */}
                 <div className="divide-y divide-gray-200 bg-white">
                   {articles.map((article) => (
                     <div key={article.id} className="grid grid-cols-10">
@@ -244,10 +244,15 @@ export default function NewsDashboardPage() {
                               Edit
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
+
+                            {/* 4. Update Trigger: Set state untuk memicu dialog */}
                             <DropdownMenuItem
                               className="text-destructive focus:text-destructive cursor-pointer focus:bg-red-50"
                               onSelect={() =>
-                                handleDelete(article.slug, article.title)
+                                setArticleToDelete({
+                                  slug: article.slug,
+                                  title: article.title,
+                                })
                               }
                             >
                               <Trash2 className="text-destructive mr-2 h-4 w-4" />
@@ -268,22 +273,54 @@ export default function NewsDashboardPage() {
   };
 
   return (
-    <Card>
-      <CardHeader className="flex flex-row items-center justify-between">
-        <div>
-          <CardTitle>Manajemen Berita</CardTitle>
-          <CardDescription className="mt-2">
-            Buat, edit, dan kelola semua artikel berita di sini.
-          </CardDescription>
-        </div>
-        <Button asChild className="cursor-pointer">
-          <Link href="/admin/news/create">
-            <Plus className="mr-2 h-4 w-4" />
-            Buat Berita Baru
-          </Link>
-        </Button>
-      </CardHeader>
-      <CardContent>{renderContent()}</CardContent>
-    </Card>
+    <>
+      <Card>
+        <CardHeader className="flex flex-row items-center justify-between">
+          <div>
+            <CardTitle>Manajemen Berita</CardTitle>
+            <CardDescription className="mt-2">
+              Buat, edit, dan kelola semua artikel berita di sini.
+            </CardDescription>
+          </div>
+          <Button asChild className="cursor-pointer">
+            <Link href="/admin/news/create">
+              <Plus className="mr-2 h-4 w-4" />
+              Buat Berita Baru
+            </Link>
+          </Button>
+        </CardHeader>
+        <CardContent>{renderContent()}</CardContent>
+      </Card>
+
+      {/* 5. Komponen AlertDialog */}
+      <AlertDialog
+        open={!!articleToDelete}
+        onOpenChange={(open) => {
+          if (!open) setArticleToDelete(null);
+        }}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Apakah Anda yakin?</AlertDialogTitle>
+            <AlertDialogDescription>
+              Tindakan ini tidak dapat dibatalkan. Artikel &quot;
+              <span className="text-foreground font-semibold">
+                {articleToDelete?.title}
+              </span>
+              &quot; akan dihapus secara permanen dari sistem.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Batal</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={() => void executeDelete()}
+              className="bg-red-600 text-white hover:bg-red-700 focus:ring-red-600"
+            >
+              Hapus
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </>
   );
 }

@@ -9,7 +9,6 @@ import ImageExtension from "@tiptap/extension-image";
 import { type JSONContent } from "@tiptap/core";
 import { Badge } from "~/components/ui/badge";
 import { NewsCard } from "~/components/news/NewsCard";
-import PageHeader from "~/components/common/PageHeader";
 
 interface NewsDetailPageProps {
   params: Promise<{
@@ -78,13 +77,7 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
 
   return (
     <div className="bg-white text-neutral-800">
-      <PageHeader
-        title="Berita & Kegiatan"
-        subtitle="Informasi terkini seputar kegiatan dan prestasi sekolah"
-        imageUrl="https://res.cloudinary.com/dah2v3xbg/image/upload/v1763225823/TemplatePageHeader_tnecsg.webp"
-      />
-
-      <main className="container mx-auto max-w-6xl px-4 py-16 sm:py-24">
+      <main className="container mx-auto max-w-6xl px-4 py-6 sm:py-12">
         <article className="flex flex-col items-center gap-8">
           <header className="flex max-w-4xl flex-col items-center gap-4">
             <Badge variant="outline" className="text-md px-4 py-1">

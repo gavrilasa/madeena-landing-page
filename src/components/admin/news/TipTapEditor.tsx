@@ -2,7 +2,6 @@
 
 import { useEditor, EditorContent, type Editor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import Link from "@tiptap/extension-link";
 import Image from "@tiptap/extension-image";
 import Placeholder from "@tiptap/extension-placeholder";
 import {
@@ -325,25 +324,23 @@ export function TiptapEditor({
   const editor = useEditor({
     extensions: [
       StarterKit.configure({
-        // Nonaktifkan fitur yang tidak diinginkan dari rencana
         blockquote: false,
         codeBlock: false,
         code: false,
         horizontalRule: false,
-        // Konfigurasi heading
         heading: {
           levels: [2, 3],
         },
-      }),
-      Link.configure({
-        openOnClick: false,
-        autolink: true,
-        // Sesuai rencana: target: null
-        HTMLAttributes: {
-          target: null,
-          rel: "noopener noreferrer nofollow",
+        link: {
+          openOnClick: false,
+          autolink: true,
+          HTMLAttributes: {
+            target: null,
+            rel: "noopener noreferrer nofollow",
+          },
         },
       }),
+
       Image.configure({
         inline: false, // Izinkan gambar menjadi blok
       }),

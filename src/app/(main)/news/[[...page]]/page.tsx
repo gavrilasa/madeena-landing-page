@@ -8,9 +8,9 @@ import PageHeader from "~/components/common/PageHeader";
 const ITEMS_PER_PAGE = 9;
 
 interface NewsGridPageProps {
-  params: {
+  params: Promise<{
     page?: string[];
-  };
+  }>;
 }
 
 export async function generateStaticParams() {
@@ -33,7 +33,9 @@ export async function generateStaticParams() {
 }
 
 export default async function NewsGridPage({ params }: NewsGridPageProps) {
-  const currentPage = params.page?.[0] ? parseInt(params.page[0]) : 1;
+  const { page } = await params;
+
+  const currentPage = page?.[0] ? parseInt(page[0]) : 1;
   const totalCount = await db.newsArticle.count({
     where: { status: "PUBLISHED" },
   });
@@ -64,13 +66,13 @@ export default async function NewsGridPage({ params }: NewsGridPageProps) {
       <section className="py-16 sm:py-24">
         {articles.length > 0 ? (
           <>
-            <div className="container mx-auto grid grid-cols-1 items-start gap-16 md:grid-cols-2 lg:grid-cols-3 px-4 sm:px-6 lg:px-8">
+            <div className="container mx-auto grid grid-cols-1 items-start gap-16 px-4 sm:px-6 md:grid-cols-2 lg:grid-cols-3 lg:px-8">
               {articles.map((article) => (
                 <NewsCard key={article.slug} article={article} />
               ))}
             </div>
 
-            <div className="container mx-auto mt-24 text-center px-4 sm:px-6 lg:px-8">
+            <div className="container mx-auto mt-24 px-4 text-center sm:px-6 lg:px-8">
               {totalPages > 1 && (
                 <PaginationControls
                   currentPage={currentPage}

@@ -47,7 +47,7 @@ const fadeIn = {
 
 export default function AboutQuickLinks() {
   return (
-    <motion.div {...fadeIn}>
+    <motion.div {...fadeIn} viewport={{ once: true }}>
       <div className="container mx-auto px-6 py-16 md:py-24">
         <h2 className="mb-10 text-center text-3xl font-bold text-neutral-900 md:text-left">
           Jelajahi Tentang Kami
