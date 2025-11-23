@@ -41,6 +41,7 @@ export default function Navbar({ forceSolid }: NavbarProps) {
     "/gallery",
     "/contact",
     "/registration",
+    "/career",
   ];
 
   // 2. Cek apakah halaman saat ini boleh transparan

@@ -49,7 +49,7 @@ export default function Programs() {
               <button
                 onClick={() => setActiveTab("primary")}
                 className={cn(
-                  "relative pb-3 text-lg font-medium transition-colors duration-300",
+                  "relative pb-3 text-lg font-medium",
                   activeTab === "primary"
                     ? "text-black"
                     : "text-gray-400 hover:text-gray-600"
@@ -60,7 +60,7 @@ export default function Programs() {
                   <motion.div
                     layoutId="activeTab"
                     className="absolute bottom-0 left-0 h-[3px] w-full bg-black"
-                    transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                    
                   />
                 )}
               </button>
@@ -68,7 +68,7 @@ export default function Programs() {
               <button
                 onClick={() => setActiveTab("preschool")}
                 className={cn(
-                  "relative pb-3 text-lg font-medium transition-colors duration-300",
+                  "relative pb-3 text-lg font-medium",
                   activeTab === "preschool"
                     ? "text-black"
                     : "text-gray-400 hover:text-gray-600"
@@ -79,7 +79,7 @@ export default function Programs() {
                   <motion.div
                     layoutId="activeTab"
                     className="absolute bottom-0 left-0 h-[3px] w-full bg-black"
-                    transition={{ type: "spring", stiffness: 500, damping: 30 }}
+                    
                   />
                 )}
               </button>

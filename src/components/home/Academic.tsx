@@ -81,7 +81,7 @@ export default function Academic() {
                 sizes="(max-width: 1280px) 100vw, 50vw"
                 className="object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/40 to-transparent" />
+              <div className="absolute inset-0 bg-linear-to-t from-black/50 via-black/10 to-transparent" />
 
               <div className="relative z-10 flex h-full flex-col items-start justify-end gap-3 p-6 text-white md:p-8">
                 <h3 className="text-4xl font-bold text-white md:text-5xl">
