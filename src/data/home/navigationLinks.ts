@@ -11,7 +11,6 @@ interface SubmenuItem {
   href: string;
   label: string;
   description?: string;
-  // Allow any string so we can use any Lucide icon name
   icon?: string;
 }
 
@@ -172,14 +171,8 @@ export const navigationLinks: NavigationItem[] = [
       {
         href: "/registration/flow",
         label: "Alur Pendaftaran",
-        icon: "GitMerge", // Flow icon
+        icon: "GitMerge",
         description: "Panduan langkah demi langkah pendaftaran siswa baru.",
-      },
-      {
-        href: "/registration/form",
-        label: "Form Pendaftaran",
-        icon: "FileText",
-        description: "Formulir digital untuk pendaftaran calon siswa.",
       },
       {
         href: "/contact/faq",
