@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { Mail, Youtube, MessageCircle, MapPin } from "lucide-react";
+import { Mail, Youtube, MessageCircle, MapPin, Instagram } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import InstagramFeed from "./InstagramFeed";
 import { Skeleton } from "~/components/ui/skeleton";
@@ -56,36 +56,99 @@ export default function Footer() {
             </div>
 
             <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8 lg:gap-10">
-              <div className="flex flex-col gap-2">
-                <div className="flex items-center gap-2">
-                  <MapPin className="h-5 w-5 shrink-0 text-white md:h-6 md:w-6" />
-                  <h3 className="text-lg font-semibold md:text-xl">
-                    Primary School
-                  </h3>
+              {/* Primary School Section */}
+              <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-center gap-2">
+                    <MapPin className="h-5 w-5 shrink-0 text-white md:h-6 md:w-6" />
+                    <h3 className="text-lg font-semibold md:text-xl">
+                      Primary School
+                    </h3>
+                  </div>
+                  <p className="text-sm leading-relaxed text-white/90 md:text-base">
+                    Jl. Pamitran No. 7 Kejaksan <br />
+                    Kota Cirebon 45123
+                  </p>
                 </div>
-                <p className="text-sm leading-relaxed text-white/90 md:text-base">
-                  Jl. Ks. Tubun No.29, Kejaksan, Kec. Kejaksan, Kota Cirebon,
-                  Jawa Barat 45123
-                </p>
+                
+                {/* Primary Contacts with Icons */}
+                <div className="flex flex-col gap-3 text-md text-white/90">
+                  <a 
+                    href="https://wa.me/6285215599906" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 transition-opacity hover:opacity-80"
+                  >
+                    <MessageCircle className="h-4 w-4" />
+                    <span>08521-55999-06</span>
+                  </a>
+                  <a 
+                    href="mailto:primary.almadeena@gmail.com"
+                    className="flex items-center gap-2 transition-opacity hover:opacity-80"
+                  >
+                    <Mail className="h-4 w-4" />
+                    <span>primary.almadeena@gmail.com</span>
+                  </a>
+                </div>
               </div>
-              <div className="flex flex-col gap-2">
-                <div className="flex items-center gap-2">
-                  <MapPin className="h-5 w-5 shrink-0 text-white md:h-6 md:w-6" />
-                  <h3 className="text-lg font-semibold md:text-xl">
-                    Pre School
-                  </h3>
+
+              {/* Preschool Section */}
+              <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-center gap-2">
+                    <MapPin className="h-5 w-5 shrink-0 text-white md:h-6 md:w-6" />
+                    <h3 className="text-lg font-semibold md:text-xl">
+                      Pre School
+                    </h3>
+                  </div>
+                  <p className="text-sm leading-relaxed text-white/90 md:text-base">
+                    Jl. KS Tubun No. 29 Kejaksan <br />
+                    Kota Cirebon 45123
+                  </p>
                 </div>
-                <p className="text-sm leading-relaxed text-white/90 md:text-base">
-                  Jl. Ks. Tubun No.29, Kejaksan, Kec. Kejaksan, Kota Cirebon,
-                  Jawa Barat 45123
-                </p>
+
+                {/* Preschool Contacts with Icons */}
+                <div className="flex flex-col gap-3 text-md text-white/90">
+                  <a 
+                    href="https://wa.me/6282119222822" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 transition-opacity hover:opacity-80"
+                  >
+                    <MessageCircle className="h-4 w-4" />
+                    <span>0821-1922-2822</span>
+                  </a>
+                  <a 
+                    href="mailto:halo.almadeena@gmail.com"
+                    className="flex items-center gap-2 transition-opacity hover:opacity-80"
+                  >
+                    <Mail className="h-4 w-4" />
+                    <span>halo.almadeena@gmail.com</span>
+                  </a>
+                </div>
               </div>
             </div>
 
             <div className="flex items-center gap-5 border-t border-white/70 pt-4 md:pt-5">
-              <MessageCircle className="h-6 w-6 cursor-pointer transition hover:scale-110 md:h-7 md:w-7" />
-              <Mail className="h-6 w-6 cursor-pointer transition hover:scale-110 md:h-7 md:w-7" />
-              <Youtube className="h-7 w-7 cursor-pointer transition hover:scale-110 md:h-8 md:w-8" />
+              <a
+                href="https://instagram.com/almadeena.islamic.school"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                
+              >
+                <Instagram className="h-6 w-6 cursor-pointer transition hover:scale-110 md:h-7 md:w-7" />
+              </a>
+              <a
+              href="https://www.youtube.com/@almadeenaislamicschool"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              >
+                <Youtube className="h-6 w-6 cursor-pointer transition hover:scale-110 md:h-7 md:w-7" />
+              </a>
+              
+              
             </div>
           </div>
 

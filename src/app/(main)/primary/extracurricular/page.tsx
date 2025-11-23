@@ -1,5 +1,6 @@
 import ExtracurricularContent from "~/components/academic/ExtracurricularContent";
 import PageHeader from "~/components/common/PageHeader";
+import PrimaryQuickLinks from "~/components/academic/PrimaryQuickLinks";
 
 export default function PrimaryExtracurricularPage() {
   return (
@@ -10,6 +11,7 @@ export default function PrimaryExtracurricularPage() {
         imageUrl="https://res.cloudinary.com/dah2v3xbg/image/upload/v1763225823/TemplatePageHeader_tnecsg.webp"
       />
       <ExtracurricularContent category="primary" />
+      <PrimaryQuickLinks />
     </main>
   );
 }

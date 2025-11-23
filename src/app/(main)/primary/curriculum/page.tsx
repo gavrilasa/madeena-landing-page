@@ -3,6 +3,7 @@
 import PageHeader from "~/components/common/PageHeader";
 import CurriculumContent from "~/components/academic/CurriculumContent";
 import { curriculumData } from "~/data/academic/curriculumData";
+import PrimaryQuickLinks from "~/components/academic/PrimaryQuickLinks";
 
 export const metadata = {
   title: "Kurikulum Primary School - Al Madeena",
@@ -30,6 +31,7 @@ export default function PrimaryCurriculumPage() {
         visualAlt="Gambar siswa primary school sedang belajar di depan Smartboard"
         visualImage="https://res.cloudinary.com/dah2v3xbg/image/upload/v1763224535/Primary-Academic_yadxyh.webp"
       />
+      <PrimaryQuickLinks />
     </div>
   );
 }

@@ -1,8 +1,9 @@
+// src/components/academic/AchievementsContent.tsx
 "use client";
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Quote, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 import { achievementsData } from "~/data/academic/achievmentsData";
 
@@ -26,8 +27,18 @@ export default function AchievementsContent({
   return (
     <section className="w-full bg-white py-16 md:py-24">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {data.map((item, index) => (
+        
+        {/* Intro Section */}
+        <div className="mb-12 max-w-4xl mx-auto text-center md:mb-16">
+          <div
+            className="prose prose-lg text-muted-foreground mx-auto leading-relaxed"
+            dangerouslySetInnerHTML={{ __html: data.intro }}
+          />
+        </div>
+
+        {/* Achievements Cards Grid */}
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 mb-16">
+          {data.items.map((item, index) => (
             <motion.div
               key={item.id}
               initial="initial"
@@ -35,7 +46,7 @@ export default function AchievementsContent({
               viewport={{ once: true, amount: 0.2 }}
               transition={{ delay: index * 0.1, duration: 0.5 }}
               variants={fadeIn}
-              className="group relative aspect-4/4 w-full overflow-hidden rounded-2xl bg-gray-900 shadow-lg"
+              className="group relative aspect-4/5 w-full overflow-hidden rounded-2xl bg-gray-900 shadow-lg"
             >
               {/* Background Image */}
               <Image
@@ -47,13 +58,13 @@ export default function AchievementsContent({
               />
 
               {/* Dark Overlay Gradient */}
-              <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/20 to-black/30" />
+              <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/20 to-black/10" />
 
               {/* Content Container */}
               <div className="absolute inset-0 flex flex-col justify-between p-6 sm:p-8">
                 {/* Top: Title */}
                 <div>
-                  <h3 className="text-xl leading-tight font-medium text-white md:text-2xl">
+                  <h3 className="text-xl leading-tight font-bold text-white md:text-2xl drop-shadow-md">
                     {item.title}
                   </h3>
                 </div>
@@ -64,14 +75,14 @@ export default function AchievementsContent({
                     <span className="block text-4xl font-light text-white md:text-5xl">
                       {item.metric}
                     </span>
-                    <span className="block text-sm text-gray-300">
+                    <span className="block text-sm text-gray-300 font-medium tracking-wide uppercase">
                       {item.metricLabel}
                     </span>
                   </div>
 
                   <Link
                     href={item.link}
-                    className="inline-flex w-fit items-center gap-2 rounded-md bg-white px-4 py-2 text-sm font-medium text-gray-900 transition-colors hover:bg-gray-200"
+                    className="inline-flex w-fit items-center gap-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 px-4 py-2 text-sm font-medium text-white transition-all hover:bg-white hover:text-gray-900"
                   >
                     Read Story
                     <ArrowRight className="h-4 w-4" />
@@ -81,6 +92,25 @@ export default function AchievementsContent({
             </motion.div>
           ))}
         </div>
+
+        {/* Closing Section */}
+        <motion.div
+          initial="initial"
+          whileInView="whileInView"
+          viewport={{ once: true }}
+          variants={fadeIn}
+          className="relative rounded-3xl bg-gray-50 p-8 text-center md:p-12 border border-gray-100"
+        >
+          <Quote className="mx-auto mb-4 h-8 w-8 text-gray-300" />
+          <div
+            className="mx-auto max-w-3xl text-xl font-medium leading-relaxed text-gray-700 md:text-2xl"
+            dangerouslySetInnerHTML={{ __html: data.closing }}
+          />
+          <div className="mt-6 flex justify-center">
+            <Sparkles className="h-6 w-6 text-yellow-400" />
+          </div>
+        </motion.div>
+
       </div>
     </section>
   );
