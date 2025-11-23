@@ -46,7 +46,7 @@ export default function AchievementsContent({
               viewport={{ once: true, amount: 0.2 }}
               transition={{ delay: index * 0.1, duration: 0.5 }}
               variants={fadeIn}
-              className="group relative aspect-[4/5] w-full overflow-hidden rounded-2xl bg-gray-900 shadow-lg"
+              className="group relative aspect-4/5 w-full overflow-hidden rounded-2xl bg-gray-900 shadow-lg"
             >
               {/* Background Image */}
               <Image
@@ -58,7 +58,7 @@ export default function AchievementsContent({
               />
 
               {/* Dark Overlay Gradient */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-black/10" />
+              <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/20 to-black/10" />
 
               {/* Content Container */}
               <div className="absolute inset-0 flex flex-col justify-between p-6 sm:p-8">
