@@ -196,9 +196,6 @@ export default function StaffGridClient() {
                       <p className="mt-1 text-base text-gray-600">
                         {selectedStaffData.role}
                       </p>
-                      <p className="mt-0.5 text-sm text-gray-500">
-                        {selectedStaffData.pronouns}
-                      </p>
                     </div>
 
                     <div className="rounded bg-gray-50 p-3">

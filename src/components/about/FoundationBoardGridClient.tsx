@@ -166,9 +166,6 @@ export default function FoundationBoardGridClient() {
                     <h3 className="mt-4 text-3xl font-bold text-gray-900 md:text-4xl">
                       {selectedStaffData.name}
                     </h3>
-                    <p className="mt-2 text-gray-500">
-                      {selectedStaffData.pronouns}
-                    </p>
                   </div>
 
                   <blockquote className="mb-8 border-l-4 border-[#0094D9] pl-4 text-lg text-gray-700 italic">
