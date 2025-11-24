@@ -27,7 +27,7 @@ const academicCards = [
 
 export default function Academic() {
   return (
-    <section className="bg-white py-16 text-gray-900 md:py-24">
+    <section className="bg-white py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-6">
         <div className="mb-12 grid grid-cols-1 items-start gap-6 md:mb-16 xl:grid-cols-3 xl:gap-12">
           <div className="xl:col-span-1">

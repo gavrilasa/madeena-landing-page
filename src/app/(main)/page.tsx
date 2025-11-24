@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import Hero from "~/components/home/Hero";
-// import Quote from "~/components/home/Quote";
+import Quote from "~/components/home/Quote";
 import Academic from "~/components/home/Academic";
 import Motto from "~/components/home/Motto";
 import Programs from "~/components/home/Programs";
@@ -25,7 +25,7 @@ export default async function HomePage() {
   return (
     <main className="space-y-8 bg-white">
       <Hero />
-      {/* <Quote /> */}
+      <Quote />
       <Academic />
       <Motto />
       <Programs />
