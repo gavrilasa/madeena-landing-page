@@ -19,7 +19,7 @@ export default function Hero() {
           sizes="100vw"
         />
         {/* Overlay for text readability */}
-        <div className="absolute inset-0 bg-linear-to-br from-black/30 to-black/0" />
+        <div className="absolute inset-0 bg-linear-to-br from-black/20 to-black/0" />
       </div>
 
       {/* Content */}

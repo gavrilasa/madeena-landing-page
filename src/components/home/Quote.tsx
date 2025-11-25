@@ -63,7 +63,7 @@ export default function Quote() {
         {/* --- BluePattern Component (Right) --- */}
         <BluePattern
           containerRef={sectionRef}
-          className="absolute top-20 right-0 z-10 w-[50px] translate-x-1/4 sm:w-[70px] md:top-1/2 md:w-[90px] md:-translate-y-1/2 lg:w-[120px]"
+          className="absolute top-20 right-0 z-10 w-[50px] translate-x-1/4 sm:w-[70px] md:top-1/3 md:w-[90px] md:-translate-y-1/2 lg:w-[200px]"
         />
 
         {/* 3. Custom Decorative Elements (Circle & Star) */}
@@ -102,15 +102,15 @@ export default function Quote() {
                 src="https://res.cloudinary.com/dah2v3xbg/image/upload/v1763885433/outer-text-logo_plu5w0.svg"
                 alt="Text Ring"
                 fill
-                className="object-contain p-1"
+                className="object-contain"
               />
             </div>
           </div>
 
-          <h2 className="mb-3 font-sans text-xl leading-relaxed font-bold text-gray-900 sm:mb-4 sm:text-2xl md:text-3xl lg:text-4xl">
+          <h2 className="mb-3 font-sans text-xl leading-relaxed font-bold text-gray-900 sm:mb-4 sm:text-3xl md:text-4xl lg:text-6xl">
             Growing Golden Generation <br></br> with Islamic Character
           </h2>
-          <p className="max-w-2xl text-sm leading-relaxed font-medium text-gray-600 sm:text-base md:text-lg">
+          <p className="max-w-2xl text-md leading-relaxed font-medium text-gray-600 sm:text-base md:text-xl">
             At Al Madeena, we lead them to be a smart generation, good manner,
             and ready to face the future.
           </p>

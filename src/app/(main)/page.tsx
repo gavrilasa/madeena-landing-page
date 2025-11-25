@@ -4,14 +4,15 @@ import dynamic from "next/dynamic";
 import Hero from "~/components/home/Hero";
 import Quote from "~/components/home/Quote";
 import Academic from "~/components/home/Academic";
-import Motto from "~/components/home/Motto";
 import Programs from "~/components/home/Programs";
 import Partners from "~/components/home/Partners";
-import News from "~/components/home/News";
 import { Skeleton } from "~/components/ui/skeleton";
 import { db } from "~/server/db";
+import Curriculum from "~/components/home/Curriculum";
+import Achievements from "~/components/home/Achievements";
+import Faq from "~/components/home/Faq";
 
-const Testimonials = dynamic(() => import("~/components/home/Testimonial"), {
+const Testimonials = dynamic(() => import("~/components/home/Testimonials"), {
   loading: () => <Skeleton className="h-[500px] w-full" />,
 });
 
@@ -23,15 +24,16 @@ export default async function HomePage() {
   });
 
   return (
-    <main className="space-y-8 bg-white">
+    <main className="">
       <Hero />
       <Quote />
       <Academic />
-      <Motto />
       <Programs />
-      <Testimonials />
+      <Curriculum />
+      <Achievements />
       <Partners />
-      <News articles={articles} />
+      <Testimonials />
+      <Faq />
     </main>
   );
 }
