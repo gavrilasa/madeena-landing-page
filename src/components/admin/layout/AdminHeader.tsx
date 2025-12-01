@@ -1,7 +1,7 @@
 import { SidebarTrigger } from "~/components/ui/sidebar";
 import AdminProfile from "./AdminProfile";
-import { Button } from "../ui/button";
-import { Avatar, AvatarFallback } from "../ui/avatar";
+import { Button } from "../../ui/button";
+import { Avatar, AvatarFallback } from "../../ui/avatar";
 
 export function AdminHeader() {
   return (

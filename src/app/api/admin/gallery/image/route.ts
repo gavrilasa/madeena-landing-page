@@ -1,95 +1,78 @@
 import { NextResponse } from "next/server";
 import { headers } from "next/headers";
-import { v2 as cloudinary } from "cloudinary";
 import { auth } from "~/lib/auth";
-import { env } from "~/env.js";
+import { db } from "~/server/db";
+import type { CreateImageBody, ReorderImagesBody } from "~/types/gallery";
 
-// Konfigurasi Cloudinary (sama seperti di route upload)
-cloudinary.config({
-  cloud_name: env.CLOUDINARY_CLOUD_NAME,
-  api_key: env.CLOUDINARY_API_KEY,
-  api_secret: env.CLOUDINARY_API_SECRET,
-  secure: true,
-});
-
-/**
- * Helper untuk mengekstrak public_id dari URL Cloudinary
- * Contoh URL: https://res.cloudinary.com/.../upload/v12345/madeena/foto.jpg
- * Output: madeena/foto
- */
-function getPublicIdFromUrl(url: string): string | null {
+export async function POST(req: Request) {
   try {
-    const regex = /\/upload\/(?:v\d+\/)?(.+)\.[^.]+$/;
-    const match = regex.exec(url);
-    return match ? (match[1] ?? null) : null;
+    const session = await auth.api.getSession({ headers: await headers() });
+    if (!session)
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+
+    const body = (await req.json()) as CreateImageBody;
+    const { sectionId, url, publicId, alt, order } = body;
+
+    if (!sectionId || !url) {
+      return NextResponse.json({ error: "Missing data" }, { status: 400 });
+    }
+
+    let newOrder = 0;
+
+    if (typeof order === "number") {
+      newOrder = order;
+    } else {
+      const lastImage = await db.galleryImage.findFirst({
+        where: { sectionId },
+        orderBy: { order: "desc" },
+      });
+      newOrder = lastImage ? lastImage.order + 1 : 0;
+    }
+
+    const newImage = await db.galleryImage.create({
+      data: {
+        sectionId,
+        url,
+        publicId,
+        alt: alt ?? "",
+        order: newOrder,
+      },
+    });
+
+    return NextResponse.json(newImage);
   } catch (error) {
-    console.error("Error parsing public_id from URL:", error);
-    return null;
+    console.error("[IMAGE_POST]", error);
+    return NextResponse.json({ error: "Internal Error" }, { status: 500 });
   }
 }
 
-export async function DELETE(request: Request) {
+export async function PUT(req: Request) {
   try {
-    // 1. Cek Autentikasi Admin
-    const session = await auth.api.getSession({
-      headers: await headers(),
-    });
+    const session = await auth.api.getSession({ headers: await headers() });
+    if (!session)
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
-    if (!session) {
-      return NextResponse.json(
-        { error: "Unauthorized: Anda harus login." },
-        { status: 401 },
-      );
-    }
+    const body = (await req.json()) as ReorderImagesBody;
+    const { items } = body;
 
-    // 2. Parse Body Request
-    // Frontend bisa mengirimkan { public_id: "..." } ATAU { url: "..." }
-    const body = (await request.json()) as {
-      public_id?: string;
-      url?: string;
-    };
+    await db.$transaction(
+      items.map((item) => {
+        const data: { order: number; sectionId?: string } = {
+          order: item.order,
+        };
 
-    let publicIdToDelete = body.public_id;
+        if (item.sectionId) data.sectionId = item.sectionId;
 
-    // Jika public_id tidak ada, coba ekstrak dari URL
-    if (!publicIdToDelete && body.url) {
-      const extractedId = getPublicIdFromUrl(body.url);
-      if (extractedId) {
-        publicIdToDelete = extractedId;
-      }
-    }
-
-    if (!publicIdToDelete) {
-      return NextResponse.json(
-        {
-          error: "Public ID atau URL valid diperlukan untuk menghapus gambar.",
-        },
-        { status: 400 },
-      );
-    }
-
-    // 3. Panggil Cloudinary Destroy API
-    const result = (await cloudinary.uploader.destroy(publicIdToDelete)) as {
-      result: string;
-    };
-
-    if (result.result !== "ok") {
-      console.error("Cloudinary delete failed:", result);
-      return NextResponse.json(
-        { error: "Gagal menghapus gambar di Cloudinary.", details: result },
-        { status: 500 },
-      );
-    }
-
-    return NextResponse.json(
-      { message: "Gambar berhasil dihapus.", public_id: publicIdToDelete },
-      { status: 200 },
+        return db.galleryImage.update({
+          where: { id: item.id },
+          data,
+        });
+      }),
     );
+
+    return NextResponse.json({ success: true });
   } catch (error) {
-    console.error("Internal server error (DELETE image):", error);
-    return NextResponse.json(
-      { error: "Terjadi kesalahan pada server." },
-      { status: 500 },
-    );
+    console.error("[IMAGE_REORDER]", error);
+    return NextResponse.json({ error: "Internal Error" }, { status: 500 });
   }
 }

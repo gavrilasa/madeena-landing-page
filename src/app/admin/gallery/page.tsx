@@ -1,55 +1,49 @@
+import { redirect } from "next/navigation";
+import { headers } from "next/headers";
+import { auth } from "~/lib/auth";
 import { db } from "~/server/db";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbList,
-  BreadcrumbPage,
-  BreadcrumbSeparator,
-} from "~/components/ui/breadcrumb";
 import { GalleryEditor } from "~/components/admin/gallery/GalleryEditor";
-import { type GallerySettings } from "~/types/gallery";
 
 export const metadata = {
-  title: "Manajemen Galeri - Admin",
+  title: "Manajemen Galeri | Admin Panel",
+  description: "Atur tata letak dan konten galeri foto.",
 };
 
 export default async function AdminGalleryPage() {
-  // 1. Ambil data dari database (Server Side)
-  const settingsData = await db.gallerySettings.findFirst();
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
 
-  // 2. Normalisasi data agar sesuai tipe TypeScript
-  // Jika database kosong, berikan array kosong
-  const initialData: GallerySettings = settingsData
-    ? {
-        content: settingsData.content as unknown as GallerySettings["content"],
-      }
-    : { content: [] };
+  if (!session) {
+    redirect("/login");
+  }
+
+  const galleryData = await db.gallerySection.findMany({
+    include: {
+      images: {
+        orderBy: {
+          order: "asc",
+        },
+      },
+    },
+    orderBy: {
+      order: "asc",
+    },
+  });
 
   return (
-    <div className="flex flex-col gap-6">
-      <Breadcrumb>
-        <BreadcrumbList>
-          <BreadcrumbItem>
-            <BreadcrumbLink href="/admin">Admin</BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbPage>Manajemen Galeri</BreadcrumbPage>
-          </BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
-
-      <div className="flex flex-col gap-2">
-        <h1 className="text-3xl font-bold tracking-tight">Galeri Kegiatan</h1>
-        <p className="text-muted-foreground">
-          Atur tata letak foto kegiatan sekolah dengan sistem Drag and Drop.
-          Jangan lupa tekan tombol <strong>Simpan</strong> setelah melakukan
-          perubahan.
+    <div className="container mx-auto space-y-6">
+      <div className="space-y-1">
+        <h1 className="text-2xl font-bold tracking-tight text-gray-900">
+          Manajemen Galeri
+        </h1>
+        <p className="text-muted-foreground text-md">
+          Atur tata letak grid dan unggah foto kegiatan sekolah secara
+          real-time.
         </p>
       </div>
 
-      <GalleryEditor initialData={initialData} />
+      <GalleryEditor initialData={galleryData} />
     </div>
   );
 }

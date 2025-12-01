@@ -13,7 +13,7 @@ if (typeof window !== "undefined") {
 interface ScrollLineProps {
   /** Optional class for positioning the wrapper div */
   className?: string;
-  /** * The ref of the container element that drives the scroll progress. 
+  /** * The ref of the container element that drives the scroll progress.
    * If omitted, the animation triggers based on the line itself entering the viewport.
    */
   containerRef?: React.RefObject<HTMLElement | null>;
@@ -39,7 +39,7 @@ export function ScrollLine({
     () => {
       const path = lineRef.current;
       // Use the provided containerRef as the trigger source, or fallback to this component's wrapper
-      const triggerElement = containerRef?.current || wrapperRef.current;
+      const triggerElement = containerRef?.current ?? wrapperRef.current;
 
       if (path && triggerElement) {
         const length = path.getTotalLength();
@@ -63,17 +63,14 @@ export function ScrollLine({
         });
       }
     },
-    { 
-      scope: wrapperRef, 
-      dependencies: [containerRef, start, end, scrub] 
-    }
+    {
+      scope: wrapperRef,
+      dependencies: [containerRef, start, end, scrub],
+    },
   );
 
   return (
-    <div
-      ref={wrapperRef}
-      className={`pointer-events-none ${className}`}
-    >
+    <div ref={wrapperRef} className={`pointer-events-none ${className}`}>
       <svg
         viewBox="0 0 348 393"
         fill="none"

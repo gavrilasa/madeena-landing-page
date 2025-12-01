@@ -11,28 +11,20 @@ import {
   MoreVertical,
   AlertTriangle,
   Newspaper,
+  Filter,
 } from "lucide-react";
-
-// Impor komponen UI
 import { Button } from "~/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-} from "~/components/ui/card";
+import { Card, CardContent, CardHeader } from "~/components/ui/card";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
   DropdownMenuSeparator,
+  DropdownMenuCheckboxItem,
 } from "~/components/ui/dropdown-menu";
 import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
 import { Skeleton } from "~/components/ui/skeleton";
-
-// 1. Import komponen AlertDialog
 import {
   AlertDialog,
   AlertDialogAction,
@@ -43,16 +35,7 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "~/components/ui/alert-dialog";
-
-interface NewsArticle {
-  id: string;
-  title: string;
-  slug: string;
-  status: string;
-  publishedAt: string | null;
-  createdAt: string;
-  updatedAt: string;
-}
+import type { NewsArticle } from "~/types/news";
 
 function LoadingSkeletons() {
   return (
@@ -77,9 +60,10 @@ export default function NewsDashboardPage() {
   const [articles, setArticles] = useState<NewsArticle[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [statusFilter, setStatusFilter] = useState<
+    "ALL" | "PUBLISHED" | "DRAFT"
+  >("ALL");
 
-  // 2. State untuk melacak artikel mana yang akan dihapus
-  // Jika null, berarti dialog tertutup. Jika ada isinya, dialog terbuka.
   const [articleToDelete, setArticleToDelete] = useState<{
     slug: string;
     title: string;
@@ -118,13 +102,11 @@ export default function NewsDashboardPage() {
     void loadArticles();
   }, []);
 
-  // 3. Fungsi eksekusi hapus (dipanggil saat tombol "Lanjutkan" di dialog diklik)
   async function executeDelete() {
     if (!articleToDelete) return;
 
     const { slug } = articleToDelete;
 
-    // Tutup dialog segera agar UI terasa responsif
     setArticleToDelete(null);
 
     const promise = fetch(`/api/admin/news/${slug}`, {
@@ -137,7 +119,6 @@ export default function NewsDashboardPage() {
         if (!res.ok) {
           throw new Error("Gagal menghapus artikel.");
         }
-        // Hapus artikel dari state secara optimis
         setArticles((prev) => prev.filter((a) => a.slug !== slug));
         return "Artikel berhasil dihapus.";
       },
@@ -180,6 +161,32 @@ export default function NewsDashboardPage() {
       );
     }
 
+    const filteredArticles = articles.filter((article) => {
+      if (statusFilter === "ALL") return true;
+      return article.status === statusFilter;
+    });
+
+    if (filteredArticles.length === 0 && articles.length > 0) {
+      return (
+        <div className="flex h-40 flex-col items-center justify-center text-center">
+          <p className="text-muted-foreground text-sm">
+            Tidak ditemukan artikel dengan status{" "}
+            <span className="font-semibold text-gray-900">
+              {statusFilter === "PUBLISHED" ? "Published" : "Draft"}
+            </span>
+            .
+          </p>
+          <Button
+            variant="link"
+            onClick={() => setStatusFilter("ALL")}
+            className="text-primary mt-2"
+          >
+            Tampilkan Semua Artikel
+          </Button>
+        </div>
+      );
+    }
+
     return (
       <div className="flow-root">
         <div className="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
@@ -201,7 +208,7 @@ export default function NewsDashboardPage() {
                   </div>
                 </div>
                 <div className="divide-y divide-gray-200 bg-white">
-                  {articles.map((article) => (
+                  {filteredArticles.map((article) => (
                     <div key={article.id} className="grid grid-cols-10">
                       <div className="col-span-6 flex w-full min-w-0 items-center px-6 py-2 text-sm font-medium text-gray-900">
                         <span className="min-w-0 flex-1 truncate">
@@ -245,7 +252,6 @@ export default function NewsDashboardPage() {
                             </DropdownMenuItem>
                             <DropdownMenuSeparator />
 
-                            {/* 4. Update Trigger: Set state untuk memicu dialog */}
                             <DropdownMenuItem
                               className="text-destructive focus:text-destructive cursor-pointer focus:bg-red-50"
                               onSelect={() =>
@@ -273,14 +279,61 @@ export default function NewsDashboardPage() {
   };
 
   return (
-    <>
+    <div className="container mx-auto space-y-6">
+      <div className="space-y-1">
+        <h1 className="text-2xl font-bold tracking-tight text-gray-900">
+          Manajemen Berita
+        </h1>
+        <p className="text-muted-foreground text-md">
+          Buat, edit, dan kelola semua artikel berita di sini.
+        </p>
+      </div>
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
-          <div>
-            <CardTitle>Manajemen Berita</CardTitle>
-            <CardDescription className="mt-2">
-              Buat, edit, dan kelola semua artikel berita di sini.
-            </CardDescription>
+          <div className="flex items-center gap-2">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild className="cursor-pointer">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="h-9 gap-2 border-dashed"
+                >
+                  <Filter className="h-3.5 w-3.5" />
+                  <span className="hidden sm:inline">Status:</span>
+                  <span className="font-semibold">
+                    {statusFilter === "ALL"
+                      ? "Semua"
+                      : statusFilter === "PUBLISHED"
+                        ? "Published"
+                        : "Draft"}
+                  </span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="start" className="w-40">
+                <DropdownMenuCheckboxItem
+                  checked={statusFilter === "ALL"}
+                  onCheckedChange={() => setStatusFilter("ALL")}
+                  className="cursor-pointer"
+                >
+                  Semua
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuSeparator />
+                <DropdownMenuCheckboxItem
+                  checked={statusFilter === "PUBLISHED"}
+                  onCheckedChange={() => setStatusFilter("PUBLISHED")}
+                  className="cursor-pointer"
+                >
+                  Published
+                </DropdownMenuCheckboxItem>
+                <DropdownMenuCheckboxItem
+                  checked={statusFilter === "DRAFT"}
+                  onCheckedChange={() => setStatusFilter("DRAFT")}
+                  className="cursor-pointer"
+                >
+                  Draft
+                </DropdownMenuCheckboxItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
           <Button asChild className="cursor-pointer">
             <Link href="/admin/news/create">
@@ -292,7 +345,6 @@ export default function NewsDashboardPage() {
         <CardContent>{renderContent()}</CardContent>
       </Card>
 
-      {/* 5. Komponen AlertDialog */}
       <AlertDialog
         open={!!articleToDelete}
         onOpenChange={(open) => {
@@ -321,6 +373,6 @@ export default function NewsDashboardPage() {
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-    </>
+    </div>
   );
 }

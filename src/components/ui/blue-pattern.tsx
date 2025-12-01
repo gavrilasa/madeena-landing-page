@@ -15,14 +15,17 @@ interface BluePatternProps {
   containerRef?: React.RefObject<HTMLElement | null>;
 }
 
-export function BluePattern({ className = "", containerRef }: BluePatternProps) {
+export function BluePattern({
+  className = "",
+  containerRef,
+}: BluePatternProps) {
   const patternRef = useRef<SVGPathElement>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
       const path = patternRef.current;
-      const triggerElement = containerRef?.current || wrapperRef.current;
+      const triggerElement = containerRef?.current ?? wrapperRef.current;
 
       if (path && triggerElement) {
         gsap.fromTo(
@@ -39,11 +42,11 @@ export function BluePattern({ className = "", containerRef }: BluePatternProps) 
               end: "top 25%",
               scrub: 1.5,
             },
-          }
+          },
         );
       }
     },
-    { scope: wrapperRef, dependencies: [containerRef] }
+    { scope: wrapperRef, dependencies: [containerRef] },
   );
 
   return (

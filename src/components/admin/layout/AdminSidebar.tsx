@@ -1,6 +1,11 @@
 "use client";
 
-import { ChartNoAxesCombinedIcon, Newspaper, Settings } from "lucide-react";
+import {
+  ChartNoAxesCombinedIcon,
+  Images,
+  Newspaper,
+  Settings,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -49,6 +54,14 @@ export function AdminSidebar() {
               </SidebarMenuItem>
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
+                  <Link href="/admin/gallery">
+                    <Images />
+                    <span>Gallery</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
                   <Link href="/admin/users">
                     <Settings />
                     <span>User</span>
@@ -56,11 +69,6 @@ export function AdminSidebar() {
                 </SidebarMenuButton>
               </SidebarMenuItem>
             </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-        <SidebarGroup>
-          <SidebarGroupContent>
-            <SidebarMenu></SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>

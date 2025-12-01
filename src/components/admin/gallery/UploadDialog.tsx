@@ -1,25 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState, useRef } from "react";
+import { Loader2, UploadCloud, X } from "lucide-react";
 import { toast } from "sonner";
-import { Loader2 } from "lucide-react";
+
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogFooter,
-} from "~/components/ui/dialog"; // Pastikan komponen Dialog Shadcn sudah ada
+} from "~/components/ui/dialog";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
-import { type GalleryImage } from "~/types/gallery";
-
-interface UploadDialogProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-  onSuccess: (image: GalleryImage) => void;
-}
+import type { UploadDialogProps } from "~/types/gallery";
 
 export function UploadDialog({
   open,
@@ -29,22 +24,33 @@ export function UploadDialog({
   const [file, setFile] = useState<File | null>(null);
   const [altText, setAltText] = useState("");
   const [isUploading, setIsUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleClose = () => {
+    setFile(null);
+    setAltText("");
+    setIsUploading(false);
+    onOpenChange(false);
+  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.[0]) {
-      setFile(e.target.files[0]);
+      const selectedFile = e.target.files[0];
+      if (selectedFile.size > 5 * 1024 * 1024) {
+        toast.error("Ukuran file maksimal 5MB");
+        return;
+      }
+      setFile(selectedFile);
     }
   };
 
   const handleUpload = async () => {
-    if (!file) {
-      toast.error("Silakan pilih gambar terlebih dahulu.");
-      return;
-    }
+    if (!file) return;
 
     setIsUploading(true);
     const formData = new FormData();
     formData.append("file", file);
+    formData.append("folder", "madeena/gallery");
 
     try {
       const res = await fetch("/api/admin/upload", {
@@ -52,66 +58,91 @@ export function UploadDialog({
         body: formData,
       });
 
-      if (!res.ok) throw new Error("Gagal mengunggah gambar");
+      if (!res.ok) throw new Error("Upload gagal");
 
-      const data = (await res.json()) as { url: string };
+      const data = (await res.json()) as { url: string; public_id: string };
 
-      // Ambil public_id sederhana dari URL (atau sesuaikan jika API upload Anda mengembalikan public_id)
-      // Contoh regex sederhana untuk mengambil ID sebelum ekstensi
-      const publicIdMatch = data.url.match(/\/v\d+\/(.+)\.[a-z]+$/i);
-      const publicId = publicIdMatch ? publicIdMatch[1] : undefined;
-
-      const newImage: GalleryImage = {
-        id: crypto.randomUUID(),
+      onSuccess({
         url: data.url,
+        publicId: data.public_id,
         alt: altText,
-        publicId: publicId,
-      };
+      });
 
-      onSuccess(newImage);
+      toast.success("Gambar terupload, menyimpan ke galeri...");
       handleClose();
     } catch (error) {
       console.error(error);
-      toast.error("Terjadi kesalahan saat mengunggah.");
+      toast.error("Gagal mengupload gambar.");
     } finally {
       setIsUploading(false);
     }
   };
 
-  const handleClose = () => {
-    setFile(null);
-    setAltText("");
-    onOpenChange(false);
-  };
-
   return (
-    <Dialog open={open} onOpenChange={handleClose}>
-      <DialogContent className="sm:max-w-[425px]">
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Unggah Foto Baru</DialogTitle>
+          <DialogTitle>Upload Foto Galeri</DialogTitle>
         </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid w-full max-w-sm items-center gap-1.5">
-            <Label htmlFor="picture">Gambar</Label>
-            <Input
-              id="picture"
+
+        <div className="space-y-4 py-4">
+          <div
+            onClick={() => fileInputRef.current?.click()}
+            className={`flex cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed p-8 transition-colors ${
+              file
+                ? "border-primary bg-primary/5"
+                : "border-gray-300 hover:bg-gray-50"
+            }`}
+          >
+            {file ? (
+              <div className="text-center">
+                <p className="text-primary font-medium">{file.name}</p>
+                <p className="text-xs text-gray-500">
+                  {(file.size / 1024).toFixed(0)} KB
+                </p>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className="mt-2 text-red-500 hover:bg-red-50 hover:text-red-600"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setFile(null);
+                  }}
+                >
+                  <X className="mr-1 h-3 w-3" /> Ganti File
+                </Button>
+              </div>
+            ) : (
+              <>
+                <UploadCloud className="mb-2 h-10 w-10 text-gray-400" />
+                <p className="text-sm font-medium text-gray-600">
+                  Klik untuk pilih gambar
+                </p>
+                <p className="text-xs text-gray-400">
+                  PNG, JPG, WEBP (Max 5MB)
+                </p>
+              </>
+            )}
+            <input
+              ref={fileInputRef}
               type="file"
               accept="image/*"
+              className="hidden"
               onChange={handleFileChange}
-              disabled={isUploading}
             />
           </div>
-          <div className="grid w-full max-w-sm items-center gap-1.5">
-            <Label htmlFor="alt">Keterangan (Alt Text) - Opsional</Label>
+
+          <div className="space-y-2">
+            <Label htmlFor="alt-text">Deskripsi Gambar (Alt Text)</Label>
             <Input
-              id="alt"
-              placeholder="Contoh: Kegiatan Belajar Mengajar"
+              id="alt-text"
+              placeholder="Contoh: Kegiatan siswa belajar di kelas..."
               value={altText}
               onChange={(e) => setAltText(e.target.value)}
-              disabled={isUploading}
             />
           </div>
         </div>
+
         <DialogFooter>
           <Button
             variant="outline"
@@ -120,9 +151,9 @@ export function UploadDialog({
           >
             Batal
           </Button>
-          <Button onClick={handleUpload} disabled={isUploading || !file}>
+          <Button onClick={handleUpload} disabled={!file || isUploading}>
             {isUploading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-            Simpan
+            {isUploading ? "Mengupload..." : "Upload & Simpan"}
           </Button>
         </DialogFooter>
       </DialogContent>
