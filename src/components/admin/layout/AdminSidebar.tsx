@@ -5,6 +5,7 @@ import {
   Images,
   Newspaper,
   Settings,
+  Users,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -57,6 +58,14 @@ export function AdminSidebar() {
                   <Link href="/admin/gallery">
                     <Images />
                     <span>Gallery</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <Link href="/admin/staff">
+                    <Users />
+                    <span>Staff</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
