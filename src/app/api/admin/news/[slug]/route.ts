@@ -5,7 +5,6 @@ import { auth } from "~/lib/auth";
 import { db } from "~/server/db";
 import { Prisma } from "@prisma/client";
 
-// Skema Zod untuk validasi data UPDATE (semua bidang opsional)
 const UpdateNewsArticleSchema = z.object({
   title: z.string().min(1, "Judul tidak boleh kosong").optional(),
   slug: z.string().min(1, "Slug tidak boleh kosong").optional(),
@@ -15,16 +14,11 @@ const UpdateNewsArticleSchema = z.object({
   status: z.enum(["DRAFT", "PUBLISHED"]).optional(),
 });
 
-/**
- * GET Handler: Mengambil satu artikel berita (untuk form edit)
- */
 export async function GET(
   request: Request,
-  // FIX: Tipe params sekarang adalah Promise
   { params }: { params: Promise<{ slug: string }> },
 ) {
   try {
-    // FIX: Await params untuk mendapatkan nilainya
     const { slug } = await params;
 
     const session = await auth.api.getSession({
@@ -35,7 +29,7 @@ export async function GET(
     }
 
     const article = await db.newsArticle.findUnique({
-      where: { slug: slug }, // Menggunakan slug yang sudah di-await
+      where: { slug: slug },
     });
 
     if (!article) {
@@ -55,16 +49,11 @@ export async function GET(
   }
 }
 
-/**
- * PATCH Handler: Mengupdate artikel berita (PATCH lebih baik untuk update parsial)
- */
 export async function PATCH(
   request: Request,
-  // FIX: Tipe params sekarang adalah Promise
   { params }: { params: Promise<{ slug: string }> },
 ) {
   try {
-    // FIX: Await params di awal fungsi
     const { slug } = await params;
 
     const session = await auth.api.getSession({
@@ -86,9 +75,7 @@ export async function PATCH(
 
     const dataToUpdate = validation.data;
 
-    // Validasi keunikan slug JIKA slug diubah
     if (dataToUpdate.slug && dataToUpdate.slug !== slug) {
-      // FIX: Gunakan slug yang sudah di-await
       const existingSlug = await db.newsArticle.findUnique({
         where: { slug: dataToUpdate.slug },
       });
@@ -96,34 +83,30 @@ export async function PATCH(
       if (existingSlug) {
         return NextResponse.json(
           { error: "Slug ini sudah digunakan. Harap pilih yang lain." },
-          { status: 409 }, // 409 Conflict
+          { status: 409 },
         );
       }
     }
 
-    // Logika untuk tanggal publikasi
     let publishedAtUpdate: Date | null | undefined = undefined;
     if (dataToUpdate.status) {
-      // Hanya set tanggal publikasi jika status diubah menjadi PUBLISHED
-      // dan sebelumnya BUKAN PUBLISHED
       if (dataToUpdate.status === "PUBLISHED") {
         const currentArticle = await db.newsArticle.findUnique({
-          where: { slug: slug }, // FIX: Gunakan slug yang sudah di-await
+          where: { slug: slug },
           select: { status: true },
         });
         if (currentArticle?.status !== "PUBLISHED") {
           publishedAtUpdate = new Date();
         }
       } else if (dataToUpdate.status === "DRAFT") {
-        publishedAtUpdate = null; // Set null jika kembali ke DRAFT
+        publishedAtUpdate = null;
       }
     }
 
     const updatedArticle = await db.newsArticle.update({
-      where: { slug: slug }, // FIX: Gunakan slug yang sudah di-await
+      where: { slug: slug },
       data: {
         ...dataToUpdate,
-        // Hanya tambahkan 'publishedAt' ke data update jika nilainya didefinisikan
         ...(publishedAtUpdate !== undefined && {
           publishedAt: publishedAtUpdate,
         }),
@@ -132,7 +115,6 @@ export async function PATCH(
 
     return NextResponse.json(updatedArticle);
   } catch (error) {
-    // Tangani jika artikel yang akan di-update tidak ditemukan
     if (
       error instanceof Prisma.PrismaClientKnownRequestError &&
       error.code === "P2025"
@@ -150,16 +132,11 @@ export async function PATCH(
   }
 }
 
-/**
- * DELETE Handler: Menghapus artikel berita
- */
 export async function DELETE(
   request: Request,
-  // FIX: Tipe params sekarang adalah Promise
   { params }: { params: Promise<{ slug: string }> },
 ) {
   try {
-    // FIX: Await params di awal fungsi
     const { slug } = await params;
 
     const session = await auth.api.getSession({
@@ -170,7 +147,7 @@ export async function DELETE(
     }
 
     await db.newsArticle.delete({
-      where: { slug: slug }, // FIX: Gunakan slug yang sudah di-await
+      where: { slug: slug },
     });
 
     return NextResponse.json(
@@ -178,7 +155,6 @@ export async function DELETE(
       { status: 200 },
     );
   } catch (error) {
-    // Tangani jika artikel yang akan dihapus tidak ditemukan
     if (
       error instanceof Prisma.PrismaClientKnownRequestError &&
       error.code === "P2025"

@@ -1,5 +1,3 @@
-// src/components/admin/news/NewsArticleForm.tsx
-
 "use client";
 
 import { useState, useEffect } from "react";
@@ -7,8 +5,6 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { z } from "zod";
 import { AlertTriangle, Loader2 } from "lucide-react";
-
-// Impor komponen UI
 import { Button } from "~/components/ui/button";
 import {
   Card,
@@ -30,36 +26,17 @@ import {
 } from "~/components/ui/field";
 import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
 import { ImageUploader } from "~/components/ui/image-uploader";
-// FIX 1: Mengubah path import menjadi relatif sesuai permintaan
 import { TiptapEditor } from "./TipTapEditor";
+import { slugify } from "~/lib/utils";
+import type { NewsArticle } from "~/types/news";
 
-// --- Skema & Tipe ---
-
-// Tipe data berdasarkan Prisma, untuk props
-// (content disimpan sebagai 'unknown' karena berasal dari JSON)
-interface NewsArticle {
-  id: string;
-  title: string;
-  slug: string;
-  summary: string;
-  featuredImage: string;
-  content: unknown;
-  status: string;
-  publishedAt: string | null;
-  createdAt: string;
-  updatedAt: string;
-}
-
-// Skema Zod yang lebih aman untuk Tiptap node
-// Mendefinisikan bentuk dasar node untuk menghindari 'any'
 const tiptapNodeSchema = z
   .object({
     type: z.string().optional(),
-    content: z.array(z.any()).optional(), // z.any() diperlukan untuk struktur rekursif
+    content: z.array(z.any()).optional(),
   })
-  .passthrough(); // Izinkan properti lain (seperti attrs, marks, dll.)
+  .passthrough();
 
-// Skema validasi Zod (sesuai dengan API)
 const newsArticleSchema = z.object({
   title: z.string().min(1, "Judul tidak boleh kosong"),
   slug: z.string().min(1, "Slug tidak boleh kosong"),
@@ -68,16 +45,13 @@ const newsArticleSchema = z.object({
   content: z
     .object({
       type: z.string(),
-      content: z.array(tiptapNodeSchema), // Menggunakan skema node yang lebih aman
+      content: z.array(tiptapNodeSchema),
     })
     .refine(
       (val) => {
-        // Logika refine yang lebih aman, memeriksa properti yang ada
         if (val.content.length === 0) return false;
         const firstNode = val.content[0];
         if (!firstNode) return false;
-        // Periksa apakah node pertama memiliki konten (misal, teks dalam paragraf)
-        // ATAU apakah node pertama itu sendiri adalah gambar
         return (
           (firstNode.content && firstNode.content.length > 0) ??
           firstNode.type === "image"
@@ -93,21 +67,6 @@ const newsArticleSchema = z.object({
 type FormData = z.infer<typeof newsArticleSchema>;
 type FormErrors = z.ZodError<FormData> | null;
 
-// --- Helper ---
-
-// Fungsi untuk membuat slug
-const slugify = (text: string) => {
-  return text
-    .toString()
-    .toLowerCase()
-    .trim()
-    .replace(/\s+/g, "-") // Ganti spasi dengan -
-    .replace(/[^\w-]+/g, "") // Hapus karakter non-alfanumerik
-    .replace(/--+/g, "-"); // Ganti -- ganda dengan -
-};
-
-// --- Komponen Utama ---
-
 export function NewsArticleForm({
   initialData,
 }: {
@@ -116,13 +75,11 @@ export function NewsArticleForm({
   const router = useRouter();
   const isEditing = !!initialData;
 
-  // State untuk form
   const [formData, setFormData] = useState<FormData>({
     title: initialData?.title ?? "",
     slug: initialData?.slug ?? "",
     summary: initialData?.summary ?? "",
     featuredImage: initialData?.featuredImage ?? "",
-    // PERBAIKAN: Casting ke 'FormData["content"]' agar sesuai dengan tipe inferensi Zod
     content: (initialData?.content as FormData["content"]) ?? {
       type: "doc",
       content: [],
@@ -130,12 +87,10 @@ export function NewsArticleForm({
     status: (initialData?.status as "DRAFT" | "PUBLISHED") ?? "DRAFT",
   });
 
-  // State untuk UI
   const [isLoading, setIsLoading] = useState(false);
   const [isSlugManuallyEdited, setIsSlugManuallyEdited] = useState(isEditing);
   const [errors, setErrors] = useState<FormErrors>(null);
 
-  // Efek untuk auto-slugging
   useEffect(() => {
     if (!isSlugManuallyEdited) {
       setFormData((prev) => ({
@@ -145,12 +100,10 @@ export function NewsArticleForm({
     }
   }, [formData.title, isSlugManuallyEdited]);
 
-  // Handler untuk submit form
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setErrors(null);
 
-    // 1. Validasi Sisi Klien
     const validation = newsArticleSchema.safeParse(formData);
     if (!validation.success) {
       setErrors(validation.error);
@@ -160,22 +113,19 @@ export function NewsArticleForm({
 
     setIsLoading(true);
 
-    // 2. Tentukan Endpoint dan Method
     const endpoint = isEditing
       ? `/api/admin/news/${initialData.slug}`
       : "/api/admin/news";
     const method = isEditing ? "PATCH" : "POST";
 
-    // 3. Kirim ke API
     const promise = fetch(endpoint, {
       method,
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(validation.data), // Kirim data yang sudah divalidasi
+      body: JSON.stringify(validation.data),
     });
 
-    // 4. Tampilkan Toast Promise
     toast.promise(promise, {
       loading: isEditing ? "Menyimpan perubahan..." : "Membuat artikel...",
       success: async (res) => {
@@ -183,13 +133,12 @@ export function NewsArticleForm({
           const errorData = (await res.json()) as { error: string };
           throw new Error(errorData.error || "Gagal menyimpan artikel.");
         }
-        router.push("/admin/news"); // Redirect ke halaman daftar
-        router.refresh(); // Pemicu refresh data di server component
+        router.push("/admin/news");
+        router.refresh();
         return `Artikel "${validation.data.title}" berhasil disimpan.`;
       },
       error: (err) => {
         setIsLoading(false);
-        // Tampilkan pesan error spesifik dari API (misal: slug duplikat)
         return err instanceof Error
           ? err.message
           : "Terjadi kesalahan yang tidak diketahui.";
@@ -202,17 +151,14 @@ export function NewsArticleForm({
     });
   };
 
-  // Helper untuk update state form
   const handleChange = (field: keyof FormData, value: string | object) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
 
-    // Jika field slug diedit, kunci auto-slug
     if (field === "slug") {
       setIsSlugManuallyEdited(true);
     }
   };
 
-  // Helper untuk mendapatkan pesan error untuk field tertentu
   const getError = (field: keyof FormData) => {
     return errors?.flatten().fieldErrors[field]?.[0];
   };

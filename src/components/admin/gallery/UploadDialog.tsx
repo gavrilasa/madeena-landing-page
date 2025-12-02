@@ -36,8 +36,8 @@ export function UploadDialog({
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files?.[0]) {
       const selectedFile = e.target.files[0];
-      if (selectedFile.size > 5 * 1024 * 1024) {
-        toast.error("Ukuran file maksimal 5MB");
+      if (selectedFile.size > 3 * 1024 * 1024) {
+        toast.error("Ukuran file maksimal 3MB");
         return;
       }
       setFile(selectedFile);

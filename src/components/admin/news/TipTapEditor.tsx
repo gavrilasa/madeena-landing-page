@@ -28,24 +28,19 @@ import {
 } from "~/components/ui/popover";
 import { Input } from "~/components/ui/input";
 
-// Tipe untuk props komponen
 interface TiptapEditorProps {
-  value: string; // Tiptap akan mengurai string JSON ini
+  value: string;
   onChange: (jsonValue: object) => void;
   className?: string;
   placeholder?: string;
 }
 
-/**
- * Toolbar terpisah untuk editor Tiptap
- */
 const TiptapToolbar = ({ editor }: { editor: Editor }) => {
   const [isLinkEditOpen, setIsLinkEditOpen] = useState(false);
   const [linkUrl, setLinkUrl] = useState("");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isUploading, setIsUploading] = useState(false);
 
-  // Fungsi untuk menangani unggah gambar
   const handleImageUpload = async (file: File) => {
     if (!file) return;
 
@@ -53,8 +48,8 @@ const TiptapToolbar = ({ editor }: { editor: Editor }) => {
       toast.error("File bukan gambar.");
       return;
     }
-    if (file.size > 10 * 1024 * 1024) {
-      toast.error("Gambar terlalu besar. Maksimal 10MB.");
+    if (file.size > 3 * 1024 * 1024) {
+      toast.error("Gambar terlalu besar. Maksimal 3MB.");
       return;
     }
 
@@ -85,32 +80,28 @@ const TiptapToolbar = ({ editor }: { editor: Editor }) => {
     } finally {
       setIsUploading(false);
       if (fileInputRef.current) {
-        fileInputRef.current.value = ""; // Reset input file
+        fileInputRef.current.value = "";
       }
     }
   };
 
-  // Callback untuk mengatur link
   const setLink = useCallback(() => {
     if (linkUrl) {
       editor
         .chain()
         .focus()
         .extendMarkRange("link")
-        .setLink({ href: linkUrl, target: null }) // Hapus target="_blank"
+        .setLink({ href: linkUrl, target: null })
         .run();
     } else {
-      // Jika URL kosong, hapus link
       editor.chain().focus().extendMarkRange("link").unsetLink().run();
     }
     setIsLinkEditOpen(false);
     setLinkUrl("");
   }, [editor, linkUrl]);
 
-  // Saat popover link dibuka
   const handleLinkOpen = (isOpen: boolean) => {
     if (isOpen) {
-      // FIX (Error 1 & 2): Explicitly cast href to string to resolve unsafe assignment.
       const existingUrl = (editor.getAttributes("link").href as string) ?? "";
       setLinkUrl(existingUrl);
     } else {
@@ -121,7 +112,6 @@ const TiptapToolbar = ({ editor }: { editor: Editor }) => {
 
   return (
     <div className="flex flex-wrap items-center gap-1 border-b p-2">
-      {/* Tombol Teks Dasar */}
       <Button
         type="button" // Mencegah submit form
         variant={editor.isActive("bold") ? "secondary" : "ghost"}
@@ -273,8 +263,8 @@ export function TiptapEditor({
       toast.error("File bukan gambar.");
       return null;
     }
-    if (file.size > 10 * 1024 * 1024) {
-      toast.error("Gambar terlalu besar. Maksimal 10MB.");
+    if (file.size > 3 * 1024 * 1024) {
+      toast.error("Gambar terlalu besar. Maksimal 3MB.");
       return null;
     }
 

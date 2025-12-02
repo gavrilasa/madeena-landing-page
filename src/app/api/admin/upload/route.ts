@@ -28,11 +28,7 @@ async function uploadToCloudinary(
         result: UploadApiResponse | undefined,
       ) => {
         if (error) {
-          // === PERBAIKAN DI SINI ===
-          // Kita membungkus objek 'error' dari Cloudinary ke dalam 'new Error()'.
-          // Menggunakan 'error.message' jika tersedia, atau pesan default.
           return reject(new Error(error?.message || "Cloudinary upload error"));
-          // ==========================
         }
         if (result?.secure_url) {
           return resolve({ secure_url: result.secure_url });
@@ -43,7 +39,6 @@ async function uploadToCloudinary(
       },
     );
 
-    // Tulis buffer ke stream
     uploadStream.end(buffer);
   });
 }
@@ -60,7 +55,6 @@ export async function POST(request: Request) {
       );
     }
 
-    // 2. Terima file gambar dari request
     const formData = await request.formData();
     const file = formData.get("file") as File | null;
 
@@ -71,15 +65,20 @@ export async function POST(request: Request) {
       );
     }
 
-    // 3. Ubah file menjadi buffer
+    const MAX_SIZE = 3 * 1024 * 1024;
+    if (file.size > MAX_SIZE) {
+      return NextResponse.json(
+        { error: "Ukuran file terlalu besar. Maksimal 3MB." },
+        { status: 400 },
+      );
+    }
+
     const bytes = await file.arrayBuffer();
     const buffer = Buffer.from(bytes);
 
-    // 4. Unggah buffer ke Cloudinary
     try {
       const { secure_url } = await uploadToCloudinary(buffer);
 
-      // 5. Kembalikan URL gambar yang berhasil diunggah
       return NextResponse.json({ url: secure_url });
     } catch (uploadError) {
       console.error("Cloudinary upload error:", uploadError);
