@@ -67,8 +67,10 @@ export default function CurriculumContent({
       <div className="container mx-auto px-6">
         {/* Content Grid */}
         <div className="grid grid-cols-1 gap-12 py-10 lg:grid-cols-6 lg:gap-20">
+          
           {/* Left Side: Sticky Image */}
-          <div className="col-span-2 h-fit lg:sticky lg:top-24">
+          {/* UPDATED: Added 'hidden lg:block' to hide on mobile/tablet and show only on desktop */}
+          <div className="hidden lg:block col-span-2 h-fit lg:sticky lg:top-24">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}

@@ -1,7 +1,8 @@
 import { db } from "~/server/db";
 import { notFound } from "next/navigation";
 import Image from "next/image";
-
+import NextLink from "next/link";
+import { ArrowLeft } from "lucide-react";
 import { generateHTML } from "@tiptap/html";
 import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
@@ -110,6 +111,16 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
 
         {moreArticles.length > 0 && (
           <section className="mt-16 w-full border-t pt-12">
+            {/* Back Button Section - Placed ABOVE More News */}
+            <div className="w-full max-w-prose pb-4">
+              <NextLink
+                href="/news"
+                className="group inline-flex items-center text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+              >
+                <ArrowLeft className="h-4 w-4 mx-2" />
+                Kembali ke Berita
+              </NextLink>
+            </div>
             <h2 className="text-primary mb-8 text-2xl font-bold md:text-4xl">
               More News
             </h2>
