@@ -6,6 +6,7 @@ import { db } from "~/server/db";
 import { v2 as cloudinary } from "cloudinary";
 import { env } from "~/env";
 import { Prisma } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 
 // Konfigurasi Cloudinary
 cloudinary.config({
@@ -110,6 +111,8 @@ export async function PATCH(
       },
     });
 
+    revalidatePath("/about/staff-profile");
+
     return NextResponse.json(updatedStaff);
   } catch (error) {
     if (
@@ -178,6 +181,8 @@ export async function DELETE(
     await db.staff.delete({
       where: { id },
     });
+
+    revalidatePath("/about/staff-profile");
 
     return NextResponse.json({
       success: true,

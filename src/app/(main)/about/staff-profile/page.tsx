@@ -9,8 +9,6 @@ export const metadata: Metadata = {
     "Berkenalan dengan tim pendidik dan tenaga kependidikan kami yang berdedikasi.",
 };
 
-export const revalidate = 60;
-
 export default async function StaffProfilePage() {
   const rawStaff = await db.staff.findMany({
     where: {

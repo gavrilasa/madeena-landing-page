@@ -10,6 +10,7 @@ import ImageExtension from "@tiptap/extension-image";
 import { type JSONContent } from "@tiptap/core";
 import { Badge } from "~/components/ui/badge";
 import { NewsCard } from "~/components/news/NewsCard";
+import type { Metadata } from "next";
 
 interface NewsDetailPageProps {
   params: Promise<{
@@ -17,15 +18,51 @@ interface NewsDetailPageProps {
   }>;
 }
 
-export async function generateStaticParams() {
-  const articles = await db.newsArticle.findMany({
-    where: { status: "PUBLISHED" },
-    select: { slug: true },
+export async function generateMetadata({
+  params,
+}: NewsDetailPageProps): Promise<Metadata> {
+  const { slug } = await params;
+  const article = await db.newsArticle.findFirst({
+    where: {
+      slug: slug,
+      status: "PUBLISHED",
+    },
   });
 
-  return articles.map((article) => ({
-    slug: article.slug,
-  }));
+  if (!article) {
+    return {
+      title: "Artikel Tidak Ditemukan",
+      description: "Maaf, artikel yang Anda cari tidak tersedia.",
+    };
+  }
+
+  return {
+    title: `${article.title} - Al Madeena Islamic School`,
+    description: article.summary,
+    openGraph: {
+      title: article.title,
+      description: article.summary,
+      url: `https://almadeena.sch.id/news/${slug}`,
+      siteName: "Al Madeena Islamic School",
+      images: [
+        {
+          url: article.featuredImage,
+          width: 1200,
+          height: 630,
+          alt: article.title,
+        },
+      ],
+      locale: "id_ID",
+      type: "article",
+      publishedTime: article.publishedAt?.toISOString(),
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: article.title,
+      description: article.summary,
+      images: [article.featuredImage],
+    },
+  };
 }
 
 function formatDate(date: Date | null): string {
@@ -115,9 +152,9 @@ export default async function NewsDetailPage({ params }: NewsDetailPageProps) {
             <div className="w-full max-w-prose pb-4">
               <NextLink
                 href="/news"
-                className="group inline-flex items-center text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+                className="group text-muted-foreground hover:text-primary inline-flex items-center text-sm font-medium transition-colors"
               >
-                <ArrowLeft className="h-4 w-4 mx-2" />
+                <ArrowLeft className="mx-2 h-4 w-4" />
                 Kembali ke Berita
               </NextLink>
             </div>
