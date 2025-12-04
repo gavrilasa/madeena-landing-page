@@ -9,8 +9,6 @@ export const metadata: Metadata = {
     "Profil pendidik dan staf profesional Al Madeena Islamic School.",
 };
 
-export const revalidate = 60;
-
 export default async function StaffProfilePage() {
   const rawStaff = await db.staff.findMany({
     where: {

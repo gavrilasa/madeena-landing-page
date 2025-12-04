@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import { z } from "zod";
 import { auth } from "~/lib/auth";
 import { db } from "~/server/db";
+import { revalidatePath } from "next/cache";
 
 const StaffSchema = z.object({
   name: z.string().min(1, "Nama tidak boleh kosong"),
@@ -120,6 +121,8 @@ export async function POST(request: Request) {
         order: newOrder,
       },
     });
+
+    revalidatePath("/about/staff-profile");
 
     return NextResponse.json(newStaff, { status: 201 });
   } catch (error) {

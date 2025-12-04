@@ -1,7 +1,12 @@
-// src/app/(main)/about/partners/page.tsx
-
 import PageHeader from "~/components/common/PageHeader";
 import PartnersContentClient from "~/components/about/PartnersContentClient";
+import { partnersData } from "~/data/home/partnersData";
+
+export const metadata = {
+  title: "Partner Kerjasama - Al Madeena Islamic School",
+  description:
+    "Daftar mitra strategis dan kerjasama Al Madeena Islamic School.",
+};
 
 export default function PartnersPage() {
   return (
@@ -11,7 +16,8 @@ export default function PartnersPage() {
         subtitle="Bersinergi untuk Pendidikan Islam yang Unggul"
         imageUrl="https://res.cloudinary.com/dah2v3xbg/image/upload/v1763225823/TemplatePageHeader_tnecsg.webp"
       />
-      <PartnersContentClient />
+
+      <PartnersContentClient data={partnersData} />
     </div>
   );
 }

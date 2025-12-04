@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import { z } from "zod";
 import { auth } from "~/lib/auth";
 import { db } from "~/server/db";
+import { revalidatePath } from "next/cache";
 
 // Skema validasi untuk payload reorder
 const ReorderStaffSchema = z.object({
@@ -52,6 +53,8 @@ export async function PUT(request: Request) {
         }),
       ),
     );
+
+    revalidatePath("/about/staff-profile");
 
     return NextResponse.json({
       success: true,
