@@ -4,9 +4,9 @@ import { db } from "~/server/db";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Meet The Team - Al Madeena Islamic School",
+  title: "Profil Guru & Staf | Al Madeena School",
   description:
-    "Profil pendidik dan staf profesional Al Madeena Islamic School.",
+    "Berkenalan dengan tim pendidik dan tenaga kependidikan kami yang berdedikasi.",
 };
 
 export default async function StaffProfilePage() {
@@ -28,8 +28,8 @@ export default async function StaffProfilePage() {
   return (
     <div className="bg-white text-neutral-800">
       <PageHeader
-        title="Meet The Team"
-        subtitle="Our Dedicated Educators & Staff"
+        title="Profil Guru & Staf"
+        subtitle="Berkenalan dengan tim pendidik dan tenaga kependidikan kami yang berdedikasi"
         imageUrl="https://res.cloudinary.com/dah2v3xbg/image/upload/v1763225823/TemplatePageHeader_tnecsg.webp"
       />
 

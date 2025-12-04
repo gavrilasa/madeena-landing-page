@@ -37,7 +37,7 @@ export default function AchievementsContent({
         </div>
 
         {/* Achievements Cards Grid */}
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 mb-16">
+        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 mb-16">
           {data.items.map((item, index) => (
             <motion.div
               key={item.id}
@@ -46,43 +46,42 @@ export default function AchievementsContent({
               viewport={{ once: true, amount: 0.2 }}
               transition={{ delay: index * 0.1, duration: 0.5 }}
               variants={fadeIn}
-              className="group relative aspect-4/5 w-full overflow-hidden rounded-2xl bg-gray-900 shadow-lg"
+              // UPDATED: Changed aspect ratio to aspect-[9/16]
+              className="group relative aspect-9/16 w-full overflow-hidden rounded-2xl bg-gray-900 shadow-lg"
             >
               {/* Background Image */}
               <Image
                 src={item.image}
                 alt={item.title}
                 fill
-                className="object-cover opacity-80 transition-transform duration-700 group-hover:scale-110 group-hover:opacity-60"
+                className="object-cover opacity-90 transition-transform duration-700 group-hover:scale-110"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
 
-              {/* Dark Overlay Gradient */}
-              <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/20 to-black/10" />
+              {/* Dark Overlay Gradient (More prominent at bottom for text readability) */}
+              <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/20 to-transparent" />
 
               {/* Content Container */}
-              <div className="absolute inset-0 flex flex-col justify-between p-6 sm:p-8">
-                {/* Top: Title */}
-                <div>
-                  <h3 className="text-xl leading-tight font-bold text-white md:text-2xl drop-shadow-md">
+              <div className="absolute inset-0 flex flex-col justify-end p-6 sm:p-8">
+                
+                <div className="flex flex-col gap-4">
+                   {/* Title moved here for better flow in 9:16 layout */}
+                   <h3 className="text-xl leading-tight font-bold text-white md:text-2xl drop-shadow-md line-clamp-2">
                     {item.title}
                   </h3>
-                </div>
 
-                {/* Bottom: Metric & Button */}
-                <div className="flex flex-col gap-4">
                   <div>
-                    <span className="block text-4xl font-light text-white md:text-5xl">
-                      {item.metric}
+                    <span className="block text-xl font-bold text-white md:text-2xl line-clamp-1">
+                      {item.name}
                     </span>
-                    <span className="block text-sm text-gray-300 font-medium tracking-wide uppercase">
-                      {item.metricLabel}
+                    <span className="block text-sm text-gray-300 font-medium tracking-wide uppercase mt-1">
+                      {item.studentClass}
                     </span>
                   </div>
 
                   <Link
                     href={item.link}
-                    className="inline-flex w-fit items-center gap-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 px-4 py-2 text-sm font-medium text-white transition-all hover:bg-white hover:text-gray-900"
+                    className="inline-flex w-fit items-center gap-2 rounded-full bg-white/20 backdrop-blur-md border border-white/30 px-4 py-2 text-sm font-medium text-white transition-all hover:bg-white hover:text-gray-900"
                   >
                     Read Story
                     <ArrowRight className="h-4 w-4" />

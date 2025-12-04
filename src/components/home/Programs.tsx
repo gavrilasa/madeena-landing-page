@@ -72,7 +72,9 @@ function DecorationGreenStar({ className }: { className?: string }) {
 // --- Main Component ---
 
 export default function Programs() {
-  const [activeTab, setActiveTab] = useState<"preschool" | "primary">("preschool");
+  const [activeTab, setActiveTab] = useState<"preschool" | "primary">(
+    "preschool",
+  );
   const carouselRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLDivElement>(null);
 
@@ -92,8 +94,10 @@ export default function Programs() {
 
   return (
     <section
+      id="programs" // ADDED: ID for scroll target
       ref={sectionRef}
-      className="relative w-full overflow-hidden py-16 md:py-24"
+      // UPDATED: Added scroll-mt-28 to handle navbar offset
+      className="relative w-full overflow-hidden scroll-mt-28 py-16 md:py-24"
     >
       {/* --- Background Decorations --- */}
       <div className="pointer-events-none absolute inset-0 z-0">
@@ -107,7 +111,6 @@ export default function Programs() {
         <DecorationGreenStar className="absolute bottom-12 right-8 md:bottom-20 md:right-32" />
 
         {/* Top Right Orange Swirl */}
-        {/* UPDATED: Hidden on phone & tablet, visible on desktop (lg+) */}
         <ScrollLine
           containerRef={sectionRef}
           className="hidden lg:block absolute right-0 top-0 w-[400px] z-1"
@@ -129,7 +132,7 @@ export default function Programs() {
                 "rounded-full border px-8 py-2.5 text-sm font-bold transition-all duration-300",
                 activeTab === "preschool"
                   ? "border-[#0094D9] bg-[#0094D9] text-white shadow-md"
-                  : "border-gray-400 bg-transparent text-gray-500 hover:border-gray-600"
+                  : "border-gray-400 bg-transparent text-gray-500 hover:border-gray-600",
               )}
             >
               Pre School
@@ -140,7 +143,7 @@ export default function Programs() {
                 "rounded-full border px-8 py-2.5 text-sm font-bold transition-all duration-300",
                 activeTab === "primary"
                   ? "border-[#0094D9] bg-[#0094D9] text-white shadow-md"
-                  : "border-gray-400 bg-transparent text-gray-500 hover:border-gray-600"
+                  : "border-gray-400 bg-transparent text-gray-500 hover:border-gray-600",
               )}
             >
               Primary School

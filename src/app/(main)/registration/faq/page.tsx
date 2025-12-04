@@ -37,7 +37,7 @@ export default function FaqPage() {
               Jangan ragu untuk menghubungi tim kami langsung.
             </p>
             <a
-              href="/contact"
+              href="/contact/information"
               className="mt-6 inline-block rounded-full bg-black px-8 py-3 font-semibold text-white transition-colors"
             >
               Hubungi Kami

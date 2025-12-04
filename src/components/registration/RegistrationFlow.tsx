@@ -120,7 +120,7 @@ export function RegistrationFlow() {
               Jangan ragu untuk menghubungi kami jika Anda memiliki pertanyaan mengenai alur pendaftaran di atas.
             </p>
             <a 
-              href="/contact" 
+              href="/contact/information" 
               className="mt-2 inline-flex items-center justify-center rounded-full bg-primary px-8 py-3 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
             >
               Hubungi Kami
