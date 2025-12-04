@@ -1,16 +1,66 @@
-import { Card, CardContent } from "~/components/ui/card"; // Keep needed imports
+// src/app/admin/page.tsx
 
-export default function AdminDashboardPage() {
-  // Renamed for clarity
+import { db } from "~/server/db";
+import { AnalyticsDashboard } from "~/components/admin/dashboard/AnalyticsDashboard";
+
+export const metadata = {
+  title: "Dashboard Overview - Admin Panel",
+};
+
+export default async function AdminDashboardPage() {
+  // 1. Ambil data Tren Harian (Views & Visitors per tanggal)
+  const dailyStats = await db.dailyAnalytics.groupBy({
+    by: ["date"],
+    _sum: {
+      views: true,
+      visitors: true,
+    },
+    orderBy: {
+      date: "asc",
+    },
+  });
+
+  // 2. Ambil data Per Halaman (Views per tanggal & path)
+  // Kita butuh tanggalnya untuk filter "Bulan Tertentu"
+  const pageStats = await db.dailyAnalytics.groupBy({
+    by: ["date", "path"],
+    _sum: {
+      views: true,
+    },
+  });
+
+  // 3. Ambil data Referrer (Views per tanggal & referrer)
+  const referrerStats = await db.dailyAnalytics.groupBy({
+    by: ["date", "referrerGroup"],
+    _sum: {
+      views: true,
+    },
+  });
+
+  // 4. Format Data untuk Client (Serialisasi Date ke String)
+  const formattedDaily = dailyStats.map((item) => ({
+    date: item.date.toISOString(),
+    views: item._sum.views ?? 0,
+    visitors: item._sum.visitors ?? 0,
+  }));
+
+  const formattedPages = pageStats.map((item) => ({
+    date: item.date.toISOString(),
+    path: item.path,
+    views: item._sum.views ?? 0,
+  }));
+
+  const formattedReferrers = referrerStats.map((item) => ({
+    date: item.date.toISOString(),
+    referrer: item.referrerGroup,
+    views: item._sum.views ?? 0,
+  }));
+
   return (
-    // Only the main content specific to this page
-    <Card className="h-250">
-      {" "}
-      {/* Adjust height or styling as needed */}
-      <CardContent className="h-full">
-        <div className="border-card-foreground/10 h-full rounded-md border bg-[repeating-linear-gradient(45deg,color-mix(in_oklab,var(--card-foreground)10%,transparent),color-mix(in_oklab,var(--card-foreground)10%,transparent)_1px,var(--card)_2px,var(--card)_15px)]" />
-        {/* Replace the pattern div with actual dashboard content */}
-      </CardContent>
-    </Card>
+    <AnalyticsDashboard
+      rawDaily={formattedDaily}
+      rawPages={formattedPages}
+      rawReferrers={formattedReferrers}
+    />
   );
 }

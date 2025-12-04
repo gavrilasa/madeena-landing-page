@@ -39,9 +39,9 @@ export function AdminSidebar() {
             <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
-                  <a href="/admin/analytics">
+                  <a href="/admin">
                     <ChartNoAxesCombinedIcon />
-                    <span>Analytics</span>
+                    <span>Overview</span>
                   </a>
                 </SidebarMenuButton>
               </SidebarMenuItem>
