@@ -11,7 +11,8 @@ export default function StaffPreview() {
   const staffPreview = staffData.slice(0, 4);
 
   return (
-    <div className="w-full py-8 md:py-12">
+    // UPDATED: Standardized padding
+    <div className="w-full pt-10 pb-2 md:pt-20 md:pb-4">
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
         {staffPreview.map((staff, index) => (
           <motion.div
@@ -40,7 +41,7 @@ export default function StaffPreview() {
         ))}
       </div>
 
-      <div className="mt-12 text-center">
+      <div className="mt-12 md:mt-24 text-center">
         <Link
           href="/about/staff-profile"
           className="group inline-flex items-center text-sm font-semibold text-white transition-opacity hover:opacity-80 md:text-base hover:underline"

@@ -1,6 +1,7 @@
 import { type Metadata } from "next";
 import { db } from "~/server/db";
 import Gallery from "~/components/gallery/Gallery";
+import PageHeader from "~/components/common/PageHeader";
 
 export const metadata: Metadata = {
   title: "Gallery | Madeena School",
@@ -25,8 +26,13 @@ export default async function GalleryPage() {
   });
 
   return (
-    <div className="bg-white">
+    <main className="bg-white">
+      <PageHeader
+        title="Galeri Sekolah"
+        subtitle="Momen berharga dan dokumentasi kegiatan siswa Al Madeena Islamic School"
+        imageUrl="https://res.cloudinary.com/dah2v3xbg/image/upload/v1763225823/TemplatePageHeader_tnecsg.webp"
+      />
       <Gallery sections={sections} />
-    </div>
+    </main>
   );
 }

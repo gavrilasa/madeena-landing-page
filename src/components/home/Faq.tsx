@@ -35,9 +35,10 @@ export default function Faq() {
         <DecorationGreenStar className="absolute left-16 top-8 w-12 h-12 md:left-32 md:top-24" />
 
         {/* Top Right Orange Swirl */}
+        {/* UPDATED: Hidden on mobile */}
         <ScrollLine
           containerRef={sectionRef}
-          className="absolute right-20 -top-10 w-[300px] md:right-0 md:top-0 md:w-[400px] z-10"
+          className="hidden md:block absolute md:right-0 md:top-0 md:w-[400px] z-10"
         />
 
         {/* Bottom Left Blue Flower */}
@@ -77,7 +78,6 @@ export default function Faq() {
               <AccordionItem
                 key={item.id}
                 value={item.id}
-                // Updated className: Added last:border-b to ensure the last item retains its bottom border
                 className="border border-gray-800 bg-white px-6 transition-all duration-300 rounded-2xl data-[state=open]:rounded-4xl last:border-b"
               >
                 <AccordionTrigger className="text-left text-base font-semibold text-gray-900 hover:no-underline md:text-lg py-4">

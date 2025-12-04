@@ -70,20 +70,21 @@ export default function PageHeader({
         */}
         <ScrollLine
           containerRef={containerRef}
-          className="absolute -left-8 -top-8 w-[120px] md:left-0 md:top-0 md:w-[220px] lg:w-[260px]"
+          className="absolute -left-2 top-0 w-[120px] md:left-0 md:top-0 md:w-[220px] lg:w-[260px]"
         />
 
         {/* Green Ring (Top Right) */}
         <DecorationGreenRing className="absolute right-8 top-24 w-6 h-6 md:right-56 md:top-24 md:w-10 md:h-10" />
 
         {/* Blue Pattern (Right Side) */}
+        {/* UPDATED: Added 'hidden md:block' to hide on phone devices */}
         <BluePattern
           containerRef={containerRef}
-          className="absolute right-0 top-1/2 w-24 -translate-y-1/2 translate-x-1/3 md:w-48 md:translate-x-1/4"
+          className="hidden lg:block absolute right-0 top-1/2 w-24 -translate-y-1/2 translate-x-1/3 md:w-48 md:translate-x-1/4"
         />
 
         {/* Yellow Star (Bottom Left) */}
-        <DecorationYellowStar className="absolute bottom-10 left-10 w-8 h-8 md:bottom-10 md:left-32 md:w-12 md:h-12 rotate-12" />
+        <DecorationYellowStar className="absolute bottom-10 left-4 w-8 h-8 md:bottom-10 md:left-32 md:w-12 md:h-12 rotate-12" />
       </div>
 
       {/* --- Content --- */}

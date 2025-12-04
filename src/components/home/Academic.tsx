@@ -34,12 +34,12 @@ export default function Academic() {
       <BackgroundSwirl />
       
       {/* Flower Decoration - Top Left */}
-      <FlowerDecoration className="absolute -left-4 top-4 w-20 opacity-20 md:left-4 md:top-8 md:w-28 md:opacity-30 lg:left-8 lg:top-12 lg:w-32" />
+      <FlowerDecoration className="absolute -left-4 top-4 w-20 opacity-20 md:left-4 md:top-8 md:w-28 md:opacity-30 lg:left-0 lg:top-6 lg:w-32" />
       
       {/* Star Decorations - Multiple positions */}
       <StarDecoration className="absolute bottom-16 right-8 w-8 animate-pulse opacity-30 md:bottom-20 md:right-16 md:w-10 lg:right-24 lg:w-12" />
       <StarDecoration className="absolute left-8 top-1/2 w-6 -translate-y-1/2 opacity-20 md:left-16 md:w-8 lg:left-24" />
-      <StarDecoration className="absolute right-1/4 top-16 w-7 rotate-45 opacity-15 md:top-24 md:w-9" />
+
 
       <div className="container relative z-10 mx-auto px-6">
         

@@ -103,7 +103,7 @@ export default function FoundationBoardGridClient() {
   return (
     <>
       <section className="w-full bg-white py-16 md:py-24">
-        <div className="container mx-auto px-6">
+        <div className="container mx-auto px-18 lg:px-8">
           {/* Carousel Component */}
           <div className="w-full">
             <Carousel items={cards} />

@@ -6,7 +6,8 @@ import { ArrowRight, Target, Eye } from "lucide-react";
 
 export default function VisionMissionPreview() {
   return (
-    <div className="w-full py-10 md:py-16">
+    // UPDATED: Standardized padding consistent with HistoryTimeline
+    <div className="w-full pt-10 pb-2 md:pt-20 md:pb-4">
       <div className="grid gap-10 md:grid-cols-2 md:gap-16">
         {/* Vision Side */}
         <motion.div
@@ -53,12 +54,12 @@ export default function VisionMissionPreview() {
       </div>
 
       {/* CTA */}
-      <div className="mt-16 text-center">
+      <div className="mt-12 md:mt-24 text-center">
         <Link
           href="/about/vision-mission"
           className="group inline-flex items-center text-sm font-semibold text-white transition-opacity hover:opacity-80 md:text-base hover:underline"
         >
-          Baca Visi & Misi Selengkapnya
+          Visi & Misi Selengkapnya
           <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
         </Link>
       </div>

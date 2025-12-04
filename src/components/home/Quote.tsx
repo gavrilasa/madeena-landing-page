@@ -51,11 +51,12 @@ export default function Quote() {
     <section ref={sectionRef} className="relative z-20 w-full">
       {/* The White Card Container */}
       <div className="relative -mt-24 flex min-h-screen flex-col overflow-hidden rounded-t-[3rem] bg-white pt-24 pb-24 md:-mt-32 md:rounded-t-[5rem] md:pt-32 md:pb-32 lg:rounded-t-[80px]">
+        
         {/* --- ScrollLine Component (Left) --- */}
-        {/* Updated width for mobile: w-[180px] instead of w-[100px] and adjusted positioning */}
+        {/* UPDATED: Hidden on mobile, visible on desktop (md+) */}
         <ScrollLine
           containerRef={sectionRef}
-          className="absolute top-0 left-0 z-10 w-[180px] -translate-x-8 -translate-y-6 sm:w-[220px] sm:-translate-x-10 sm:-translate-y-8 md:top-10 md:w-[280px] md:translate-x-0 md:-translate-y-12 lg:w-[348px]"
+          className="hidden md:block absolute z-10 md:top-10 md:left-0 md:w-[280px] md:-translate-y-12 lg:w-[348px]"
           start="top 85%"
           end="center center"
         />
@@ -83,7 +84,7 @@ export default function Quote() {
           </svg>
         </div>
 
-        {/* Content Container - Centered Vertical & Horizontal */}
+        {/* Content Container */}
         <div
           ref={contentRef}
           className="relative z-20 container mx-auto flex flex-1 flex-col items-center justify-center px-6 text-center"

@@ -31,30 +31,15 @@ export default function Navbar({ forceSolid }: NavbarProps) {
   // Default ke string kosong untuk keamanan jika null
   const pathname = usePathname() || "";
 
-  // --- LOGIKA TRANSPARAN ---
-  
-  // Daftar awalan path yang memiliki PageHeader putih (Transparan navbar)
-  const transparentPrefixes = [
-    "/about",
-    "/preschool",
-    "/primary",
-    "/gallery",
-    "/contact",
-    "/registration",
-    "/career",
-  ];
-
-  // Cek apakah halaman saat ini boleh transparan
-  const isTransparentPage =
-    pathname === "/" || // Homepage
-    transparentPrefixes.some((prefix) => pathname.startsWith(prefix)) ||
-    pathname === "/news" ||
-    pathname.startsWith("/news/page/");
+  // --- LOGIKA BARU: ---
+  // Hanya Homepage ('/') yang dianggap transparan (teks putih).
+  // Halaman lain otomatis dianggap solid (teks hitam) agar kontras terjaga.
+  const isTransparentPage = pathname === "/";
 
   // Navbar Transparan HANYA JIKA:
   // 1. Sudah di client (isClient)
   // 2. TIDAK dipaksa solid lewat props (!forceSolid)
-  // 3. Halaman terdaftar sebagai transparan (isTransparentPage)
+  // 3. Halaman adalah Homepage (isTransparentPage)
   // 4. User BELUM scroll (!isScrolled)
   const useTransparentStyle =
     isClient && !forceSolid && isTransparentPage && !isScrolled;
@@ -78,8 +63,8 @@ export default function Navbar({ forceSolid }: NavbarProps) {
       className={cn(
         "sticky top-0 right-0 left-0 z-50 px-4 pt-2 transition-all duration-300 md:px-6",
         !useTransparentStyle
-          ? "bg-white text-gray-800 shadow-md" // Style Solid (Scrolled / Other Pages)
-          : "bg-transparent text-gray-900" // Style Transparan (Top of PageHeader) - Sekarang Text Hitam
+          ? "bg-white text-gray-800 shadow-md" // Style Solid (Putih, Text Hitam) - Default untuk semua halaman selain Home
+          : "bg-transparent text-white", // Style Transparan (Text Putih) - Khusus Home sebelum scroll
       )}
     >
       <div className="container mx-auto -mt-1 flex h-16 items-center justify-between gap-4">
@@ -95,11 +80,10 @@ export default function Navbar({ forceSolid }: NavbarProps) {
             orientation="vertical"
             className={cn(
               "max-h-10",
-              // Separator selalu gelap karena background sekarang selalu terang (Putih atau Transparan di atas Putih)
-              "bg-gray-300"
+              !useTransparentStyle ? "bg-gray-300" : "bg-white/50",
             )}
           />
-          <div className="text-md flex flex-col leading-tight font-medium text-gray-900">
+          <div className="text-md flex flex-col leading-tight font-medium">
             <span>Al Madeena</span>
             <span className="-mt-1">Islamic School</span>
           </div>
@@ -123,9 +107,15 @@ export default function Navbar({ forceSolid }: NavbarProps) {
                             navigationMenuTriggerStyle(),
                             "group h-full cursor-pointer rounded-t-lg rounded-b-none border-transparent bg-transparent px-3 py-1.5 pb-3 font-medium transition-all",
                             "hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent",
-                            // Style selalu Text Hitam/Gelap
-                            "text-gray-800 after:bg-gray-900 hover:text-gray-900 focus:text-gray-900 focus-visible:ring-gray-900/40 data-[state=open]:text-gray-900",
-                            isActive && "font-semibold text-gray-900"
+                            !useTransparentStyle
+                              ? "text-gray-800 after:bg-gray-900 hover:text-gray-900 focus:text-gray-900 focus-visible:ring-gray-900/40 data-[state=open]:text-gray-900"
+                              : "text-white after:bg-white hover:text-white focus:text-white focus-visible:ring-white/40 data-[state=open]:text-white",
+                            isActive &&
+                              !useTransparentStyle &&
+                              "font-semibold text-gray-900",
+                            isActive &&
+                              useTransparentStyle &&
+                              "font-semibold text-white",
                           )}
                         >
                           {link.label}
@@ -134,7 +124,7 @@ export default function Navbar({ forceSolid }: NavbarProps) {
                         <NavigationMenuContent className="rounded-sm">
                           <ul
                             className={cn(
-                              "mt-0 border-0 bg-white text-gray-800 shadow-none md:min-w-64"
+                              "mt-0 border-0 bg-white text-gray-800 shadow-none md:min-w-64",
                             )}
                           >
                             {link.items.map((item, itemIndex) => {
@@ -154,7 +144,7 @@ export default function Navbar({ forceSolid }: NavbarProps) {
                                       "text-gray-700 transition-colors",
                                       "hover:bg-gray-100 hover:text-gray-900",
                                       "focus:bg-gray-100 focus:text-gray-900 focus:outline-none",
-                                      "data-active:bg-gray-50 data-active:font-semibold data-active:text-gray-900"
+                                      "data-active:bg-gray-50 data-active:font-semibold data-active:text-gray-900",
                                     )}
                                   >
                                     <div className="flex items-start gap-3">
@@ -190,19 +180,24 @@ export default function Navbar({ forceSolid }: NavbarProps) {
                           "group relative flex h-full flex-row items-center justify-center rounded-none border-transparent bg-transparent px-3 py-1.5 pb-3 font-medium",
                           "transition-colors outline-none focus-visible:ring-[3px]",
                           "hover:bg-transparent focus:bg-transparent",
-                          // Style selalu Text Hitam/Gelap
-                          isActive
-                            ? "font-semibold text-gray-900 hover:text-gray-900"
-                            : "text-gray-800/80 hover:text-gray-900",
-                          "focus:text-gray-900 focus-visible:ring-gray-900/40"
+                          !useTransparentStyle
+                            ? isActive
+                              ? "font-semibold text-gray-900 hover:text-gray-900"
+                              : "text-gray-800/80 hover:text-gray-900"
+                            : isActive
+                              ? "font-semibold text-white hover:text-white"
+                              : "text-white/80 hover:text-white",
+                          !useTransparentStyle
+                            ? "focus:text-gray-900 focus-visible:ring-gray-900/40"
+                            : "focus:text-white focus-visible:ring-white/40",
                         )}
                       >
                         {link.label}
                         <span
                           className={cn(
                             "absolute bottom-0 left-0 h-0.5 w-full origin-left scale-x-0 transform transition-transform duration-300 ease-out group-hover:scale-x-100",
-                            "bg-gray-900", // Underline selalu hitam
-                            isActive && "scale-x-100"
+                            !useTransparentStyle ? "bg-gray-900" : "bg-white",
+                            isActive && "scale-x-100",
                           )}
                         ></span>
                       </NavigationMenuLink>
@@ -216,9 +211,9 @@ export default function Navbar({ forceSolid }: NavbarProps) {
           <div className="lg:hidden">
             <MobileNav
               links={navigationLinks}
-              // Selalu pass TRUE agar MobileNav merender tombol Hamburger berwarna gelap/hitam
-              // karena background sekarang selalu Putih atau Transparan-di-atas-Putih
-              isScrolled={true}
+              // Pass kondisi solid state ke MobileNav
+              // Jika Solid (useTransparentStyle = FALSE), maka isScrolled = TRUE (agar ikon gelap)
+              isScrolled={!useTransparentStyle}
             />
           </div>
         </div>
