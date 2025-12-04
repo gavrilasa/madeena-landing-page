@@ -38,7 +38,7 @@ export default function FaqPage() {
             </p>
             <a
               href="/contact"
-              className="mt-6 inline-block rounded-full bg-[#FE7D01] px-8 py-3 font-semibold text-white transition-colors hover:bg-[#e67201]"
+              className="mt-6 inline-block rounded-full bg-black px-8 py-3 font-semibold text-white transition-colors"
             >
               Hubungi Kami
             </a>

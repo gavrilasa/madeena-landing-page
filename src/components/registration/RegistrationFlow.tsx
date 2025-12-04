@@ -56,7 +56,7 @@ export function RegistrationFlow() {
       <div className="container mx-auto px-6 max-w-5xl">
         
         <div className="relative">
-          {/* Vertical Line (Hidden on mobile, visible on md+) */}
+          {/* Vertical Line (Positioned at left-8 on mobile, center on desktop) */}
           <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-border md:left-1/2 md:-ml-0.5" />
 
           <div className="space-y-12">
@@ -75,8 +75,9 @@ export function RegistrationFlow() {
                     isEven ? "md:flex-row-reverse" : ""
                   )}
                 >
-                  {/* Step Number Badge (Mobile: Left, Desktop: Center) */}
-                  <div className="absolute left-4 md:left-1/2 -translate-x-1/2 flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground font-bold z-10 ring-4 ring-background">
+                  {/* Step Number Badge */}
+                  {/* UPDATED: Changed 'left-4' to 'left-8' to align center with the vertical line on mobile */}
+                  <div className="absolute left-8 md:left-1/2 -translate-x-1/2 flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground font-bold z-10 ring-4 ring-background">
                     {step.id}
                   </div>
 

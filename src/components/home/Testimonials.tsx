@@ -107,7 +107,7 @@ export default function Testimonials() {
   );
 
   return (
-    <section className="relative w-full h-screen overflow-hidden bg-[#F5C546] py-20 md:py-32">
+    <section className="relative w-full overflow-hidden bg-[#F5C546] py-20 md:py-32">
       {/* --- Background Decorations --- */}
       <div className="absolute inset-0 pointer-events-none">
         <DecorationQuote className="absolute top-10 left-6 w-24 h-24 md:top-16 md:left-20 md:w-32 md:h-32" />

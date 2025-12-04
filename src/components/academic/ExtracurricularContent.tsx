@@ -1,8 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { extracurricularData } from "~/data/academic/extracurricularData";
 import { cn } from "~/lib/utils";
@@ -75,14 +73,6 @@ export default function ExtracurricularContent({
                     <p className="mb-8 text-base leading-relaxed text-gray-600 md:text-lg">
                       {item.description}
                     </p>
-                    
-                    <Link
-                      href={item.link}
-                      className="group inline-flex items-center gap-2 font-semibold text-gray-900 transition-colors hover:text-[#0094D9]"
-                    >
-                      Learn more
-                      <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-                    </Link>
                   </div>
                 </div>
               </motion.div>

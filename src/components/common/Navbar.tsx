@@ -31,36 +31,15 @@ export default function Navbar({ forceSolid }: NavbarProps) {
   // Default ke string kosong untuk keamanan jika null
   const pathname = usePathname() || "";
 
-  // --- LOGIKA BARU: WHITELIST TRANSPARAN ---
-
-  // 1. Daftar awalan path yang PASTI Transparan (karena punya Page Header)
-  const transparentPrefixes = [
-    "/about",
-    "/preschool",
-    "/primary",
-    "/gallery",
-    "/contact",
-    "/registration",
-    "/career",
-  ];
-
-  // 2. Cek apakah halaman saat ini boleh transparan
-  const isTransparentPage =
-    pathname === "/" || // Homepage
-    transparentPrefixes.some((prefix) => pathname.startsWith(prefix)) || // Halaman statis ber-header
-    pathname === "/news" || // Halaman list berita (punya header)
-    pathname.startsWith("/news/page/"); // Halaman paginasi berita (punya header)
-
-  // Catatan: Logika di atas otomatis mengecualikan "/news/[slug]" (Detail Berita).
-  // Karena "/news/judul-berita" TIDAK sama dengan "/news" DAN TIDAK mulai dengan "/news/page/".
-  // Jadi Detail Berita akan dianggap FALSE (Tidak Transparan) -> Solid.
-
-  // --- HASIL AKHIR STYLE ---
+  // --- LOGIKA BARU: ---
+  // Hanya Homepage ('/') yang dianggap transparan (teks putih).
+  // Halaman lain otomatis dianggap solid (teks hitam) agar kontras terjaga.
+  const isTransparentPage = pathname === "/";
 
   // Navbar Transparan HANYA JIKA:
   // 1. Sudah di client (isClient)
   // 2. TIDAK dipaksa solid lewat props (!forceSolid)
-  // 3. Halaman terdaftar sebagai transparan (isTransparentPage)
+  // 3. Halaman adalah Homepage (isTransparentPage)
   // 4. User BELUM scroll (!isScrolled)
   const useTransparentStyle =
     isClient && !forceSolid && isTransparentPage && !isScrolled;
@@ -84,8 +63,8 @@ export default function Navbar({ forceSolid }: NavbarProps) {
       className={cn(
         "sticky top-0 right-0 left-0 z-50 px-4 pt-2 transition-all duration-300 md:px-6",
         !useTransparentStyle
-          ? "bg-white text-gray-800 shadow-md" // Style Solid (Putih)
-          : "bg-transparent text-white", // Style Transparan
+          ? "bg-white text-gray-800 shadow-md" // Style Solid (Putih, Text Hitam) - Default untuk semua halaman selain Home
+          : "bg-transparent text-white", // Style Transparan (Text Putih) - Khusus Home sebelum scroll
       )}
     >
       <div className="container mx-auto -mt-1 flex h-16 items-center justify-between gap-4">

@@ -7,22 +7,6 @@ export default function Gallery({ sections }: GalleryProps) {
   return (
     <section className="py-8 sm:py-16 lg:py-24">
       <div className="container mx-auto px-4 md:px-0">
-        <div className="mb-8 space-y-2 text-center sm:mb-12 md:space-y-4 lg:mb-16">
-          <h2 className="text-2xl font-semibold md:text-3xl lg:text-4xl">
-            <span className="relative z-1">
-              Explore our
-              <span
-                className="bg-primary absolute bottom-1 left-0 -z-1 h-px w-full"
-                aria-hidden="true"
-              ></span>
-            </span>{" "}
-            Gallery
-          </h2>
-          <p className="text-muted-foreground text-md md:text-xl">
-            Explore our gallery to learn more about our school
-          </p>
-        </div>
-
         <div className="flex flex-col gap-16">
           {nonEmptySections.map((section) => (
             <div
