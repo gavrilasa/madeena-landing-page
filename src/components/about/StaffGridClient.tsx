@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { User } from "lucide-react";
 import type { Staff } from "~/types/staff";
 import AboutQuickLinks from "./AboutQuickLinks";
+import { cn } from "~/lib/utils";
 
 const departmentsData = [
   { id: "leadership", name: "Leadership Team" },
@@ -43,6 +44,7 @@ export default function StaffGridClient({ staffList }: StaffGridClientProps) {
   const renderProfileImage = (
     imageUrl: string | null | undefined,
     alt: string,
+    gender: string | null | undefined,
     isModal = false,
   ) => {
     if (imageUrl) {
@@ -64,7 +66,10 @@ export default function StaffGridClient({ staffList }: StaffGridClientProps) {
     return (
       <div className="flex h-full w-full items-center justify-center bg-gray-100 text-gray-400">
         <User
-          className={isModal ? "h-32 w-32" : "h-20 w-20"}
+          className={cn(
+            isModal ? "size-48" : "size-40",
+            gender === "FEMALE" ? "text-pink-500" : "text-blue-500",
+          )}
           strokeWidth={1.5}
         />
       </div>
@@ -122,23 +127,26 @@ export default function StaffGridClient({ staffList }: StaffGridClientProps) {
                     className={`relative aspect-3/4 overflow-hidden ${cardGradientClass}`}
                   >
                     <div className="absolute inset-0">
-                      {renderProfileImage(staff.imageUrl, staff.name)}
+                      {renderProfileImage(
+                        staff.imageUrl,
+                        staff.name,
+                        staff.gender,
+                      )}
                     </div>
                   </div>
 
                   {/* Info Section */}
-                  <div className="bg-white p-4">
-                    <div className="mb-3 border-b-2 border-gray-900 pb-3 text-center">
+                  <div className="bg-white p-2">
+                    <div className="mb-2 border-b-2 border-gray-900 pb-2 text-center">
                       <Image
                         src="https://res.cloudinary.com/dah2v3xbg/image/upload/v1761844689/Logo_Footer_mdjaax.svg"
                         alt="Logo"
-                        width={120}
-                        height={30}
-                        className="mx-auto h-auto w-full max-w-[120px] object-contain opacity-80"
+                        width={240}
+                        height={60}
+                        className="mx-auto h-auto w-full max-w-[200px] object-contain opacity-80"
                       />
                     </div>
-
-                    <div className="space-y-1 text-center">
+                    <div className="space-y-1 py-2 text-center">
                       <h3 className="line-clamp-1 text-base leading-tight font-bold text-gray-900">
                         {staff.name}
                       </h3>
@@ -203,6 +211,7 @@ export default function StaffGridClient({ staffList }: StaffGridClientProps) {
                     {renderProfileImage(
                       selectedStaffData.imageUrl,
                       selectedStaffData.name,
+                      selectedStaffData.gender,
                       true,
                     )}
                   </div>

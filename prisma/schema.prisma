@@ -154,3 +154,26 @@ model DailyAnalytics {
   @@index([date])
   @@index([path])
 }
+
+enum AchievementCategory {
+  PRESCHOOL
+  PRIMARY
+}
+
+model Achievement {
+  id           String              @id @default(cuid())
+  title        String
+  slug         String              @unique
+  category     AchievementCategory
+  date         DateTime            @db.Date
+  studentNames String[]
+  studentClass String
+  predicate    String
+  description  String              @db.Text
+  image        String
+  createdAt    DateTime            @default(now())
+  updatedAt    DateTime            @updatedAt
+
+  @@index([category])
+  @@index([date])
+}

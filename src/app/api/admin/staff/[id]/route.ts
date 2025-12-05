@@ -21,7 +21,7 @@ cloudinary.config({
 const getPublicIdFromUrl = (url: string) => {
   try {
     const parts = url.split("/");
-    const filenameWithExtension = parts[parts.length - 1];
+    // const filenameWithExtension = parts[parts.length - 1];
     // Ambil juga nama folder jika ada (biasanya index ke-2 dan ke-1 dari belakang setelah split)
     // Untuk keamanan, kita coba ambil segmen setelah 'upload/' dan hapus extension
     const uploadIndex = parts.findIndex((part) => part === "upload");

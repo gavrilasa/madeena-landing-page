@@ -3,7 +3,7 @@
 import Image from "next/image";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { GripVertical, Edit, Trash2, User, UserCircle } from "lucide-react";
+import { GripVertical, Edit, Trash2, User } from "lucide-react";
 import { Button } from "~/components/ui/button";
 import { Badge } from "~/components/ui/badge";
 import { cn } from "~/lib/utils";
@@ -49,9 +49,9 @@ export function StaffItem({ staff, onEdit, onDelete }: StaffItemProps) {
     return (
       <div className="bg-muted text-muted-foreground flex h-full w-full items-center justify-center">
         {staff.gender === "FEMALE" ? (
-          <UserCircle className="h-6 w-6" />
+          <User className="h-6 w-6 text-pink-500" />
         ) : (
-          <User className="h-6 w-6" />
+          <User className="h-6 w-6 text-blue-500" />
         )}
       </div>
     );

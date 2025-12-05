@@ -258,8 +258,8 @@ export function AnalyticsDashboard({
             </CardDescription>
           </CardHeader>
           <CardContent className="pl-2">
-            <div style={{ width: "100%", height: 300 }}>
-              <ResponsiveContainer width="100%" height="100%">
+            <div className="h-[300px] w-full">
+              <ResponsiveContainer width="100%" height="100%" minWidth={0}>
                 <AreaChart
                   data={processedData.trend}
                   margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
@@ -339,8 +339,8 @@ export function AnalyticsDashboard({
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <div style={{ width: "100%", height: 350 }}>
-              <ResponsiveContainer width="100%" height="100%">
+            <div className="h-[300px] w-full">
+              <ResponsiveContainer width="100%" height="100%" minWidth={0}>
                 <PieChart>
                   <Pie
                     data={processedData.referrerData}
@@ -380,8 +380,8 @@ export function AnalyticsDashboard({
             <CardDescription>Top 5 Pages ({getFilterLabel()})</CardDescription>
           </CardHeader>
           <CardContent>
-            <div style={{ width: "100%", height: 350 }}>
-              <ResponsiveContainer width="100%" height="100%">
+            <div className="h-[300px] w-full">
+              <ResponsiveContainer width="100%" height="100%" minWidth={0}>
                 <BarChart
                   layout="vertical"
                   data={processedData.topPages}

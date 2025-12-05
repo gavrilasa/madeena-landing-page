@@ -4,7 +4,7 @@ import {
   ChartNoAxesCombinedIcon,
   Images,
   Newspaper,
-  Settings,
+  Trophy,
   Users,
 } from "lucide-react";
 import Image from "next/image";
@@ -71,9 +71,9 @@ export function AdminSidebar() {
               </SidebarMenuItem>
               <SidebarMenuItem>
                 <SidebarMenuButton asChild>
-                  <Link href="/admin/users">
-                    <Settings />
-                    <span>User</span>
+                  <Link href="/admin/achievements">
+                    <Trophy />
+                    <span>Achievements</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
