@@ -9,11 +9,11 @@ const StaffSchema = z.object({
   name: z.string().min(1, "Nama tidak boleh kosong"),
   nip: z.string().min(1, "NIP tidak boleh kosong"),
   gender: z.enum(["MALE", "FEMALE"], {
-    errorMap: () => ({ message: "Gender harus MALE atau FEMALE" }),
+    error: "Gender harus MALE atau FEMALE",
   }),
   role: z.string().min(1, "Jabatan tidak boleh kosong"),
   department: z.enum(["leadership", "teachers", "administration", "support"], {
-    errorMap: () => ({ message: "Departemen tidak valid" }),
+    error: "Departemen tidak valid",
   }),
   quote: z.string().optional(),
   email: z

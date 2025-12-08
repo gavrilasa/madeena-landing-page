@@ -64,17 +64,17 @@ export default function AdminCareersPage() {
   };
 
   return (
-    <div className="space-y-6 p-6">
+    <div className="container mx-auto space-y-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">
+        <div className="space-y-1">
+          <h1 className="text-2xl font-bold tracking-tight">
             Karir & Lowongan
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-muted-foreground text-sm md:text-base">
             Kelola lowongan pekerjaan yang tersedia di sekolah.
           </p>
         </div>
-        <Button onClick={handleCreate}>
+        <Button onClick={handleCreate} className="shrink-0">
           <Plus className="mr-2 h-4 w-4" />
           Tambah Lowongan
         </Button>

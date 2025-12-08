@@ -120,7 +120,7 @@ export function StaffFormDialog({
 
     const validation = formSchema.safeParse(formData);
     if (!validation.success) {
-      toast.error(validation.error.errors[0]?.message ?? "Data tidak valid");
+      toast.error("Data tidak valid");
       setIsLoading(false);
       return;
     }

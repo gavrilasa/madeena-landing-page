@@ -27,7 +27,7 @@ import {
 const formSchema = z.object({
   title: z.string().min(1, "Judul prestasi wajib diisi"),
   category: z.enum(["PRESCHOOL", "PRIMARY"], {
-    errorMap: () => ({ message: "Pilih kategori" }),
+    error: "Pilih kategori",
   }),
   date: z.string().min(1, "Tanggal wajib diisi"),
   studentNames: z

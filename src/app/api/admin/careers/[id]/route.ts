@@ -5,19 +5,20 @@ import { UpdateCareerSchema } from "~/types/career";
 import type { Prisma } from "~/lib/generated/prisma/client";
 
 interface RouteContext {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export async function PATCH(request: Request, context: RouteContext) {
   try {
-    const { id } = context.params;
-    const body = UpdateCareerSchema.parse(await request.json());
+    const { id } = await context.params;
+
+    const json: unknown = await request.json();
+    const body = UpdateCareerSchema.parse(json);
 
     const updateData: Prisma.CareerUpdateInput = {
       ...body,
-      // Pastikan updatedAt diperbarui (opsional, Prisma handle otomatis biasanya)
       updatedAt: new Date(),
     };
 
@@ -30,7 +31,7 @@ export async function PATCH(request: Request, context: RouteContext) {
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
-        { error: "Validasi gagal", details: error.errors },
+        { error: "Validasi gagal", details: error },
         { status: 400 },
       );
     }
@@ -45,7 +46,8 @@ export async function PATCH(request: Request, context: RouteContext) {
 
 export async function DELETE(request: Request, context: RouteContext) {
   try {
-    const { id } = context.params;
+    // Perbaikan: Await params
+    const { id } = await context.params;
 
     await db.career.delete({
       where: { id },

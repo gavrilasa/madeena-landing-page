@@ -55,7 +55,7 @@ export async function POST(request: Request) {
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json(
-        { error: "Validasi gagal", details: error.errors },
+        { error: "Validasi gagal", details: error },
         { status: 400 },
       );
     }

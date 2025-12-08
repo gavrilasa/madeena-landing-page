@@ -176,7 +176,7 @@ export function NewsArticleForm({
         </CardHeader>
         <CardContent className="flex flex-col gap-6">
           {/* Tampilkan error API (misal: slug duplikat) */}
-          {errors && !errors.errors.length && (
+          {errors && (
             <Alert variant="destructive">
               <AlertTriangle className="h-4 w-4" />
               <AlertTitle>Error</AlertTitle>
