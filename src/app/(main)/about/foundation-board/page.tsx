@@ -1,9 +1,14 @@
-// src/app/(main)/about/foundation-board/page.tsx
-
 import PageHeader from "~/components/common/PageHeader";
 import FoundationBoardGridClient from "~/components/about/FoundationBoardGridClient";
+import { db } from "~/server/db";
 
-export default function FoundationBoardPage() {
+export default async function FoundationBoardPage() {
+  // Fetch from the new table
+  const boardData = await db.foundationMember.findMany({
+    where: { isActive: true },
+    orderBy: { order: "asc" },
+  });
+
   return (
     <div className="bg-white text-neutral-800">
       <PageHeader
@@ -11,8 +16,8 @@ export default function FoundationBoardPage() {
         subtitle="Yayasan Al Madeena Cendekia Muslim"
         imageUrl="https://res.cloudinary.com/dah2v3xbg/image/upload/v1763225823/TemplatePageHeader_tnecsg.webp"
       />
-
-      <FoundationBoardGridClient />
+      {/* Note: Ensure FoundationBoardGridClient accepts FoundationMember[] type */}
+      <FoundationBoardGridClient data={boardData} />
     </div>
   );
 }

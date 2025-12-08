@@ -58,42 +58,40 @@ export default function PageHeader({
     <section
       ref={containerRef}
       className={cn(
-        "relative w-full overflow-hidden bg-white pt-32 pb-16 md:pt-48 md:pb-28",
-        className
+        // UPDATED: Reduced vertical padding for a tighter, cleaner look
+        "relative w-full overflow-hidden bg-white pt-24 pb-12 md:pt-32 md:pb-16",
+        className,
       )}
     >
       {/* --- Background Decorations --- */}
       <div className="pointer-events-none absolute inset-0 z-0 select-none overflow-hidden">
-        {/* Scroll Line (Left side - Orange Swirl) 
-          - Reduced width to make it shorter (w-[120px] mobile, w-[260px] desktop)
-          - Adjusted positioning to ensure it ends near the middle/center vertically
-        */}
+        {/* Scroll Line (Left side) */}
         <ScrollLine
           containerRef={containerRef}
-          className="absolute -left-2 top-0 w-[120px] md:left-0 md:top-0 md:w-[220px] lg:w-[260px]"
+          className="absolute -left-2 top-0 w-[100px] md:left-0 md:top-0 md:w-[180px] lg:w-[220px]"
         />
 
-        {/* Green Ring (Top Right) */}
-        <DecorationGreenRing className="absolute right-8 top-24 w-6 h-6 md:right-56 md:top-24 md:w-10 md:h-10" />
+        {/* Green Ring (Top Right) - Adjusted position to match new height */}
+        <DecorationGreenRing className="absolute top-12 right-6 h-6 w-6 md:right-36 md:top-16 md:h-10 md:w-10" />
 
         {/* Blue Pattern (Right Side) */}
-        {/* UPDATED: Added 'hidden md:block' to hide on phone devices */}
         <BluePattern
           containerRef={containerRef}
-          className="hidden lg:block absolute right-0 top-1/2 w-24 -translate-y-1/2 translate-x-1/3 md:w-48 md:translate-x-1/4"
+          className="hidden md:block absolute right-0 top-1/2 w-24 -translate-y-1/4 translate-x-1/3 md:w-40 md:translate-x-1/4"
         />
 
         {/* Yellow Star (Bottom Left) */}
-        <DecorationYellowStar className="absolute bottom-10 left-4 w-8 h-8 md:bottom-10 md:left-32 md:w-12 md:h-12 rotate-12" />
+        <DecorationYellowStar className="absolute bottom-6 left-4 h-8 w-8 rotate-12 md:bottom-0 md:left-32 md:h-12 md:w-12" />
       </div>
 
       {/* --- Content --- */}
       <div className="container relative z-10 mx-auto px-6 text-center">
-        <h1 className="mb-4 font-sans text-4xl font-bold leading-tight text-gray-900 md:text-5xl lg:text-6xl">
+        {/* UPDATED: Added max-width and adjusted font sizes for better readability */}
+        <h1 className="mx-auto mb-4 max-w-4xl font-sans text-4xl font-bold leading-tight text-gray-900 md:text-5xl lg:text-6xl">
           {title}
         </h1>
         {subtitle && (
-          <p className="mx-auto max-w-3xl text-base font-medium leading-relaxed text-gray-600 md:text-xl">
+          <p className="text-muted-foreground mx-auto max-w-2xl text-base font-medium leading-relaxed md:text-lg">
             {subtitle}
           </p>
         )}

@@ -7,6 +7,7 @@ import {
   Newspaper,
   Trophy,
   Users,
+  Building2, // Icon tambahan untuk Foundation
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -91,6 +92,22 @@ export function AdminSidebar() {
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
+              
+              {/* --- Menu Tambahan Foundation Board --- */}
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  asChild
+                  isActive={pathname?.startsWith("/admin/foundation")}
+                  className={activeIconClass}
+                >
+                  <Link href="/admin/foundation">
+                    <Building2 />
+                    <span>Foundation</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              {/* -------------------------------------- */}
+
               <SidebarMenuItem>
                 <SidebarMenuButton
                   asChild

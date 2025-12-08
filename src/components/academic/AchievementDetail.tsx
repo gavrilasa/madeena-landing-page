@@ -35,7 +35,7 @@ export default function AchievementDetail({
   return (
     <main className="min-h-screen pb-20">
       <PageHeader
-        title="Hall of Fame"
+        title="Prestasi Siswa"
         subtitle={`Merayakan Prestasi Siswa ${categoryLabel} Al Madeena`}
         imageUrl="https://res.cloudinary.com/dah2v3xbg/image/upload/v1763225823/TemplatePageHeader_tnecsg.webp"
       />

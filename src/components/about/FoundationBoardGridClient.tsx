@@ -5,75 +5,20 @@ import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import AboutQuickLinks from "./AboutQuickLinks";
 import { Carousel, Card } from "~/components/ui/apple-card-carousel";
+import { User } from "lucide-react";
+import { type FoundationMember } from "~/types/foundation";
 
-// --- Data ---
-const boardData = [
-  {
-    id: 1,
-    name: "H. Murdiyono, S.T.",
-    role: "Pembina Yayasan",
-    category: "Pembina", // Mapped to top left text
-    email: "info@almadeena.sch.id",
-    instagram: "@almadeena.islamic.school",
-    src: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=1000&auto=format&fit=crop",
-    pronouns: "He/Him",
-    quote: "Mendedikasikan diri untuk fondasi pendidikan yang kuat.",
-    nip: "YYS-00001",
-  },
-  {
-    id: 2,
-    name: "Anindita Mahendra, S.T",
-    role: "Pengawas Yayasan",
-    category: "Pengawas",
-    email: "info@almadeena.sch.id",
-    instagram: "@almadeena.islamic.school",
-    src: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=1000&auto=format&fit=crop",
-    pronouns: "She/Her",
-    quote: "Memastikan kualitas dan integritas selalu terjaga.",
-    nip: "YYS-00002",
-  },
-  {
-    id: 3,
-    name: "Ir. Hj. Pipit Srirejeki",
-    role: "Ketua Yayasan",
-    category: "Ketua",
-    email: "info@almadeena.sch.id",
-    instagram: "@almadeena.islamic.school",
-    src: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=1000&auto=format&fit=crop",
-    pronouns: "She/Her",
-    quote: "Memimpin dengan hati untuk generasi berkarakter.",
-    nip: "YYS-00003",
-  },
-  {
-    id: 4,
-    name: "Dadan Nurhamdan, S.Pd.I",
-    role: "Sekretaris",
-    category: "Sekretaris",
-    email: "info@almadeena.sch.id",
-    instagram: "@almadeena.islamic.school",
-    src: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1000&auto=format&fit=crop",
-    pronouns: "He/Him",
-    quote: "Administrasi yang rapi adalah awal dari program yang hebat.",
-    nip: "YYS-00004",
-  },
-  {
-    id: 5,
-    name: "dr. Tyas Rahmaditia, Sp.A",
-    role: "Bendahara",
-    category: "Bendahara",
-    email: "info@almadeena.sch.id",
-    instagram: "@almadeena.islamic.school",
-    src: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1000&auto=format&fit=crop",
-    pronouns: "She/Her",
-    quote: "Mengelola amanah untuk masa depan anak-anak.",
-    nip: "YYS-00005",
-  },
-];
+// PERBAIKAN: Menggunakan interface FoundationMember[]
+interface FoundationBoardGridClientProps {
+  data: FoundationMember[];
+}
 
-export default function FoundationBoardGridClient() {
-  const [selectedStaff, setSelectedStaff] = useState<number | null>(null);
+export default function FoundationBoardGridClient({
+  data,
+}: FoundationBoardGridClientProps) {
+  const [selectedStaff, setSelectedStaff] = useState<string | null>(null);
 
-  const handleCardClick = (id: number) => {
+  const handleCardClick = (id: string) => {
     setSelectedStaff(id);
   };
 
@@ -81,20 +26,20 @@ export default function FoundationBoardGridClient() {
     setSelectedStaff(null);
   };
 
-  const selectedStaffData = boardData.find((s) => s.id === selectedStaff);
+  const selectedStaffData = data.find((s) => s.id === selectedStaff);
 
-  // Map data to cards for the carousel
-  const cards = boardData.map((member, index) => (
+  const cards = data.map((member, index) => (
     <Card
       key={member.id}
       card={{
-        src: member.src,
+        src: member.imageUrl || "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop", 
         title: member.name,
         category: member.role,
-        quote: member.quote,
+        quote: member.quote || "",
         id: member.id,
       }}
       index={index}
+      // @ts-ignore - Ignoring layout prop type strictness for now
       onClick={() => handleCardClick(member.id)}
       layout={true}
     />
@@ -104,14 +49,19 @@ export default function FoundationBoardGridClient() {
     <>
       <section className="w-full bg-white py-16 md:py-24">
         <div className="container mx-auto px-18 lg:px-8">
-          {/* Carousel Component */}
           <div className="w-full">
-            <Carousel items={cards} />
+            {cards.length > 0 ? (
+              <Carousel items={cards} />
+            ) : (
+              <div className="flex h-64 flex-col items-center justify-center rounded-3xl bg-gray-50 text-center">
+                <User className="mb-4 h-12 w-12 text-gray-300" />
+                <p className="text-gray-500">Belum ada data anggota yayasan.</p>
+              </div>
+            )}
           </div>
         </div>
       </section>
 
-      {/* Modal (Same as before, just ensuring it works with new trigger) */}
       <AnimatePresence>
         {selectedStaff && selectedStaffData && (
           <motion.div
@@ -126,41 +76,34 @@ export default function FoundationBoardGridClient() {
               className="relative max-h-[90vh] w-full max-w-4xl overflow-hidden rounded-3xl bg-white shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Close Button */}
               <button
                 onClick={handleCloseModal}
-                className="absolute top-4 right-4 z-50 rounded-full bg-white/80 p-2 text-gray-900 transition-colors hover:bg-white"
+                className="absolute right-4 top-4 z-50 rounded-full bg-white/80 p-2 text-gray-900 transition-colors hover:bg-white"
               >
-                <svg
-                  className="h-6 w-6"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
+                <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
 
               <div className="flex h-full flex-col md:flex-row">
-                {/* Image Side in Modal */}
                 <div className="relative h-64 w-full md:h-auto md:w-2/5">
-                  <Image
-                    src={selectedStaffData.src}
-                    alt={selectedStaffData.name}
-                    fill
-                    className="object-cover"
-                  />
+                  {selectedStaffData.imageUrl ? (
+                    <Image
+                      src={selectedStaffData.imageUrl}
+                      alt={selectedStaffData.name}
+                      fill
+                      className="object-cover"
+                    />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center bg-gray-100">
+                      <User className="h-20 w-20 text-gray-400" />
+                    </div>
+                  )}
                 </div>
 
-                {/* Content Side in Modal */}
                 <div className="flex flex-1 flex-col overflow-y-auto p-8 md:p-10">
                   <div className="mb-6">
-                    <span className="inline-block rounded-full bg-gray-100 px-3 py-1 text-xs font-bold tracking-wider text-gray-500 uppercase">
+                    <span className="inline-block rounded-full bg-gray-100 px-3 py-1 text-xs font-bold uppercase tracking-wider text-gray-500">
                       {selectedStaffData.role}
                     </span>
                     <h3 className="mt-4 text-3xl font-bold text-gray-900 md:text-4xl">
@@ -168,32 +111,38 @@ export default function FoundationBoardGridClient() {
                     </h3>
                   </div>
 
-                  <blockquote className="mb-8 border-l-4 border-[#0094D9] pl-4 text-lg text-gray-700 italic">
-                    &quot;{selectedStaffData.quote}&quot;
-                  </blockquote>
+                  {selectedStaffData.quote && (
+                    <blockquote className="mb-8 border-l-4 border-[#0094D9] pl-4 text-lg italic text-gray-700">
+                      &quot;{selectedStaffData.quote}&quot;
+                    </blockquote>
+                  )}
 
                   <div className="grid grid-cols-1 gap-6 text-sm text-gray-600 sm:grid-cols-2">
                     <div>
                       <h4 className="mb-1 font-bold text-gray-900">Jabatan</h4>
                       <p>{selectedStaffData.role}</p>
                     </div>
-                    <div>
-                      <h4 className="mb-1 font-bold text-gray-900">
-                        ID Yayasan
-                      </h4>
-                      <p>{selectedStaffData.nip}</p>
-                    </div>
-                    <div>
-                      <h4 className="mb-1 font-bold text-gray-900">Email</h4>
-                      <p>{selectedStaffData.email}</p>
-                    </div>
-                    <div>
-                      <h4 className="mb-1 font-bold text-gray-900">
-                        Sosial Media
-                      </h4>
-                      <p>{selectedStaffData.instagram}</p>
-                    </div>
+                    {/* PERBAIKAN: Menghapus field NIP yang tidak ada di FoundationMember */}
+                    {selectedStaffData.email && (
+                      <div>
+                        <h4 className="mb-1 font-bold text-gray-900">Email</h4>
+                        <p>{selectedStaffData.email}</p>
+                      </div>
+                    )}
+                    {selectedStaffData.instagram && (
+                      <div>
+                        <h4 className="mb-1 font-bold text-gray-900">Sosial Media</h4>
+                        <p>{selectedStaffData.instagram}</p>
+                      </div>
+                    )}
                   </div>
+                  
+                  {selectedStaffData.bio && (
+                     <div className="mt-6">
+                        <h4 className="mb-1 font-bold text-gray-900">Biografi</h4>
+                        <p className="text-sm text-gray-600 leading-relaxed">{selectedStaffData.bio}</p>
+                     </div>
+                  )}
 
                   <div className="mt-auto flex justify-end pt-8">
                     <Image
