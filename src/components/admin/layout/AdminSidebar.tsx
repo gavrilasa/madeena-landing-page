@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  Briefcase,
   ChartNoAxesCombinedIcon,
   Images,
   Newspaper,
@@ -74,6 +75,14 @@ export function AdminSidebar() {
                   <Link href="/admin/achievements">
                     <Trophy />
                     <span>Achievements</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <Link href="/admin/careers">
+                    <Briefcase />
+                    <span>Careers</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
