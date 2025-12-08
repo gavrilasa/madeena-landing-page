@@ -1,16 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import {
-  useForm,
-  useFieldArray,
-  type ControllerRenderProps,
-} from "react-hook-form";
+import { useForm, type ControllerRenderProps } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import { Loader2, Plus, Trash2, Check, ChevronsUpDown, X } from "lucide-react";
+import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
-import { cn } from "~/lib/utils";
 
 import {
   Dialog,
@@ -21,185 +15,37 @@ import {
   DialogTitle,
 } from "~/components/ui/dialog";
 
-// IMPORT ALERT DIALOG
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "~/components/ui/alert-dialog";
-
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-  FormDescription,
 } from "~/components/ui/form";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-  CommandSeparator,
-} from "~/components/ui/command";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "~/components/ui/popover";
 
 import { Input } from "~/components/ui/input";
 import { Button } from "~/components/ui/button";
 import { Textarea } from "~/components/ui/textarea";
-import { Switch } from "~/components/ui/switch";
 
+// Ganti Switch dengan Select
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/ui/select";
+
+// Import komponen hasil pemisahan
+import { CreatableCombobox } from "~/components/ui/creatable-combobox";
+import { CareerRequirements } from "~/components/admin/careers/CareerRequirements";
+import {
+  careerFormSchema,
+  type CareerFormValues,
+} from "~/lib/schemas/careerSchema";
 import type { Career } from "~/types/career";
-
-// --- KOMPONEN REUSABLE: Creatable Combobox ---
-interface CreatableComboboxProps {
-  value: string;
-  onChange: (value: string) => void;
-  options: string[];
-  label: string;
-  placeholder?: string;
-}
-
-function CreatableCombobox({
-  value,
-  onChange,
-  options,
-  label,
-  placeholder = "Pilih opsi...",
-}: CreatableComboboxProps) {
-  const [open, setOpen] = useState(false);
-  const [isManual, setIsManual] = useState(false);
-
-  useEffect(() => {
-    if (value && options.length > 0 && !options.includes(value)) {
-      setIsManual(true);
-    }
-  }, [value, options]);
-
-  if (isManual) {
-    return (
-      <div className="flex items-center gap-2">
-        <Input
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          placeholder={`Ketik ${label} baru...`}
-          autoFocus
-          className="flex-1"
-        />
-        <Button
-          type="button"
-          variant="ghost"
-          size="icon"
-          onClick={() => {
-            setIsManual(false);
-            onChange("");
-          }}
-          title="Kembali ke pilihan"
-        >
-          <X className="text-muted-foreground h-4 w-4" />
-        </Button>
-      </div>
-    );
-  }
-
-  return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          role="combobox"
-          aria-expanded={open}
-          className={cn(
-            "w-full justify-between font-normal",
-            !value && "text-muted-foreground",
-          )}
-        >
-          {value || placeholder}
-          <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent
-        className="w-[--radix-popover-trigger-width] p-0"
-        align="start"
-      >
-        <Command>
-          <CommandInput placeholder={`Cari ${label}...`} />
-          <CommandList>
-            <CommandEmpty>Tidak ditemukan.</CommandEmpty>
-            <CommandGroup>
-              {options.map((option) => (
-                <CommandItem
-                  key={option}
-                  value={option}
-                  onSelect={() => {
-                    onChange(option);
-                    setOpen(false);
-                  }}
-                >
-                  <Check
-                    className={cn(
-                      "mr-2 h-4 w-4",
-                      value === option ? "opacity-100" : "opacity-0",
-                    )}
-                  />
-                  {option}
-                </CommandItem>
-              ))}
-            </CommandGroup>
-            <CommandSeparator />
-            <CommandGroup>
-              <CommandItem
-                onSelect={() => {
-                  setIsManual(true);
-                  onChange("");
-                  setOpen(false);
-                }}
-                className="text-primary cursor-pointer font-medium"
-              >
-                <Plus className="mr-2 h-4 w-4" />
-                Buat {label} Baru
-              </CommandItem>
-            </CommandGroup>
-          </CommandList>
-        </Command>
-      </PopoverContent>
-    </Popover>
-  );
-}
-
-// ---------------------------------------------
-
-const formSchema = z.object({
-  title: z.string().min(3, { message: "Judul minimal 3 karakter" }),
-  type: z.string().min(1, { message: "Tipe harus diisi" }),
-  department: z.string().min(1, { message: "Departemen harus diisi" }),
-  location: z.string().min(1, { message: "Lokasi harus diisi" }),
-  description: z.string().min(10, { message: "Deskripsi minimal 10 karakter" }),
-  status: z.enum(["DRAFT", "PUBLISHED"]),
-  requirements: z
-    .array(
-      z.object({
-        value: z.string().min(1, "Poin tidak boleh kosong"),
-      }),
-    )
-    .min(1, "Minimal harus ada satu persyaratan"),
-});
-
-type CareerFormValues = z.infer<typeof formSchema>;
 
 interface CareerFormDialogProps {
   open: boolean;
@@ -220,8 +66,9 @@ export function CareerFormDialog({
     types: string[];
   }>({ departments: [], types: [] });
 
+  // Inisialisasi Form dengan Schema dari file terpisah
   const form = useForm<CareerFormValues>({
-    resolver: zodResolver(formSchema),
+    resolver: zodResolver(careerFormSchema),
     defaultValues: {
       title: "",
       department: "",
@@ -233,11 +80,7 @@ export function CareerFormDialog({
     },
   });
 
-  const { fields, append, remove } = useFieldArray({
-    control: form.control,
-    name: "requirements",
-  });
-
+  // Effect: Reset form saat dialog dibuka atau data edit berubah
   useEffect(() => {
     if (open) {
       if (careerToEdit) {
@@ -264,6 +107,7 @@ export function CareerFormDialog({
         });
       }
 
+      // Fetch opsi departemen & tipe yang sudah ada
       const fetchOptions = async () => {
         try {
           const res = await fetch("/api/admin/careers");
@@ -281,7 +125,7 @@ export function CareerFormDialog({
             });
           }
         } catch {
-          // Ignore
+          // Ignore error silently
         }
       };
       void fetchOptions();
@@ -291,14 +135,10 @@ export function CareerFormDialog({
   const onSubmit = async (values: CareerFormValues) => {
     setIsSubmitting(true);
     try {
+      // Bersihkan requirements dari string kosong
       const cleanRequirements = values.requirements
         .map((r) => r.value)
         .filter((r) => r.trim() !== "");
-
-      const payload = {
-        ...values,
-        requirements: cleanRequirements,
-      };
 
       if (cleanRequirements.length === 0) {
         form.setError("requirements", {
@@ -307,6 +147,11 @@ export function CareerFormDialog({
         setIsSubmitting(false);
         return;
       }
+
+      const payload = {
+        ...values,
+        requirements: cleanRequirements,
+      };
 
       const url = careerToEdit
         ? `/api/admin/careers/${careerToEdit.id}`
@@ -324,6 +169,7 @@ export function CareerFormDialog({
         throw new Error(errorData.error ?? "Gagal menyimpan data");
       }
 
+      toast.success(careerToEdit ? "Lowongan diperbarui" : "Lowongan dibuat");
       onSuccess();
       onOpenChange(false);
     } catch (error) {
@@ -331,28 +177,6 @@ export function CareerFormDialog({
       toast.error(
         error instanceof Error ? error.message : "Terjadi kesalahan sistem",
       );
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const handleDelete = async () => {
-    if (!careerToEdit) return;
-    // Logika confirm dihapus dari sini karena sudah ditangani oleh UI AlertDialog
-
-    setIsSubmitting(true);
-    try {
-      const res = await fetch(`/api/admin/careers/${careerToEdit.id}`, {
-        method: "DELETE",
-      });
-
-      if (!res.ok) throw new Error("Gagal menghapus data");
-
-      toast.success("Lowongan berhasil dihapus");
-      onSuccess();
-      onOpenChange(false);
-    } catch {
-      toast.error("Gagal menghapus lowongan");
     } finally {
       setIsSubmitting(false);
     }
@@ -374,6 +198,7 @@ export function CareerFormDialog({
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
             <div className="grid gap-4 sm:grid-cols-3">
+              {/* Judul: Mengambil 2 kolom */}
               <div className="sm:col-span-2">
                 <FormField
                   control={form.control}
@@ -401,18 +226,23 @@ export function CareerFormDialog({
                 }: {
                   field: ControllerRenderProps<CareerFormValues, "status">;
                 }) => (
-                  <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
-                    <div className="space-y-0.5">
-                      <FormLabel className="text-base">Publish</FormLabel>
-                    </div>
-                    <FormControl>
-                      <Switch
-                        checked={field.value === "PUBLISHED"}
-                        onCheckedChange={(checked) =>
-                          field.onChange(checked ? "PUBLISHED" : "DRAFT")
-                        }
-                      />
-                    </FormControl>
+                  <FormItem>
+                    <FormLabel>Status</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Pilih status" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="DRAFT">Draft</SelectItem>
+                        <SelectItem value="PUBLISHED">Published</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
@@ -505,112 +335,10 @@ export function CareerFormDialog({
               )}
             />
 
-            <div className="space-y-4">
-              <div className="flex items-center justify-between">
-                <FormLabel>Persyaratan / Kualifikasi</FormLabel>
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  onClick={() => append({ value: "" })}
-                >
-                  <Plus className="mr-2 h-4 w-4" />
-                  Tambah
-                </Button>
-              </div>
-
-              <div className="space-y-2">
-                {fields.map((field, index) => (
-                  <div key={field.id} className="flex gap-2">
-                    <FormField
-                      control={form.control}
-                      name={`requirements.${index}.value`}
-                      render={({
-                        field,
-                      }: {
-                        field: ControllerRenderProps<
-                          CareerFormValues,
-                          `requirements.${number}.value`
-                        >;
-                      }) => (
-                        <FormItem className="flex-1">
-                          <FormControl>
-                            <Input
-                              placeholder={`Poin persyaratan ke-${index + 1}`}
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => remove(index)}
-                      disabled={fields.length === 1 && index === 0}
-                      className="text-destructive hover:bg-destructive/10"
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
-                  </div>
-                ))}
-              </div>
-              <FormMessage>
-                {form.formState.errors.requirements?.root?.message}
-              </FormMessage>
-            </div>
+            {/* Bagian Requirements (Dynamic Fields) */}
+            <CareerRequirements />
 
             <DialogFooter className="gap-2 sm:gap-0">
-              {/* BUTTON DELETE DENGAN ALERT DIALOG */}
-              {careerToEdit && (
-                <AlertDialog>
-                  <AlertDialogTrigger asChild>
-                    <Button
-                      type="button"
-                      variant="destructive"
-                      disabled={isSubmitting}
-                      className="mr-auto"
-                    >
-                      Hapus
-                    </Button>
-                  </AlertDialogTrigger>
-                  <AlertDialogContent>
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>Apakah Anda yakin?</AlertDialogTitle>
-                      <AlertDialogDescription>
-                        Tindakan ini tidak dapat dibatalkan. Lowongan{" "}
-                        <strong>{careerToEdit.title}</strong> akan dihapus
-                        secara permanen dari database.
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                      <AlertDialogCancel disabled={isSubmitting}>
-                        Batal
-                      </AlertDialogCancel>
-                      <AlertDialogAction
-                        onClick={(e) => {
-                          e.preventDefault();
-                          void handleDelete();
-                        }}
-                        disabled={isSubmitting}
-                        className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
-                      >
-                        {isSubmitting ? (
-                          <>
-                            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                            Menghapus...
-                          </>
-                        ) : (
-                          "Ya, Hapus"
-                        )}
-                      </AlertDialogAction>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog>
-              )}
-
               <Button
                 type="button"
                 variant="outline"

@@ -109,19 +109,11 @@ function AchievementsContent() {
             Kelola data prestasi dan penghargaan siswa Preschool & Primary.
           </p>
         </div>
-        <Button asChild className="shrink-0">
-          <Link href="/admin/achievements/create">
-            <Plus className="mr-2 h-4 w-4" />
-            Tambah Prestasi
-          </Link>
-        </Button>
       </div>
 
       <Card className="gap-4">
         <CardHeader className="px-3 pb-0">
-          {/* Toolbar: Tabs & Search */}
           <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-            {/* Filter Tabs */}
             <div className="flex w-full rounded-lg bg-gray-100 p-1 md:w-auto">
               {["all", "preschool", "primary"].map((tab) => (
                 <button
@@ -138,20 +130,25 @@ function AchievementsContent() {
               ))}
             </div>
 
-            {/* Search Input */}
-            <form
-              onSubmit={handleSearch}
-              className="relative w-full md:max-w-xs"
-            >
-              <Search className="absolute top-2.5 left-2.5 h-4 w-4 text-gray-400" />
-              <Input
-                type="text"
-                placeholder="Cari judul..."
-                className="border-gray-200 bg-gray-50 pl-9 transition-colors focus:bg-white"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-            </form>
+            <div className="flex w-full flex-col gap-2 md:w-auto md:flex-row md:items-center">
+              <form onSubmit={handleSearch} className="relative w-full md:w-64">
+                <Search className="absolute top-2.5 left-2.5 h-4 w-4 text-gray-400" />
+                <Input
+                  type="text"
+                  placeholder="Cari judul..."
+                  className="border-gray-200 bg-gray-50 pl-9 transition-colors focus:bg-white"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+              </form>
+
+              <Button asChild className="shrink-0">
+                <Link href="/admin/achievements/create">
+                  <Plus className="mr-2 h-4 w-4" />
+                  <span className="md:hidden lg:inline">Tambah</span>{" "}
+                </Link>
+              </Button>
+            </div>
           </div>
         </CardHeader>
 

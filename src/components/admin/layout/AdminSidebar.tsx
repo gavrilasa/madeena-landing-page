@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import {
   Sidebar,
   SidebarContent,
@@ -22,6 +23,10 @@ import {
 } from "~/components/ui/sidebar";
 
 export function AdminSidebar() {
+  const pathname = usePathname();
+
+  const activeIconClass = "data-[active=true]:[&>svg]:stroke-[2.5]";
+
   return (
     <Sidebar>
       <SidebarContent>
@@ -39,15 +44,23 @@ export function AdminSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
-                <SidebarMenuButton asChild>
-                  <a href="/admin">
+                <SidebarMenuButton
+                  asChild
+                  isActive={pathname === "/admin"}
+                  className={activeIconClass}
+                >
+                  <Link href="/admin">
                     <ChartNoAxesCombinedIcon />
                     <span>Overview</span>
-                  </a>
+                  </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <SidebarMenuButton asChild>
+                <SidebarMenuButton
+                  asChild
+                  isActive={pathname?.startsWith("/admin/news")}
+                  className={activeIconClass}
+                >
                   <Link href="/admin/news">
                     <Newspaper />
                     <span>News</span>
@@ -55,7 +68,11 @@ export function AdminSidebar() {
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <SidebarMenuButton asChild>
+                <SidebarMenuButton
+                  asChild
+                  isActive={pathname?.startsWith("/admin/gallery")}
+                  className={activeIconClass}
+                >
                   <Link href="/admin/gallery">
                     <Images />
                     <span>Gallery</span>
@@ -63,7 +80,11 @@ export function AdminSidebar() {
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <SidebarMenuButton asChild>
+                <SidebarMenuButton
+                  asChild
+                  isActive={pathname?.startsWith("/admin/staff")}
+                  className={activeIconClass}
+                >
                   <Link href="/admin/staff">
                     <Users />
                     <span>Staff</span>
@@ -71,7 +92,11 @@ export function AdminSidebar() {
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <SidebarMenuButton asChild>
+                <SidebarMenuButton
+                  asChild
+                  isActive={pathname?.startsWith("/admin/achievements")}
+                  className={activeIconClass}
+                >
                   <Link href="/admin/achievements">
                     <Trophy />
                     <span>Achievements</span>
@@ -79,7 +104,11 @@ export function AdminSidebar() {
                 </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <SidebarMenuButton asChild>
+                <SidebarMenuButton
+                  asChild
+                  isActive={pathname?.startsWith("/admin/careers")}
+                  className={activeIconClass}
+                >
                   <Link href="/admin/careers">
                     <Briefcase />
                     <span>Careers</span>
