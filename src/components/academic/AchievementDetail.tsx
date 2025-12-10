@@ -34,11 +34,11 @@ export default function AchievementDetail({
 
   return (
     <main className="min-h-screen pb-20">
-      <PageHeader
+      {/* <PageHeader
         title="Prestasi Siswa"
         subtitle={`Merayakan Prestasi Siswa ${categoryLabel} Al Madeena`}
         imageUrl="https://res.cloudinary.com/dah2v3xbg/image/upload/v1763225823/TemplatePageHeader_tnecsg.webp"
-      />
+      /> */}
 
       <section className="container mx-auto px-4 py-8 md:px-6 md:py-12">
         {/* Navigation - Outside Grid */}
