@@ -5,7 +5,7 @@ import { auth } from "~/lib/auth";
 import { db } from "~/server/db";
 import { v2 as cloudinary } from "cloudinary";
 import { env } from "~/env";
-import { Prisma } from "@prisma/client";
+import { Prisma } from "~/lib/generated/prisma/client";
 import { revalidatePath } from "next/cache";
 
 // Konfigurasi Cloudinary

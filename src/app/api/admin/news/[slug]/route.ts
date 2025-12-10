@@ -3,7 +3,7 @@ import { headers } from "next/headers";
 import { z } from "zod";
 import { auth } from "~/lib/auth";
 import { db } from "~/server/db";
-import { Prisma } from "@prisma/client";
+import { Prisma } from "~/lib/generated/prisma/client";
 
 const UpdateNewsArticleSchema = z.object({
   title: z.string().min(1, "Judul tidak boleh kosong").optional(),
