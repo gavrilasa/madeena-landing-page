@@ -7,7 +7,6 @@ import { ArrowLeft, Trophy, Share2, User, School, Medal } from "lucide-react";
 import { motion } from "framer-motion";
 import type { Achievement } from "~/lib/generated/prisma/client";
 
-import PageHeader from "~/components/common/PageHeader";
 import { Button } from "~/components/ui/button";
 import { Badge } from "~/components/ui/badge";
 

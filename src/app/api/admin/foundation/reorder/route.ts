@@ -1,22 +1,69 @@
 import { NextResponse } from "next/server";
+import { headers } from "next/headers";
+import { z } from "zod";
+import { auth } from "~/lib/auth";
 import { db } from "~/server/db";
+import { revalidatePath } from "next/cache";
 
-export async function PUT(req: Request) {
+// Skema validasi untuk payload reorder foundation
+const ReorderFoundationSchema = z.object({
+  items: z.array(
+    z.object({
+      id: z.string(),
+      order: z.number().int().min(0),
+    }),
+  ),
+});
+
+/**
+ * PUT Handler: Memperbarui urutan (order) foundation member secara massal
+ * Digunakan setelah aksi drag-and-drop di Admin Panel
+ */
+export async function PUT(request: Request) {
   try {
-    const { items } = await req.json();
-    
-    // Transaction for atomic updates
+    // 1. Cek sesi autentikasi
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
+
+    if (!session) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    // 2. Parsing dan Validasi Body
+    const body = (await request.json()) as unknown;
+    const validation = ReorderFoundationSchema.safeParse(body);
+
+    if (!validation.success) {
+      return NextResponse.json(
+        { error: "Data tidak valid", details: validation.error.format() },
+        { status: 400 },
+      );
+    }
+
+    const { items } = validation.data;
+
+    // 3. Eksekusi Update dalam Transaksi
     await db.$transaction(
-      items.map((item: { id: string; order: number }) =>
+      items.map((item) =>
         db.foundationMember.update({
           where: { id: item.id },
           data: { order: item.order },
-        })
-      )
+        }),
+      ),
     );
 
-    return NextResponse.json({ success: true });
+    revalidatePath("/about/foundation-board");
+
+    return NextResponse.json({
+      success: true,
+      message: "Urutan berhasil diperbarui",
+    });
   } catch (error) {
-    return NextResponse.json({ error: "Reorder failed" }, { status: 500 });
+    console.error("[FOUNDATION_REORDER]", error);
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 },
+    );
   }
 }

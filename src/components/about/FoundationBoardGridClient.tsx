@@ -32,14 +32,15 @@ export default function FoundationBoardGridClient({
     <Card
       key={member.id}
       card={{
-        src: member.imageUrl || "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop", 
+        src:
+          member.imageUrl ??
+          "https://images.unsplash.com/photo-1511367461989-f85a21fda167?q=80&w=1000&auto=format&fit=crop",
         title: member.name,
         category: member.role,
-        quote: member.quote || "",
+        quote: member.quote ?? "",
         id: member.id,
       }}
       index={index}
-      // @ts-ignore - Ignoring layout prop type strictness for now
       onClick={() => handleCardClick(member.id)}
       layout={true}
     />
@@ -78,10 +79,20 @@ export default function FoundationBoardGridClient({
             >
               <button
                 onClick={handleCloseModal}
-                className="absolute right-4 top-4 z-50 rounded-full bg-white/80 p-2 text-gray-900 transition-colors hover:bg-white"
+                className="absolute top-4 right-4 z-50 rounded-full bg-white/80 p-2 text-gray-900 transition-colors hover:bg-white"
               >
-                <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                <svg
+                  className="h-6 w-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               </button>
 
@@ -103,7 +114,7 @@ export default function FoundationBoardGridClient({
 
                 <div className="flex flex-1 flex-col overflow-y-auto p-8 md:p-10">
                   <div className="mb-6">
-                    <span className="inline-block rounded-full bg-gray-100 px-3 py-1 text-xs font-bold uppercase tracking-wider text-gray-500">
+                    <span className="inline-block rounded-full bg-gray-100 px-3 py-1 text-xs font-bold tracking-wider text-gray-500 uppercase">
                       {selectedStaffData.role}
                     </span>
                     <h3 className="mt-4 text-3xl font-bold text-gray-900 md:text-4xl">
@@ -112,7 +123,7 @@ export default function FoundationBoardGridClient({
                   </div>
 
                   {selectedStaffData.quote && (
-                    <blockquote className="mb-8 border-l-4 border-[#0094D9] pl-4 text-lg italic text-gray-700">
+                    <blockquote className="mb-8 border-l-4 border-[#0094D9] pl-4 text-lg text-gray-700 italic">
                       &quot;{selectedStaffData.quote}&quot;
                     </blockquote>
                   )}
@@ -131,17 +142,21 @@ export default function FoundationBoardGridClient({
                     )}
                     {selectedStaffData.instagram && (
                       <div>
-                        <h4 className="mb-1 font-bold text-gray-900">Sosial Media</h4>
+                        <h4 className="mb-1 font-bold text-gray-900">
+                          Sosial Media
+                        </h4>
                         <p>{selectedStaffData.instagram}</p>
                       </div>
                     )}
                   </div>
-                  
+
                   {selectedStaffData.bio && (
-                     <div className="mt-6">
-                        <h4 className="mb-1 font-bold text-gray-900">Biografi</h4>
-                        <p className="text-sm text-gray-600 leading-relaxed">{selectedStaffData.bio}</p>
-                     </div>
+                    <div className="mt-6">
+                      <h4 className="mb-1 font-bold text-gray-900">Biografi</h4>
+                      <p className="text-sm leading-relaxed text-gray-600">
+                        {selectedStaffData.bio}
+                      </p>
+                    </div>
                   )}
 
                   <div className="mt-auto flex justify-end pt-8">

@@ -33,7 +33,7 @@ import {
 } from "~/components/ui/alert-dialog";
 import type { FoundationMember } from "~/types/foundation";
 import { FoundationFormDialog } from "./FoundationFormDialog";
-// Reuse StaffItem or create FoundationItem if layout differs significantly. 
+// Reuse StaffItem or create FoundationItem if layout differs significantly.
 // For now, we reuse StaffItem but adapt props or make a simpler one.
 // Let's create a local Item to be safe/clean.
 import { useSortable } from "@dnd-kit/sortable";
@@ -114,7 +114,9 @@ export function FoundationManager() {
   const [searchQuery, setSearchQuery] = useState("");
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<FoundationMember | null>(null);
-  const [deleteTarget, setDeleteTarget] = useState<FoundationMember | null>(null);
+  const [deleteTarget, setDeleteTarget] = useState<FoundationMember | null>(
+    null,
+  );
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 8 } }),
@@ -128,7 +130,9 @@ export function FoundationManager() {
     try {
       const res = await fetch("/api/admin/foundation");
       if (!res.ok) throw new Error();
-      const data = await res.json();
+
+      const data = (await res.json()) as FoundationMember[];
+
       setList(data);
     } catch {
       toast.error("Gagal memuat data");
@@ -153,7 +157,10 @@ export function FoundationManager() {
         await fetch("/api/admin/foundation/reorder", {
           method: "PUT",
           body: JSON.stringify({
-            items: newItems.map((item, index) => ({ id: item.id, order: index })),
+            items: newItems.map((item, index) => ({
+              id: item.id,
+              order: index,
+            })),
           }),
         });
         toast.success("Urutan diperbarui");
@@ -166,8 +173,10 @@ export function FoundationManager() {
   const handleDelete = async () => {
     if (!deleteTarget) return;
     try {
-      await fetch(`/api/admin/foundation/${deleteTarget.id}`, { method: "DELETE" });
-      setList(prev => prev.filter(i => i.id !== deleteTarget.id));
+      await fetch(`/api/admin/foundation/${deleteTarget.id}`, {
+        method: "DELETE",
+      });
+      setList((prev) => prev.filter((i) => i.id !== deleteTarget.id));
       toast.success("Dihapus");
     } catch {
       toast.error("Gagal menghapus");
@@ -176,9 +185,10 @@ export function FoundationManager() {
     }
   };
 
-  const filtered = list.filter(i => 
-    i.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-    i.role.toLowerCase().includes(searchQuery.toLowerCase())
+  const filtered = list.filter(
+    (i) =>
+      i.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      i.role.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   return (
@@ -193,7 +203,12 @@ export function FoundationManager() {
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
-        <Button onClick={() => { setEditingItem(null); setIsFormOpen(true); }}>
+        <Button
+          onClick={() => {
+            setEditingItem(null);
+            setIsFormOpen(true);
+          }}
+        >
           <Plus className="mr-2 h-4 w-4" />
           Tambah Anggota
         </Button>
@@ -202,7 +217,9 @@ export function FoundationManager() {
       <div className="rounded-xl border bg-gray-50/50 p-4">
         {isLoading ? (
           <div className="space-y-4">
-             {[1,2,3].map(i => <Skeleton key={i} className="h-16 w-full" />)}
+            {[1, 2, 3].map((i) => (
+              <Skeleton key={i} className="h-16 w-full" />
+            ))}
           </div>
         ) : filtered.length === 0 ? (
           <div className="flex h-40 flex-col items-center justify-center text-gray-500">
@@ -210,14 +227,24 @@ export function FoundationManager() {
             <p>Tidak ada data.</p>
           </div>
         ) : (
-          <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-            <SortableContext items={filtered.map((s) => s.id)} strategy={verticalListSortingStrategy}>
+          <DndContext
+            sensors={sensors}
+            collisionDetection={closestCenter}
+            onDragEnd={handleDragEnd}
+          >
+            <SortableContext
+              items={filtered.map((s) => s.id)}
+              strategy={verticalListSortingStrategy}
+            >
               <div className="flex flex-col gap-3">
                 {filtered.map((member) => (
                   <FoundationItem
                     key={member.id}
                     member={member}
-                    onEdit={(m) => { setEditingItem(m); setIsFormOpen(true); }}
+                    onEdit={(m) => {
+                      setEditingItem(m);
+                      setIsFormOpen(true);
+                    }}
                     onDelete={setDeleteTarget}
                   />
                 ))}
@@ -234,7 +261,10 @@ export function FoundationManager() {
         onSuccess={fetchData}
       />
 
-      <AlertDialog open={!!deleteTarget} onOpenChange={(open) => !open && setDeleteTarget(null)}>
+      <AlertDialog
+        open={!!deleteTarget}
+        onOpenChange={(open) => !open && setDeleteTarget(null)}
+      >
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Hapus Data?</AlertDialogTitle>
@@ -244,7 +274,9 @@ export function FoundationManager() {
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Batal</AlertDialogCancel>
-            <AlertDialogAction onClick={handleDelete} className="bg-red-600">Hapus</AlertDialogAction>
+            <AlertDialogAction onClick={handleDelete} className="bg-red-600">
+              Hapus
+            </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

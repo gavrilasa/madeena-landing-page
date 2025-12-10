@@ -132,7 +132,7 @@ export function FoundationFormDialog({
       toast.success(initialData ? "Data diperbarui" : "Berhasil ditambahkan");
       onSuccess();
       onOpenChange(false);
-    } catch (error) {
+    } catch {
       toast.error("Terjadi kesalahan sistem");
     } finally {
       setIsLoading(false);
@@ -184,7 +184,8 @@ export function FoundationFormDialog({
             </div>
             <div className="space-y-2">
               <Label htmlFor="role">
-                Jabatan di Yayasan<span className="-ml-1.5 text-red-500">*</span>
+                Jabatan di Yayasan
+                <span className="-ml-1.5 text-red-500">*</span>
               </Label>
               <Input
                 id="role"
@@ -213,8 +214,8 @@ export function FoundationFormDialog({
               placeholder="Motto atau kutipan..."
             />
           </div>
-          
-           <div className="space-y-2">
+
+          <div className="space-y-2">
             <Label htmlFor="bio">Biografi (Opsional)</Label>
             <Textarea
               id="bio"
