@@ -13,13 +13,13 @@ import { motion } from "framer-motion";
 import type { Achievement } from "~/lib/generated/prisma/client";
 
 import { Button } from "~/components/ui/button";
-import { cn } from "~/lib/utils"; // Pastikan utilitas cn tersedia (biasanya ada di project shadcn)
+import { cn } from "~/lib/utils";
 
 interface AchievementsContentProps {
   category: "preschool" | "primary";
-  achievements: Achievement[]; // Data dari Database
-  intro: string; // Text intro dari parent
-  closing: string; // Text closing dari parent
+  achievements: Achievement[];
+  intro: string;
+  closing: string;
   currentPage: number;
   totalPages: number;
 }
@@ -38,7 +38,7 @@ export default function AchievementsContent({
   currentPage,
   totalPages,
 }: AchievementsContentProps) {
-  // Helper untuk menampilkan nama siswa dari array string
+  // Helper untuk menampilkan nama siswa
   const formatStudentName = (names: string[]) => {
     if (!names || names.length === 0) return "-";
     if (names.length === 1) return names[0];
@@ -49,7 +49,6 @@ export default function AchievementsContent({
   const createPageLink = (page: number) => {
     const params = new URLSearchParams();
     if (page > 1) params.set("page", page.toString());
-    // URL dasar: /preschool/achievements atau /primary/achievements
     return `/${category}/achievements?${params.toString()}`;
   };
 
@@ -66,13 +65,11 @@ export default function AchievementsContent({
           />
         </div>
 
-        {/* Achievements Cards Grid (Bento Style) */}
+        {/* Achievements Cards Grid */}
         <div className="mb-16 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {achievements.map((item, index) => {
-            // Logika Bento Grid:
-            // Item ke-0, 3, 4, 7, ... akan lebar (col-span-2) jika di layar besar
-            // Pola: index % 4 === 0 atau index % 4 === 3
-            const isLargeCard = index % 4 === 0 || index % 4 === 3;
+            // Logika 'isLargeCard' telah dihapus sepenuhnya.
+            // Semua kartu diperlakukan sama.
 
             return (
               <motion.div
@@ -84,9 +81,8 @@ export default function AchievementsContent({
                 variants={fadeIn}
                 className={cn(
                   "group relative w-full overflow-hidden rounded-2xl bg-gray-900 shadow-lg",
-                  // Aspect ratio standar 9/16, tapi bisa menyesuaikan jika card lebar
-                  "aspect-9/16",
-                  // Di layar Large (lg), terapkan bento grid
+                  // Menggunakan aspect ratio portrait standar (4:5) agar pas di semua layar
+                  "aspect-4/5",
                 )}
               >
                 {/* Background Image */}
@@ -94,42 +90,25 @@ export default function AchievementsContent({
                   src={item.image}
                   alt={item.title}
                   fill
-                  className="object-cover opacity-90 transition-transform duration-700 group-hover:scale-110"
-                  sizes={
-                    isLargeCard
-                      ? "(max-width: 1024px) 100vw, 66vw"
-                      : "(max-width: 768px) 100vw, 33vw"
-                  }
+                  className="object-cover opacity-95 transition-transform duration-700 ease-in-out group-hover:scale-110"
+                  // Sizes standar untuk grid 3 kolom
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
 
-                {/* Dark Overlay Gradient */}
-                <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/20 to-transparent" />
+                {/* Dark Overlay Gradient - Dipertebal agar teks putih selalu terbaca */}
+                <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/10 to-transparent transition-opacity duration-300" />
 
                 {/* Content Container */}
                 <div className="absolute inset-0 flex flex-col justify-end p-6 sm:p-8">
-                  <div className="flex flex-col gap-4">
-                    {/* Title */}
-                    <h3
-                      className={cn(
-                        "line-clamp-2 font-bold text-white drop-shadow-md",
-                        isLargeCard
-                          ? "text-2xl md:text-4xl"
-                          : "text-xl md:text-2xl",
-                      )}
-                    >
+                  <div className="flex flex-col gap-3">
+                    {/* Title - Ukuran SERAGAM (tidak pakai cn large cards) */}
+                    <h3 className="line-clamp-2 text-xl font-bold text-white drop-shadow-md md:text-2xl">
                       {item.title}
                     </h3>
 
-                    {/* Student Info */}
+                    {/* Student Info - Ukuran SERAGAM */}
                     <div>
-                      <span
-                        className={cn(
-                          "line-clamp-1 block font-bold text-white",
-                          isLargeCard
-                            ? "text-xl md:text-2xl"
-                            : "text-lg md:text-xl",
-                        )}
-                      >
+                      <span className="line-clamp-1 block text-lg font-semibold text-white md:text-xl">
                         {formatStudentName(item.studentNames)}
                       </span>
                       <span className="mt-1 block text-sm font-medium tracking-wide text-gray-300 uppercase">
@@ -138,13 +117,15 @@ export default function AchievementsContent({
                     </div>
 
                     {/* Action Link */}
-                    <Link
-                      href={`/${category}/achievements/${item.slug}`}
-                      className="inline-flex w-fit items-center gap-2 rounded-full border border-white/30 bg-white/20 px-4 py-2 text-sm font-medium text-white backdrop-blur-md transition-all hover:bg-white hover:text-gray-900"
-                    >
-                      Read Story
-                      <ArrowRight className="h-4 w-4" />
-                    </Link>
+                    <div className="pt-2">
+                      <Link
+                        href={`/${category}/achievements/${item.slug}`}
+                        className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/20 px-4 py-2 text-sm font-medium text-white backdrop-blur-md transition-all hover:bg-white hover:text-gray-900"
+                      >
+                        Read Story
+                        <ArrowRight className="h-4 w-4" />
+                      </Link>
+                    </div>
                   </div>
                 </div>
               </motion.div>
@@ -154,11 +135,12 @@ export default function AchievementsContent({
 
         {/* Pagination Controls */}
         {totalPages > 1 && (
-          <div className="flex items-center justify-between border-t pt-8">
+          <div className="flex items-center justify-between border-t border-gray-100 pt-8">
             <Button
               variant="outline"
               disabled={currentPage <= 1}
               asChild={currentPage > 1}
+              className="w-32"
             >
               {currentPage > 1 ? (
                 <Link href={createPageLink(currentPage - 1)}>
@@ -181,6 +163,7 @@ export default function AchievementsContent({
               variant="outline"
               disabled={currentPage >= totalPages}
               asChild={currentPage < totalPages}
+              className="w-32"
             >
               {currentPage < totalPages ? (
                 <Link href={createPageLink(currentPage + 1)}>
@@ -203,7 +186,7 @@ export default function AchievementsContent({
           whileInView="whileInView"
           viewport={{ once: true }}
           variants={fadeIn}
-          className="relative mt-8 p-8 text-center md:p-12"
+          className="relative mt-16 p-8 text-center md:p-12"
         >
           <Quote className="mx-auto mb-4 h-8 w-8 text-gray-300" />
           <div

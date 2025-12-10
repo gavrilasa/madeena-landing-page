@@ -2,9 +2,11 @@ import { FoundationManager } from "~/components/admin/foundation/FoundationManag
 
 export default function AdminFoundationPage() {
   return (
-    <div className="container mx-auto py-8">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold tracking-tight">Dewan Yayasan</h1>
+    <div className="container mx-auto space-y-6">
+      <div className="space-y-1">
+        <h1 className="text-2xl font-bold tracking-tight">
+            Dewan Yayasan
+        </h1>
         <p className="text-muted-foreground mt-2">
           Kelola struktur organisasi dan anggota dewan yayasan.
         </p>
