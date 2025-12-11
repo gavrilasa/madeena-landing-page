@@ -5,6 +5,7 @@ interface NavigationItem {
   submenu?: boolean;
   type?: "description" | "simple" | "icon";
   items?: SubmenuItem[];
+  iconName?: string;
 }
 
 interface SubmenuItem {
@@ -15,12 +16,18 @@ interface SubmenuItem {
 }
 
 export const navigationLinks: NavigationItem[] = [
-  { href: "/", label: "Beranda", active: true },
+  {
+    href: "/",
+    label: "Beranda",
+    active: true,
+    iconName: "Home",
+  },
 
   {
     label: "Tentang Kami",
     submenu: true,
     type: "description",
+    iconName: "Building2",
     items: [
       {
         href: "/about/history",
@@ -59,6 +66,7 @@ export const navigationLinks: NavigationItem[] = [
     label: "Preschool",
     submenu: true,
     type: "description",
+    iconName: "BookOpen",
     items: [
       {
         href: "/preschool/programs",
@@ -103,6 +111,7 @@ export const navigationLinks: NavigationItem[] = [
     label: "Primary",
     submenu: true,
     type: "description",
+    iconName: "GraduationCap",
     items: [
       {
         href: "/primary/programs",
@@ -147,6 +156,7 @@ export const navigationLinks: NavigationItem[] = [
     label: "Berita",
     submenu: true,
     type: "icon",
+    iconName: "Newspaper",
     items: [
       {
         href: "/news",
@@ -167,6 +177,7 @@ export const navigationLinks: NavigationItem[] = [
     label: "Pendaftaran",
     submenu: true,
     type: "icon",
+    iconName: "ClipboardList",
     items: [
       {
         href: "/registration/flow",
@@ -187,6 +198,7 @@ export const navigationLinks: NavigationItem[] = [
     label: "Kontak",
     submenu: true,
     type: "icon",
+    iconName: "Phone",
     items: [
       {
         href: "/contact/information",
