@@ -58,7 +58,7 @@ export default function ProgramsContent({ category }: ProgramsContentProps) {
 
                   {/* Description - Full Text Display */}
                   <div className="w-full">
-                    <p className="text-base leading-relaxed text-gray-100 md:text-sm font-medium opacity-90">
+                    <p className="text-base leading-relaxed text-gray-100 md:text-sm font-medium">
                       {item.description}
                     </p>
                   </div>

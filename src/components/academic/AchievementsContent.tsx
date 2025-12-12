@@ -68,9 +68,6 @@ export default function AchievementsContent({
         {/* Achievements Cards Grid */}
         <div className="mb-16 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {achievements.map((item, index) => {
-            // Logika 'isLargeCard' telah dihapus sepenuhnya.
-            // Semua kartu diperlakukan sama.
-
             return (
               <motion.div
                 key={item.id}
@@ -81,7 +78,6 @@ export default function AchievementsContent({
                 variants={fadeIn}
                 className={cn(
                   "group relative w-full overflow-hidden rounded-2xl bg-gray-900 shadow-lg",
-                  // Menggunakan aspect ratio portrait standar (4:5) agar pas di semua layar
                   "aspect-4/5",
                 )}
               >
@@ -90,42 +86,48 @@ export default function AchievementsContent({
                   src={item.image}
                   alt={item.title}
                   fill
-                  className="object-cover opacity-95 transition-transform duration-700 ease-in-out group-hover:scale-110"
-                  // Sizes standar untuk grid 3 kolom
+                  className="object-cover transition-transform duration-700 ease-in-out group-hover:scale-110"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
 
-                {/* Dark Overlay Gradient - Dipertebal agar teks putih selalu terbaca */}
-                <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/10 to-transparent transition-opacity duration-300" />
+                {/* Dark Overlay Gradient (Top Down) */}
+                {/* from-black/70: Gelap di atas agar teks terbaca */}
+                {/* via-transparent: Tengah terang agar gambar terlihat */}
+                {/* to-black/60: Agak gelap di bawah agar tombol terlihat */}
+                <div className="absolute inset-0 bg-linear-to-b from-black/60 via-transparent to-black/30 duration-300" />
 
-                {/* Content Container */}
-                <div className="absolute inset-0 flex flex-col justify-end p-6 sm:p-8">
-                  <div className="flex flex-col gap-3">
-                    {/* Title - Ukuran SERAGAM (tidak pakai cn large cards) */}
-                    <h3 className="line-clamp-2 text-xl font-bold text-white drop-shadow-md md:text-2xl">
-                      {item.title}
-                    </h3>
-
-                    {/* Student Info - Ukuran SERAGAM */}
-                    <div>
-                      <span className="line-clamp-1 block text-lg font-semibold text-white md:text-xl">
-                        {formatStudentName(item.studentNames)}
-                      </span>
-                      <span className="mt-1 block text-sm font-medium tracking-wide text-gray-300 uppercase">
+                {/* Content Container - justify-between untuk memisahkan Teks (Atas) & Tombol (Bawah) */}
+                <div className="absolute inset-0 flex flex-col justify-between p-6 sm:p-8">
+                  
+                  {/* Top Section: Title & Student Info */}
+                  <div className="flex flex-col gap-2">
+                    {/* Student Info */}
+                    <div className="mb-1">
+                      <span className="mt-1 block text-xs font-bold tracking-widest text-yellow-400 uppercase">
                         {item.studentClass}
                       </span>
                     </div>
 
-                    {/* Action Link */}
-                    <div className="pt-2">
-                      <Link
-                        href={`/${category}/achievements/${item.slug}`}
-                        className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/20 px-4 py-2 text-sm font-medium text-white backdrop-blur-md transition-all hover:bg-white hover:text-gray-900"
-                      >
-                        Read Story
-                        <ArrowRight className="h-4 w-4" />
-                      </Link>
-                    </div>
+                    {/* Title */}
+                    <h3 className="line-clamp-2 text-xl font-bold text-white drop-shadow-md md:text-2xl leading-tight">
+                      {item.title}
+                    </h3>
+
+                    {/* Names */}
+                    <span className="line-clamp-1 text-lg font-medium text-white/90 md:text-lg">
+                      {formatStudentName(item.studentNames)}
+                    </span>
+                  </div>
+
+                  {/* Bottom Section: Action Link */}
+                  <div className="pt-2">
+                    <Link
+                      href={`/${category}/achievements/${item.slug}`}
+                      className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/20 px-4 py-2 text-sm font-medium text-white backdrop-blur-md transition-all hover:bg-white hover:text-gray-900"
+                    >
+                      Read Story
+                      <ArrowRight className="h-4 w-4" />
+                    </Link>
                   </div>
                 </div>
               </motion.div>
