@@ -7,7 +7,7 @@ import { ArrowRight, Target, Eye } from "lucide-react";
 export default function VisionMissionPreview() {
   return (
     // UPDATED: Standardized padding consistent with HistoryTimeline
-    <div className="w-full pt-10 pb-2 md:pt-20 md:pb-4">
+    <div className="w-full pt-10 pb-2 md:pt-6 md:pb-4">
       <div className="grid gap-10 md:grid-cols-2 md:gap-16">
         {/* Vision Side */}
         <motion.div
@@ -54,7 +54,7 @@ export default function VisionMissionPreview() {
       </div>
 
       {/* CTA */}
-      <div className="mt-12 md:mt-24 text-center">
+      <div className="mt-12 text-center">
         <Link
           href="/about/vision-mission"
           className="group inline-flex items-center text-sm font-semibold text-white transition-opacity hover:opacity-80 md:text-base hover:underline"

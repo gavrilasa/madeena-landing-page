@@ -65,10 +65,13 @@ export default function Footer() {
                       Primary School
                     </h3>
                   </div>
-                  <p className="text-sm leading-relaxed text-white/90 md:text-base">
+                  <a 
+                  href="https://maps.app.goo.gl/s8HkHR9vRscxxVfb9"
+                  className="text-sm leading-relaxed text-white/90 md:text-base"
+                  >
                     Jl. Pamitran No. 7 Kejaksan <br />
                     Kota Cirebon 45123
-                  </p>
+                  </a>
                 </div>
 
                 {/* Primary Contacts with Icons */}
@@ -101,10 +104,13 @@ export default function Footer() {
                       Pre School
                     </h3>
                   </div>
-                  <p className="text-sm leading-relaxed text-white/90 md:text-base">
+                  <a 
+                  href="https://maps.app.goo.gl/8EzbzD2LS6Yy2hyu9"
+                  className="text-sm leading-relaxed text-white/90 md:text-base"
+                  >
                     Jl. KS Tubun No. 29 Kejaksan <br />
                     Kota Cirebon 45123
-                  </p>
+                  </a>
                 </div>
 
                 {/* Preschool Contacts with Icons */}

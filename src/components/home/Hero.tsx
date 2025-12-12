@@ -7,7 +7,7 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <section className="relative -mt-17 flex h-[120vh] w-full items-center justify-center overflow-hidden">
+    <section className="relative -mt-24 flex h-[120vh] w-full items-center justify-center overflow-hidden">
       {/* Background Image with Parallax-like fixed feel */}
       <div className="absolute inset-0 z-0">
         <Image

@@ -1,21 +1,9 @@
+// src/components/common/MobileNav.tsx
 "use client";
 
 import * as React from "react";
-import {
-  Menu,
-  X,
-  Home,
-  BookOpen,
-  GraduationCap,
-  Building2,
-  Trophy,
-  Newspaper,
-  UserPlus,
-  Languages,
-  Info,
-  Phone,
-  ClipboardList,
-} from "lucide-react";
+// Import semua icon yang mungkin digunakan dari lucide-react
+import * as LucideIcons from "lucide-react";
 import { cn } from "~/lib/utils";
 import {
   Sheet,
@@ -33,29 +21,24 @@ import {
 import { Button } from "~/components/ui/button";
 import Image from "next/image";
 
-const iconMap = {
-  Home,
-  BookOpen,
-  GraduationCap,
-  Building2,
-  Trophy,
-  Newspaper,
-  UserPlus,
-  Languages,
-  Info,
-  Phone,
-  ClipboardList,
-};
+// Tipe Icon dari Lucide
+type LucideIconType = React.ElementType;
 
-type IconName = keyof typeof iconMap;
-
-function ItemIcon({ name }: { name?: IconName }) {
-  const Icon = name && iconMap[name] ? iconMap[name] : Info;
+function ItemIcon({ name }: { name?: string }) {
+  // Ambil icon dari LucideIcons berdasarkan string name
+  const Icon = (name && (LucideIcons as any)[name] ? (LucideIcons as any)[name] : LucideIcons.Info) as LucideIconType;
   return (
-    <span className="mr-2 inline-flex size-8 flex-none items-center justify-center rounded-lg bg-neutral-100 ring-1 ring-neutral-200 ring-inset">
+    <span className="mr-3 inline-flex size-8 flex-none items-center justify-center rounded-lg bg-neutral-100 ring-1 ring-neutral-200 ring-inset">
       <Icon className="size-4 text-neutral-700" aria-hidden="true" />
     </span>
   );
+}
+
+// Icon kecil untuk submenu
+function SubItemIcon({ name }: { name?: string }) {
+  if (!name) return null;
+  const Icon = ((LucideIcons as any)[name] ? (LucideIcons as any)[name] : LucideIcons.Circle) as LucideIconType;
+  return <Icon className="mr-3 size-4 text-neutral-500" aria-hidden="true" />;
 }
 
 export interface NavigationItem {
@@ -64,13 +47,13 @@ export interface NavigationItem {
   active?: boolean;
   submenu?: boolean;
   type?: "description" | "simple" | "icon";
-  items?: Array<{ href: string; label: string; description?: string }>;
+  items?: Array<{ href: string; label: string; description?: string; icon?: string }>;
   iconName?: string;
 }
 
 export function MobileNav({
   links,
-  ctaHref = "https://wa.me/6282119222822?text=Halo%2C%20saya%20tertarik%20untuk%20mengetahui%20informasi%20lebih%20lanjut%20mengenai%20Sekolah%20Al%20Madeena.",
+  ctaHref = "https://wa.me/6282119222822",
   ctaLabel = "Daftar Sekarang",
   isScrolled,
 }: {
@@ -93,7 +76,7 @@ export function MobileNav({
               : "text-white hover:bg-white/10 lg:hidden",
           )}
         >
-          <Menu className="size-5" />
+          <LucideIcons.Menu className="size-5" />
         </Button>
       </SheetTrigger>
 
@@ -111,8 +94,8 @@ export function MobileNav({
           <Image
             src={"/web-app-manifest-192x192.png"}
             alt="Logo"
-            width={64}
-            height={64}
+            width={56}
+            height={56}
           />
           <SheetClose asChild>
             <Button
@@ -121,7 +104,7 @@ export function MobileNav({
               aria-label="Tutup menu"
               className="text-neutral-600 hover:bg-neutral-100"
             >
-              <X className="size-5" />
+              <LucideIcons.X className="size-5" />
             </Button>
           </SheetClose>
         </div>
@@ -137,22 +120,23 @@ export function MobileNav({
                 >
                   <AccordionTrigger className="group flex w-full items-center justify-between px-4 py-3 text-left">
                     <div className="flex min-w-0 items-center">
-                      <ItemIcon name={link.iconName as IconName} />
+                      <ItemIcon name={link.iconName} />
                       <span className="truncate text-[15px] font-semibold text-neutral-900">
                         {link.label}
                       </span>
                     </div>
                   </AccordionTrigger>
-                  <AccordionContent className="data-[state=open]:animate-in data-[state=open]:fade-in data-[state=open]:slide-in-from-top-1 data-[state=closed]:animate-out data-[state=closed]:fade-out data-[state=closed]:slide-out-to-top-1 pb-0">
-                    <ul className="divide-y divide-neutral-200">
+                  <AccordionContent className="pb-2 pt-0">
+                    <ul className="space-y-1 px-2">
                       {link.items.map((it) => (
                         <li key={`${link.label}-${it.label}`}>
                           <SheetClose asChild>
                             <a
                               href={it.href}
-                              className="block px-4 py-3 hover:bg-neutral-50"
+                              className="flex items-center rounded-lg px-4 py-2.5 hover:bg-neutral-50"
                             >
-                              <div className="text-[15px] font-medium text-neutral-900">
+                              <SubItemIcon name={it.icon} />
+                              <div className="text-[14px] font-medium text-neutral-700">
                                 {it.label}
                               </div>
                             </a>
@@ -172,7 +156,7 @@ export function MobileNav({
                         "text-[15px] font-semibold text-neutral-900 hover:bg-neutral-50",
                       )}
                     >
-                      <ItemIcon name={link.iconName as IconName} />
+                      <ItemIcon name={link.iconName} />
                       <span>{link.label}</span>
                     </a>
                   </SheetClose>

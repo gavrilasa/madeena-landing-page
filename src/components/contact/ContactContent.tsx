@@ -1,3 +1,4 @@
+// src/components/contact/ContactContent.tsx
 "use client";
 
 import { motion } from "framer-motion";
@@ -8,6 +9,7 @@ import {
   Instagram,
   Youtube,
   MessageCircle,
+  Clock,
 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "~/components/ui/card";
 import { Button } from "~/components/ui/button";
@@ -39,7 +41,7 @@ export function ContactContent() {
           </p>
         </motion.div>
 
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {/* Address Card */}
           <motion.div
             initial="initial"
@@ -47,6 +49,7 @@ export function ContactContent() {
             viewport={{ once: true }}
             transition={{ delay: 0.1, duration: 0.5 }}
             variants={fadeIn}
+            className="md:col-span-1"
           >
             <Card className="border-border bg-card h-full transition-shadow duration-300 hover:shadow-md">
               <CardHeader>
@@ -60,20 +63,61 @@ export function ContactContent() {
               <CardContent className="space-y-6">
                 <div className="space-y-1">
                   <h4 className="text-foreground font-semibold">Preschool</h4>
-                  <p className="text-muted-foreground leading-relaxed">
+                  <a 
+                  className="text-muted-foreground leading-relaxed"
+                  href="https://maps.app.goo.gl/8EzbzD2LS6Yy2hyu9"
+                  >
                     Jl. KS Tubun No. 29 Kejaksan
                     <br />
                     Kota Cirebon 45123
-                  </p>
+                  </a>
                 </div>
                 <div className="space-y-1">
                   <h4 className="text-foreground font-semibold">
                     Primary School
                   </h4>
-                  <p className="text-muted-foreground leading-relaxed">
+                  <a 
+                  className="text-muted-foreground leading-relaxed"
+                  href="https://maps.app.goo.gl/s8HkHR9vRscxxVfb9"
+                  >
                     Jl. Pamitran No. 7 Kejaksan
                     <br />
                     Kota Cirebon 45123
+                  </a>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+
+           {/* Office Hours Card - NEW */}
+           <motion.div
+            initial="initial"
+            whileInView="whileInView"
+            viewport={{ once: true }}
+            transition={{ delay: 0.15, duration: 0.5 }}
+            variants={fadeIn}
+            className="md:col-span-1"
+          >
+            <Card className="border-border bg-card h-full transition-shadow duration-300 hover:shadow-md">
+              <CardHeader>
+                <div className="mb-2 flex items-center gap-3">
+                  <div className="bg-primary/10 text-primary flex size-10 items-center justify-center rounded-lg">
+                    <Clock className="size-5" />
+                  </div>
+                  <CardTitle className="text-xl">Jam Operasional</CardTitle>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                 <div className="space-y-1">
+                  <h4 className="text-foreground font-semibold">Kantor Administrasi</h4>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Senin - Jumat: 07.30 - 15.00 WIB
+                  </p>
+                </div>
+                <div className="space-y-1">
+                  <h4 className="text-foreground font-semibold">Kunjungan Sekolah</h4>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Dengan Perjanjian
                   </p>
                 </div>
               </CardContent>
@@ -87,6 +131,7 @@ export function ContactContent() {
             viewport={{ once: true }}
             transition={{ delay: 0.2, duration: 0.5 }}
             variants={fadeIn}
+            className="md:col-span-1"
           >
             <Card className="border-border bg-card h-full transition-shadow duration-300 hover:shadow-md">
               <CardHeader>
@@ -133,6 +178,7 @@ export function ContactContent() {
             viewport={{ once: true }}
             transition={{ delay: 0.3, duration: 0.5 }}
             variants={fadeIn}
+             className="md:col-span-1 lg:col-span-1"
           >
             <Card className="border-border bg-card h-full transition-shadow duration-300 hover:shadow-md">
               <CardHeader>
@@ -173,6 +219,7 @@ export function ContactContent() {
             viewport={{ once: true }}
             transition={{ delay: 0.4, duration: 0.5 }}
             variants={fadeIn}
+             className="md:col-span-2 lg:col-span-2"
           >
             <Card className="border-border bg-card h-full transition-shadow duration-300 hover:shadow-md">
               <CardHeader>
@@ -188,7 +235,7 @@ export function ContactContent() {
                   Ikuti kegiatan terbaru dan dokumentasi harian siswa kami di
                   media sosial.
                 </p>
-                <div className="flex flex-col gap-3 pt-2">
+                <div className="flex flex-wrap gap-3 pt-2">
                   <Button
                     variant="outline"
                     className="h-12 justify-start"

@@ -21,26 +21,16 @@ import { Separator } from "../ui/separator";
 import * as Icons from "lucide-react";
 
 interface NavbarProps {
-  forceSolid?: boolean; // Opsi manual untuk memaksa navbar solid
+  forceSolid?: boolean;
 }
 
 export default function Navbar({ forceSolid }: NavbarProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isClient, setIsClient] = useState(false);
 
-  // Default ke string kosong untuk keamanan jika null
   const pathname = usePathname() || "";
-
-  // --- LOGIKA BARU: ---
-  // Hanya Homepage ('/') yang dianggap transparan (teks putih).
-  // Halaman lain otomatis dianggap solid (teks hitam) agar kontras terjaga.
   const isTransparentPage = pathname === "/";
 
-  // Navbar Transparan HANYA JIKA:
-  // 1. Sudah di client (isClient)
-  // 2. TIDAK dipaksa solid lewat props (!forceSolid)
-  // 3. Halaman adalah Homepage (isTransparentPage)
-  // 4. User BELUM scroll (!isScrolled)
   const useTransparentStyle =
     isClient && !forceSolid && isTransparentPage && !isScrolled;
 
@@ -61,19 +51,19 @@ export default function Navbar({ forceSolid }: NavbarProps) {
   return (
     <header
       className={cn(
-        "sticky top-0 right-0 left-0 z-50 px-4 pt-2 transition-all duration-300 md:px-6",
+        "sticky top-0 right-0 left-0 z-50 px-4 transition-all duration-300 md:px-6",
         !useTransparentStyle
-          ? "bg-white text-gray-800 shadow-md" // Style Solid (Putih, Text Hitam) - Default untuk semua halaman selain Home
-          : "bg-transparent text-white", // Style Transparan (Text Putih) - Khusus Home sebelum scroll
+          ? "bg-white text-gray-800 shadow-md"
+          : "bg-transparent text-white",
       )}
     >
-      <div className="container mx-auto -mt-1 flex h-16 items-center justify-between gap-4">
+      <div className="container mx-auto flex h-24 items-center justify-between gap-6 md:pt-0 pt-2">
         <div className="flex h-full items-center gap-3">
           <Image
             src="https://res.cloudinary.com/dah2v3xbg/image/upload/v1761939553/LogoTextHitam_f83bfl.svg"
             alt="Logo"
-            width={48}
-            height={48}
+            width={52} 
+            height={52}
             priority
           />
           <Separator
@@ -83,15 +73,15 @@ export default function Navbar({ forceSolid }: NavbarProps) {
               !useTransparentStyle ? "bg-gray-300" : "bg-white/50",
             )}
           />
-          <div className="text-md flex flex-col leading-tight font-medium">
+          <div className="flex flex-col leading-tight font-medium text-lg"> 
             <span>Al Madeena</span>
-            <span className="-mt-1">Islamic School</span>
+            <span className="-mt-1 text-base">Islamic School</span> 
           </div>
         </div>
 
         <div className="-mb-1 flex items-center gap-2">
           <NavigationMenu viewport={false} className="h-full max-lg:hidden">
-            <NavigationMenuList className="h-full gap-1">
+            <NavigationMenuList className="h-full gap-2"> 
               {navigationLinks.map((link, index) => {
                 const isActive =
                   link.href === pathname ||
@@ -105,17 +95,17 @@ export default function Navbar({ forceSolid }: NavbarProps) {
                           data-active={isActive}
                           className={cn(
                             navigationMenuTriggerStyle(),
-                            "group h-full cursor-pointer rounded-t-lg rounded-b-none border-transparent bg-transparent px-3 py-1.5 pb-3 font-medium transition-all",
+                            "group h-full cursor-pointer rounded-t-lg rounded-b-none border-transparent bg-transparent px-4 py-1.5 pb-3 font-medium transition-all text-[15px]", // Text size 15px
                             "hover:bg-transparent focus:bg-transparent data-[state=open]:bg-transparent",
                             !useTransparentStyle
                               ? "text-gray-800 after:bg-gray-900 hover:text-gray-900 focus:text-gray-900 focus-visible:ring-gray-900/40 data-[state=open]:text-gray-900"
                               : "text-white after:bg-white hover:text-white focus:text-white focus-visible:ring-white/40 data-[state=open]:text-white",
                             isActive &&
                               !useTransparentStyle &&
-                              "font-semibold text-gray-900",
+                              "font-bold text-gray-900",
                             isActive &&
                               useTransparentStyle &&
-                              "font-semibold text-white",
+                              "font-bold text-white",
                           )}
                         >
                           {link.label}
@@ -124,7 +114,7 @@ export default function Navbar({ forceSolid }: NavbarProps) {
                         <NavigationMenuContent className="rounded-sm">
                           <ul
                             className={cn(
-                              "mt-0 border-0 bg-white text-gray-800 shadow-none md:min-w-64",
+                              "mt-0 border-0 bg-white text-gray-800 shadow-none md:min-w-72", 
                             )}
                           >
                             {link.items.map((item, itemIndex) => {
@@ -140,7 +130,7 @@ export default function Navbar({ forceSolid }: NavbarProps) {
                                     href={item.href}
                                     data-active={item.href === pathname}
                                     className={cn(
-                                      "block p-3 text-sm",
+                                      "block p-3 text-[15px]", 
                                       "text-gray-700 transition-colors",
                                       "hover:bg-gray-100 hover:text-gray-900",
                                       "focus:bg-gray-100 focus:text-gray-900 focus:outline-none",
@@ -177,15 +167,15 @@ export default function Navbar({ forceSolid }: NavbarProps) {
                         href={link.href ?? "#"}
                         data-active={isActive}
                         className={cn(
-                          "group relative flex h-full flex-row items-center justify-center rounded-none border-transparent bg-transparent px-3 py-1.5 pb-3 font-medium",
+                          "group relative flex h-full flex-row items-center justify-center rounded-none border-transparent bg-transparent px-4 py-1.5 pb-3 font-medium text-[15px]", // Text size 15px
                           "transition-colors outline-none focus-visible:ring-[3px]",
                           "hover:bg-transparent focus:bg-transparent",
                           !useTransparentStyle
                             ? isActive
-                              ? "font-semibold text-gray-900 hover:text-gray-900"
+                              ? "font-bold text-gray-900 hover:text-gray-900"
                               : "text-gray-800/80 hover:text-gray-900"
                             : isActive
-                              ? "font-semibold text-white hover:text-white"
+                              ? "font-bold text-white hover:text-white"
                               : "text-white/80 hover:text-white",
                           !useTransparentStyle
                             ? "focus:text-gray-900 focus-visible:ring-gray-900/40"
@@ -211,8 +201,6 @@ export default function Navbar({ forceSolid }: NavbarProps) {
           <div className="lg:hidden">
             <MobileNav
               links={navigationLinks}
-              // Pass kondisi solid state ke MobileNav
-              // Jika Solid (useTransparentStyle = FALSE), maka isScrolled = TRUE (agar ikon gelap)
               isScrolled={!useTransparentStyle}
             />
           </div>

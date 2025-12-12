@@ -43,7 +43,6 @@ export default async function HomePage() {
     <main className="">
       <Hero />
       <Quote />
-      {/* Pass both datasets */}
       <Academic 
         staff={teachingStaff} 
         board={foundationBoard} 

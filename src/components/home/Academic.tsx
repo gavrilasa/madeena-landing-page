@@ -1,3 +1,4 @@
+// src/components/home/Academic.tsx
 "use client";
 
 import { useState } from "react";
@@ -13,8 +14,6 @@ import VisionMissionPreview from "./academic/VisionMissionPreview";
 import FoundationBoardPreview from "./academic/FoundationBoardPreview";
 import StaffPreview from "./academic/StaffPreview";
 import { type Staff } from "~/lib/generated/prisma/client";
-// If you updated types/foundation.ts, you can import type from there, 
-// OR use 'any' if generic, but better to fetch proper type:
 import { type FoundationMember } from "~/types/foundation"; 
 
 interface AcademicProps {
@@ -32,31 +31,29 @@ export default function Academic({ staff, board }: AcademicProps) {
     { id: "staff", label: "Guru & Karyawan" },
   ];
 
+  // Perbaikan: Mengurangi padding vertical (py-16 md:py-20)
   return (
-    <section className="relative w-full overflow-hidden bg-[#059DEA] py-20 md:py-28">
-      {/* ... Decorations ... */}
+    <section className="relative w-full overflow-hidden bg-[#059DEA] py-16 md:py-20">
       <BackgroundSwirl />
       <FlowerDecoration className="absolute -left-4 top-4 w-20 opacity-20 md:left-4 md:top-8 md:w-28 md:opacity-30 lg:left-0 lg:top-6 lg:w-32" />
       <StarDecoration className="absolute bottom-16 right-8 w-8 animate-pulse opacity-30 md:bottom-20 md:right-16 md:w-10 lg:right-24 lg:w-12" />
       <StarDecoration className="absolute left-8 top-1/2 w-6 -translate-y-1/2 opacity-20 md:left-16 md:w-8 lg:left-24" />
 
       <div className="container relative z-10 mx-auto px-6">
-        {/* ... Header ... */}
-        <div className="mx-auto mb-12 max-w-3xl text-center md:mb-16">
+        <div className="mx-auto mb-10 max-w-3xl text-center md:mb-14">
           <motion.h2 
              initial={{ opacity: 0, y: 20 }}
              whileInView={{ opacity: 1, y: 0 }}
              viewport={{ once: true }}
              className="mb-4 text-3xl font-bold text-white md:text-5xl"
            >
-             Get To know Al Madeena
+             Get To Know Al Madeena
            </motion.h2>
            <motion.p className="text-base leading-relaxed text-white/90 md:text-lg">
              Al Madeena is a modern Islamic school that blends faith and knowledge...
            </motion.p>
         </div>
 
-        {/* ... Tabs ... */}
         <div className="mb-8 flex flex-wrap justify-center gap-3 md:gap-4">
           {tabs.map((tab) => (
             <button
@@ -74,8 +71,7 @@ export default function Academic({ staff, board }: AcademicProps) {
           ))}
         </div>
 
-        {/* ... Content ... */}
-        <div className="@container mx-10 rounded-3xl border border-white/10 bg-white/10 p-6 shadow-md backdrop-blur-sm md:mx-20 md:px-20 md:py-8 lg:mx-40">
+        <div className="@container mx-4 rounded-3xl border border-white/10 bg-white/10 p-4 shadow-md backdrop-blur-sm md:mx-20 md:px-20 md:py-8 lg:mx-40">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeTab}

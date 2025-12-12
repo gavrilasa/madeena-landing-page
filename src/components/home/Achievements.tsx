@@ -99,10 +99,10 @@ export default function Achievements({ preschool, primary }: AchievementsProps) 
                 currentData.map((item, index) => (
                   <div
                     key={`${item.id}-${index}`}
-                    className="group flex flex-col overflow-hidden rounded-3xl border border-gray-200 bg-white p-4 transition-all hover:shadow-xl"
+                    className="group flex flex-col overflow-hidden rounded-3xl bg-white p-4 transition-all hover:shadow-xl"
                   >
                     {/* Image Container */}
-                    <div className="relative mb-4 aspect-video w-full overflow-hidden rounded-2xl bg-gray-100">
+                    <div className="relative mb-4 aspect-4/5 w-full overflow-hidden rounded-2xl bg-gray-100">
                       <Image
                         src={item.image}
                         alt={item.title}
@@ -113,13 +113,13 @@ export default function Achievements({ preschool, primary }: AchievementsProps) 
 
                     {/* Content */}
                     <div className="flex flex-1 flex-col px-2 pb-2">
-                      <span className="mb-2 text-xs font-bold text-gray-500">
+                      <span className="mb-2 text-sm font-bold text-gray-500">
                         {formatDate(item.date)}
                       </span>
                       <h3 className="mb-2 text-lg font-bold leading-tight text-gray-900">
                         {item.title}
                       </h3>
-                      <p className="line-clamp-3 text-xs leading-relaxed text-gray-500">
+                      <p className="line-clamp-3 text-base leading-relaxed text-gray-500">
                         {item.description}
                       </p>
                     </div>
@@ -142,7 +142,7 @@ export default function Achievements({ preschool, primary }: AchievementsProps) 
                 ? "/preschool/achievements"
                 : "/primary/achievements"
             }
-            className="inline-block border-b border-gray-800 pb-0.5 text-sm font-semibold text-gray-800 transition-colors hover:border-[#FE7D01] hover:text-[#FE7D01]"
+            className="inline-block border-b border-gray-800 pb-0.5 text-base font-semibold text-gray-800 transition-colors hover:border-[#FE7D01] hover:text-[#FE7D01]"
           >
             Lihat Semua
           </Link>

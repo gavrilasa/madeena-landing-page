@@ -7,15 +7,8 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 import { cn } from "~/lib/utils";
 import { programsData } from "~/data/academic/programsData";
 import { ScrollLine } from "../ui/scroll-line";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-// Ensure GSAP plugins are registered
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
-
-// --- Decorative Components ---
+// --- Decoration Components (Sesuai Design Awal) ---
 
 function DecorationBlueCircle({ className }: { className?: string }) {
   return (
@@ -82,21 +75,20 @@ export default function Programs() {
 
   const scrollLeft = () => {
     if (carouselRef.current) {
-      carouselRef.current.scrollBy({ left: -320, behavior: "smooth" });
+      carouselRef.current.scrollBy({ left: -340, behavior: "smooth" });
     }
   };
 
   const scrollRight = () => {
     if (carouselRef.current) {
-      carouselRef.current.scrollBy({ left: 320, behavior: "smooth" });
+      carouselRef.current.scrollBy({ left: 340, behavior: "smooth" });
     }
   };
 
   return (
     <section
-      id="programs" // ADDED: ID for scroll target
+      id="programs"
       ref={sectionRef}
-      // UPDATED: Added scroll-mt-28 to handle navbar offset
       className="relative w-full overflow-hidden scroll-mt-28 py-16 md:py-24"
     >
       {/* --- Background Decorations --- */}
@@ -131,8 +123,8 @@ export default function Programs() {
               className={cn(
                 "rounded-full border px-8 py-2.5 text-sm font-bold transition-all duration-300",
                 activeTab === "preschool"
-                  ? "border-[#0094D9] bg-[#0094D9] text-white shadow-md"
-                  : "border-gray-400 bg-transparent text-gray-500 hover:border-gray-600",
+                  ? "border-[#0094D9] bg-[#0094D9] text-white shadow-md scale-105"
+                  : "border-gray-400 bg-transparent text-gray-500 hover:border-gray-600 hover:bg-gray-50",
               )}
             >
               Pre School
@@ -142,8 +134,8 @@ export default function Programs() {
               className={cn(
                 "rounded-full border px-8 py-2.5 text-sm font-bold transition-all duration-300",
                 activeTab === "primary"
-                  ? "border-[#0094D9] bg-[#0094D9] text-white shadow-md"
-                  : "border-gray-400 bg-transparent text-gray-500 hover:border-gray-600",
+                  ? "border-[#0094D9] bg-[#0094D9] text-white shadow-md scale-105"
+                  : "border-gray-400 bg-transparent text-gray-500 hover:border-gray-600 hover:bg-gray-50",
               )}
             >
               Primary School
@@ -152,10 +144,10 @@ export default function Programs() {
         </div>
 
         {/* Carousel Area */}
-        <div className="relative max-w-6xl mx-auto px-4 md:px-10 lg:px-16">
+        <div className="relative max-w-7xl mx-auto px-2 md:px-4 lg:px-16">
           <div
             ref={carouselRef}
-            className="scrollbar-hide flex gap-6 overflow-x-auto scroll-smooth px-4 pb-8 pt-2 snap-x snap-mandatory"
+            className="scrollbar-hide flex gap-6 overflow-x-auto scroll-smooth px-4 pb-8 pt-4 snap-x snap-mandatory"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
             <AnimatePresence mode="wait">
@@ -166,25 +158,42 @@ export default function Programs() {
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.4, delay: index * 0.1 }}
-                  className="w-[280px] shrink-0 snap-center md:w-[320px]"
+                  className="w-[300px] shrink-0 snap-center md:w-[340px]"
                 >
-                  {/* Card */}
-                  <div className="flex h-full flex-col rounded-4xl border border-gray-300 bg-white p-4 shadow-lg transition-shadow hover:shadow-xl">
-                    {/* Image */}
-                    <div className="relative aspect-3/4 w-full overflow-hidden rounded-3xl mb-4">
+                  {/* Apple Style Card */}
+                  <div className="group relative h-[500px] w-full overflow-hidden rounded-3xl bg-gray-200 transition-all duration-300">
+                    {/* Image Background */}
+                    <div className="absolute inset-0 h-full w-full">
                       <Image
                         src={item.image}
                         alt={item.title}
                         fill
-                        className="object-cover"
-                        sizes="(max-width: 768px) 100vw, 320px"
+                        className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
+                        sizes="(max-width: 768px) 100vw, 340px"
                       />
+                      {/* Gradient Overlay */}
+                      <div className="absolute inset-0 bg-linear-to-t from-black/40 via-black/20 to-transparent transition-opacity duration-300" />
                     </div>
-                    {/* Title */}
-                    <div className="mt-auto text-center pb-2">
-                      <h3 className="text-lg font-bold text-gray-900">
-                        {item.title}
-                      </h3>
+
+                    {/* Content Overlay */}
+                    <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-8">
+                      <div className="flex flex-col">
+                        <h3 className="text-2xl font-bold text-white drop-shadow-md mb-0 transition-all duration-300 group-hover:mb-2">
+                          {item.title}
+                        </h3>
+                        <div className="flex items-center gap-2 pb-2 text-sm font-semibold text-white transition-all group-hover:gap-3">
+                          <p className="text-sm text-white">
+                            Baca Selengkapnya
+                          </p>
+                        </div>
+                        <div className="grid grid-rows-[0fr] transition-all duration-300 ease-out group-hover:grid-rows-[1fr]">
+                          <div className="overflow-hidden">
+                            <p className="text-sm font-medium leading-relaxed text-gray-200 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                              {item.description}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </motion.div>
@@ -196,17 +205,17 @@ export default function Programs() {
           <div className="mt-4 flex justify-center gap-8 text-gray-400">
             <button
               onClick={scrollLeft}
-              className="transition-colors hover:text-gray-800"
+              className="rounded-full border border-gray-200 p-3 text-gray-400 transition-all hover:bg-gray-100 hover:text-gray-900 active:scale-95"
               aria-label="Previous"
             >
-              <ArrowLeft className="h-8 w-8" />
+              <ArrowLeft className="h-6 w-6" />
             </button>
             <button
               onClick={scrollRight}
-              className="transition-colors hover:text-gray-800"
+              className="rounded-full border border-gray-200 p-3 text-gray-400 transition-all hover:bg-gray-100 hover:text-gray-900 active:scale-95"
               aria-label="Next"
             >
-              <ArrowRight className="h-8 w-8" />
+              <ArrowRight className="h-6 w-6" />
             </button>
           </div>
         </div>

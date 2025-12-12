@@ -36,7 +36,6 @@ export default function ProgramsContent({ category }: ProgramsContentProps) {
                 viewport={{ once: true, amount: 0.2 }}
                 transition={{ delay: index * 0.1, duration: 0.5 }}
                 variants={fadeIn}
-                // Increased min-height for bigger cards to fit content comfortably
                 className="group relative flex min-h-[500px] flex-col justify-between overflow-hidden rounded-3xl bg-gray-900 shadow-xl transition-transform duration-300 hover:-translate-y-2"
               >
                 {/* Background Image */}
@@ -44,20 +43,15 @@ export default function ProgramsContent({ category }: ProgramsContentProps) {
                   src={item.image}
                   alt={item.title}
                   fill
-                  className="object-cover opacity-60 transition-transform duration-700 group-hover:scale-110 group-hover:opacity-50"
+                  className="object-cover transition-transform duration-700 group-hover:scale-110"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
 
                 {/* Dark Overlay Gradient */}
-                <div className="absolute inset-0 bg-linear-to-t from-black/95 via-black/70 to-transparent" />
+                <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/20 to-transparent" />
 
                 {/* Content Container */}
                 <div className="relative z-10 flex h-full flex-col justify-end p-8 md:p-10">
-                  {/* Icon */}
-                  <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-white/20 backdrop-blur-md shadow-inner border border-white/10">
-                    <Icon className="h-7 w-7 text-white" />
-                  </div>
-
                   {/* Title */}
                   <h3 className="mb-4 text-2xl font-bold text-white md:text-3xl leading-tight drop-shadow-lg">
                     {item.title}
