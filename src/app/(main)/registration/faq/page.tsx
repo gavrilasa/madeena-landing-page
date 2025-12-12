@@ -18,17 +18,7 @@ export default function FaqPage() {
 
       <section className="py-16 md:py-24">
         <div className="container mx-auto max-w-3xl px-6">
-          <div className="mb-12 text-center">
-            <h2 className="text-3xl font-bold text-[#1A1A1A] md:text-4xl">
-              Pertanyaan Umum
-            </h2>
-            <p className="mt-4 text-lg text-gray-600">
-              Berikut adalah beberapa pertanyaan yang sering diajukan oleh calon orang tua siswa.
-            </p>
-          </div>
-
           <FaqAccordion items={faqData} />
-
           <div className="mt-16 rounded-2xl bg-gray-50 p-8 text-center">
             <h3 className="text-xl font-semibold text-gray-900">
               Masih punya pertanyaan lain?

@@ -70,12 +70,12 @@ export default function CurriculumContent({
           
           {/* Left Side: Sticky Image */}
           {/* UPDATED: Added 'hidden lg:block' to hide on mobile/tablet and show only on desktop */}
-          <div className="hidden lg:block col-span-2 h-fit lg:sticky lg:top-24">
+          <div className="hidden lg:block col-span-2 h-fit lg:sticky lg:top-36">
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.5 }}
-              className="relative aspect-3/4 w-full overflow-hidden rounded-2xl shadow-2xl lg:aspect-auto lg:h-[600px]"
+              className="relative aspect-5/6 w-full overflow-hidden rounded-2xl shadow-2xl lg:aspect-auto lg:h-[600px]"
             >
               <Image
                 src={visualImage}
@@ -84,7 +84,7 @@ export default function CurriculumContent({
                 className="object-cover"
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 33vw"
               />
-              <div className="absolute inset-0 bg-linear-to-t from-black/60 to-transparent" />
+              <div className="absolute inset-0 bg-linear-to-t from-black/20 to-transparent" />
               <div className="absolute bottom-0 left-0 p-8">
                 <div className="mb-2 flex h-12 w-12 items-center justify-center rounded-xl bg-white/20 backdrop-blur-md">
                   <Icon className="h-6 w-6 text-white" />

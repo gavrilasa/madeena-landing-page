@@ -33,11 +33,6 @@ export default function AchievementDetail({
 
   return (
     <main className="min-h-screen pb-20">
-      {/* <PageHeader
-        title="Prestasi Siswa"
-        subtitle={`Merayakan Prestasi Siswa ${categoryLabel} Al Madeena`}
-        imageUrl="https://res.cloudinary.com/dah2v3xbg/image/upload/v1763225823/TemplatePageHeader_tnecsg.webp"
-      /> */}
 
       <section className="container mx-auto px-4 py-8 md:px-6 md:py-12">
         {/* Navigation - Outside Grid */}
@@ -60,8 +55,8 @@ export default function AchievementDetail({
             transition={{ duration: 0.5 }}
             className="relative md:col-span-5 lg:col-span-4"
           >
-            <div className="sticky top-24 overflow-hidden rounded-3xl bg-white p-2 shadow-lg ring-1 ring-gray-100">
-              <div className="relative aspect-9/16 w-full overflow-hidden rounded-2xl bg-gray-200">
+            <div className="sticky top-36 overflow-hidden rounded-3xl bg-white p-2 shadow-lg ring-1 ring-gray-100">
+              <div className="relative aspect-4/5 w-full overflow-hidden rounded-2xl bg-gray-200">
                 <Image
                   src={achievement.image}
                   alt={achievement.title}

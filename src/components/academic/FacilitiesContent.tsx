@@ -1,8 +1,9 @@
+// src/components/academic/FacilitiesContent.tsx
 "use client";
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { type ElementType } from "react"; // 1. Tambahkan import ini
+import { type ElementType } from "react"; 
 import { facilitiesData } from "~/data/academic/facilitiesdata";
 import { cn } from "~/lib/utils";
 import * as Icons from "lucide-react";
@@ -29,18 +30,10 @@ export default function FacilitiesContent({
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
           {data.map((item, index) => {
-            // 2. & 3. Perbaikan: Gunakan tipe Record dan operator nullish coalescing (??)
             const IconComponent =
               (Icons as unknown as Record<string, ElementType>)[item.icon] ??
               Icons.Building2;
 
-            // Logic to vary card spans for the "bento" look
-            // Pattern:
-            // Index 0: Col-span-2 (Large horizontal)
-            // Index 1: Col-span-1 (Standard vertical)
-            // Index 2: Col-span-1
-            // Index 3: Col-span-2
-            // ... and so on.
             const isLarge = index % 4 === 0 || index % 4 === 3;
 
             return (
@@ -48,41 +41,37 @@ export default function FacilitiesContent({
                 key={item.id}
                 className={cn(
                   "group relative overflow-hidden rounded-3xl bg-gray-900 shadow-xl",
-                  // Mobile: always 1 column. Desktop: vary based on logic
                   "col-span-1",
                   isLarge ? "md:col-span-2" : "md:col-span-1",
-                  "h-[400px] md:h-[450px]", // Fixed height for consistency
+                  "h-[400px] md:h-[450px]", 
                 )}
                 initial="initial"
                 whileInView="whileInView"
                 viewport={{ once: true, amount: 0.2 }}
                 variants={fadeIn}
               >
-                {/* Background Image */}
+                {/* Perbaikan: Hapus opacity-60, ganti jadi opacity-100 */}
                 <Image
                   src={item.image}
                   alt={item.title}
                   fill
-                  className="object-cover opacity-60 transition-transform duration-700 group-hover:scale-105 group-hover:opacity-50"
+                  className="object-cover opacity-100 transition-transform duration-700 group-hover:scale-105"
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 66vw, 33vw"
                 />
 
-                {/* Dark Overlay Gradient (Bottom Up) */}
-                <div className="absolute inset-0 bg-linear-to-t from-black/90 via-black/40 to-transparent" />
+                {/* Perbaikan: Gradient lebih transparan (black/60 instead of black/90) */}
+                <div className="absolute inset-0 bg-linear-to-t from-black/40 via-black/20 to-transparent" />
 
-                {/* Content Container */}
                 <div className="absolute inset-0 flex flex-col justify-between p-6 md:p-10">
-                  {/* Icon Box (Glassmorphism) */}
-                  <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-white/20 bg-white/10 backdrop-blur-md">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl border border-white/20 bg-white/20 backdrop-blur-md">
                     <IconComponent className="h-6 w-6 text-white" />
                   </div>
 
-                  {/* Text Content */}
                   <div className="space-y-3">
-                    <h3 className="text-2xl font-bold text-white md:text-3xl">
+                    <h3 className="text-2xl font-bold text-white md:text-3xl drop-shadow-md">
                       {item.title}
                     </h3>
-                    <p className="text-base leading-relaxed text-gray-300 md:text-lg">
+                    <p className="text-base leading-relaxed text-gray-100 md:text-lg drop-shadow-sm">
                       {item.description}
                     </p>
                   </div>

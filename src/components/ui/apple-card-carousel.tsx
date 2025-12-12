@@ -154,12 +154,12 @@ export const Card = ({
       <motion.button
         layoutId={layout ? `card-${card.id}` : undefined}
         onClick={onClick}
-        className="relative z-10 flex h-80 w-56 flex-col items-start justify-start overflow-hidden rounded-3xl bg-gray-100 md:h-160 md:w-96 dark:bg-neutral-900" // Fixed h-[40rem] to h-160
+        className="relative z-10 flex h-80 w-56 flex-col items-start justify-end overflow-hidden rounded-3xl bg-gray-100 md:h-160 md:w-96 dark:bg-neutral-900" // Fixed h-[40rem] to h-160
       >
-        <div className="pointer-events-none absolute inset-x-0 top-0 z-30 h-full bg-linear-to-b from-black/50 via-transparent to-transparent" />{" "}
+        <div className="pointer-events-none absolute inset-x-0 top-0 z-30 h-full bg-linear-to-t from-black/50 via-transparent to-transparent" />{" "}
         {/* Fixed bg-gradient-to-b */}
-        <div className="relative z-40 p-8">
-          <p className="text-left font-sans text-sm font-medium text-white md:text-base">
+        <div className="relative justify-end z-40 p-8">
+          <p className="text-left font-sans text-base font-medium text-white md:text-lg">
             {card.category}
           </p>
           <p className="mt-2 max-w-xs text-left font-sans text-xl font-semibold text-balance text-white md:text-3xl">
@@ -174,11 +174,6 @@ export const Card = ({
           fill
           className="absolute inset-0 z-10 object-cover"
         />
-        <div className="absolute inset-x-0 bottom-10 z-40 flex flex-col items-center">
-          <div className="flex flex-col items-center gap-1">
-            <span className="text-sm font-medium text-white">See Details</span>
-          </div>
-        </div>
       </motion.button>
     </>
   );

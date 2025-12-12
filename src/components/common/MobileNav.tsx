@@ -33,6 +33,7 @@ import {
 import { Button } from "~/components/ui/button";
 import Image from "next/image";
 
+// Definisi Icon Map untuk menghindari penggunaan 'any'
 const iconMap = {
   Home,
   BookOpen,
@@ -49,8 +50,9 @@ const iconMap = {
 
 type IconName = keyof typeof iconMap;
 
-function ItemIcon({ name }: { name?: IconName }) {
-  const Icon = name && iconMap[name] ? iconMap[name] : Info;
+function ItemIcon({ name }: { name?: string }) {
+  // Pastikan name valid dan ada di iconMap, jika tidak gunakan Info sebagai default
+  const Icon = name && iconMap[name as IconName] ? iconMap[name as IconName] : Info;
   return (
     <span className="mr-2 inline-flex size-8 flex-none items-center justify-center rounded-lg bg-neutral-100 ring-1 ring-neutral-200 ring-inset">
       <Icon className="size-4 text-neutral-700" aria-hidden="true" />
@@ -137,7 +139,7 @@ export function MobileNav({
                 >
                   <AccordionTrigger className="group flex w-full items-center justify-between px-4 py-3 text-left">
                     <div className="flex min-w-0 items-center">
-                      <ItemIcon name={link.iconName as IconName} />
+                      <ItemIcon name={link.iconName} />
                       <span className="truncate text-[15px] font-semibold text-neutral-900">
                         {link.label}
                       </span>
@@ -172,7 +174,7 @@ export function MobileNav({
                         "text-[15px] font-semibold text-neutral-900 hover:bg-neutral-50",
                       )}
                     >
-                      <ItemIcon name={link.iconName as IconName} />
+                      <ItemIcon name={link.iconName} />
                       <span>{link.label}</span>
                     </a>
                   </SheetClose>

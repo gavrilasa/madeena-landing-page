@@ -102,7 +102,7 @@ export function CareerList({ careers }: CareerListProps) {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-50px" }}
                   transition={{ duration: 0.4, delay: index * 0.1 }}
-                  className="group border-border bg-card hover:border-primary/50 relative overflow-hidden rounded-2xl border p-6 shadow-sm transition-all hover:shadow-lg md:p-8"
+                  className="group border-border bg-card relative overflow-hidden rounded-2xl border p-6 shadow-sm transition-all hover:shadow-lg md:p-8"
                 >
                   <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-start">
                     {/* Job Header & Info */}

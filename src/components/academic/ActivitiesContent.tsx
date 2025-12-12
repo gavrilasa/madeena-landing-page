@@ -28,9 +28,6 @@ export default function ActivitiesContent({ category }: ActivitiesContentProps) 
             return (
               <motion.div
                 key={item.id}
-                // CSS-ONLY LAYOUT CONTROL:
-                // 'flex-col' stacks them on mobile (image on top, text below).
-                // 'md:flex-row-reverse' puts image on Right, text on Left for Desktop.
                 className="flex flex-col items-center gap-8 md:flex-row-reverse md:gap-12 lg:gap-20"
                 initial="initial"
                 whileInView="whileInView"
@@ -47,11 +44,10 @@ export default function ActivitiesContent({ category }: ActivitiesContentProps) 
                       className="object-cover transition-transform duration-700 hover:scale-105"
                       sizes="(max-width: 768px) 100vw, 50vw"
                     />
-                    <div className="absolute inset-0 bg-black/10 transition-opacity hover:bg-black/0" />
+                    <div className="absolute inset-0" />
                   </div>
                   
-                  {/* Decorative Element */}
-                  <div className="absolute -bottom-6 -left-6 -z-10 h-full w-full rounded-2xl bg-primary/10" />
+                  
                 </div>
 
                 {/* Content Side (Left on Desktop due to row-reverse) */}

@@ -42,7 +42,7 @@ export default function HistoryTimeline() {
   return (
     <div className="w-full">
       {/* UPDATED: Changed py-10 md:py-20 to explicit pt/pb to reduce bottom space */}
-      <div className="relative flex flex-col items-center justify-center pt-10 pb-2 md:pt-20 md:pb-4">
+      <div className="relative flex flex-col items-center justify-center py-8 pb-2 md:py-28 md:pb-4">
         
         {/* --- Desktop View: Horizontal Line --- */}
         <div className="relative hidden w-full max-w-6xl items-center justify-between md:flex">
@@ -109,7 +109,7 @@ export default function HistoryTimeline() {
           whileInView={{ opacity: 1 }}
           transition={{ delay: 0.8 }}
           // UPDATED: Reduced margin-top (was mt-16 md:mt-32)
-          className="mt-12 md:mt-36"
+          className="py-6 md:mt-24"
         >
           <Link
             href="/about/history"
