@@ -26,8 +26,7 @@ export default function ProgramsContent({ category }: ProgramsContentProps) {
         {/* Content Grid */}
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 justify-center">
           {data.map((item, index) => {
-            const Icon = item.icon;
-
+            // Hapus deklarasi variable Icon yang tidak digunakan
             return (
               <motion.div
                 key={item.id}
